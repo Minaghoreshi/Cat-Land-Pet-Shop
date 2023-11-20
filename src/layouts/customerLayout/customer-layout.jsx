@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomerFooter, CustomerHeader } from "../../Components";
+import { CustomerFooter, CustomerHeader } from "../../components";
 export default function CustomerLayout({ children }) {
   return (
     <>
