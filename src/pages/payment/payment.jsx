@@ -1,6 +1,6 @@
 import React from "react";
 
 const Payment = () => {
-  return <div>fghsfh</div>;
+  return <div>this is payment page</div>;
 };
 export default Payment;
