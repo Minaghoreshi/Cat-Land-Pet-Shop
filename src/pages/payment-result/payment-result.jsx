@@ -1,6 +1,6 @@
 import React from "react";
-
+import CustomerLayout from "../../layouts/customerLayout/customer-layout";
 const PayementResult = () => {
-  return <div>this is Payement Result page</div>;
+  return <CustomerLayout>this is Payement Result page</CustomerLayout>;
 };
 export default PayementResult;
