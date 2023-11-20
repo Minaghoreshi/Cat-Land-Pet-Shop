@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import CustomerLayout from "../../layouts/customerLayout/customer-layout";
+import CustomerLayout from "../../../layouts/customerLayout/customer-layout";
 const Product = () => {
   const { category, productId } = useParams();
   return (

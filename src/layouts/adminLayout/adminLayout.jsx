@@ -4,11 +4,11 @@ import {
   AdminHeader,
   AdminMain,
 } from "../../Components/widget/admin-widget";
-export default function AdminLayout() {
+export default function AdminLayout({ children }) {
   return (
     <>
       <AdminHeader />
-      <AdminMain />
+      {children}
       <AdminFooter />
     </>
   );
