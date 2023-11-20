@@ -1,5 +1,15 @@
 import React from "react";
-
+import {
+  AdminFooter,
+  AdminHeader,
+  AdminMain,
+} from "../../Components/widget/admin-widget";
 export default function AdminLayout() {
-  return <div>this is the admin layout</div>;
+  return (
+    <>
+      <AdminHeader />
+      <AdminMain />
+      <AdminFooter />
+    </>
+  );
 }

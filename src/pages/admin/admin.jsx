@@ -1,6 +1,6 @@
 import React from "react";
-
+import AdminLayout from "../../layouts/adminLayout.jsx/adminLayout";
 const Admin = () => {
-  return <div>admin</div>;
+  return <AdminLayout />;
 };
 export default Admin;
