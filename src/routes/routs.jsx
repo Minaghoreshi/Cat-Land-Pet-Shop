@@ -1,15 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
-import Home from "../pages/Customer/home/home";
-import AdminLogin from "../pages/Admin/admin-login/admin-login";
-import ProductManagement from "../pages/Admin/product-management/product-management";
-import Cart from "../pages/Customer/cart/cart";
-import Checkout from "../pages/Customer/checkout/checkout";
-import Payment from "../pages/Customer/payment/payment";
-import PaymentResult from "../pages/Customer/payment-result/payment-result";
-import Product from "../pages/Customer/product/product";
-import { StockPrice } from "../pages/Admin/stock-price/stock-price";
-import { Orders } from "../pages/Admin/orders/orders";
+import {
+  Home,
+  Cart,
+  Checkout,
+  Payment,
+  PaymentResult,
+  Product,
+} from "../pages";
+
+import { StockPrice, Orders, ProductManagement, AdminLogin } from "../pages";
+
 const AppRoute = () => {
   return (
     <BrowserRouter>
