@@ -1,6 +1,7 @@
 import React from "react";
+import LoginLayout from "../../layouts/loginLayout/loginLayout";
 
 const AdminLogin = () => {
-  return <div>admin-login</div>;
+  return <LoginLayout></LoginLayout>;
 };
 export default AdminLogin;
