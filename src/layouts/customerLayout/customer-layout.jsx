@@ -1,10 +1,10 @@
 import React from "react";
-import { CustomerFooter, CustomerHeader } from "../../components";
+import { CustomerFooter } from "./customerFooter";
+import { CustomerHeader } from "./customerHeader";
 export default function CustomerLayout({ children }) {
   return (
     <>
       <CustomerHeader />
-      {/* <CustomerMain /> */}
       {children}
       <CustomerFooter />
     </>
