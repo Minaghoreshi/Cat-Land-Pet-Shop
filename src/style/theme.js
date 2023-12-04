@@ -4,18 +4,13 @@ import "./font.css"; // Assuming this contains the font import
 export const theme = createTheme({
   breakpoints: {
     values: {
-      // xs: 0,
-      // sm: 600,
-      // md: 960,
-      // lg: 1280,
-      // xl: 1920,
       xxl: 2500,
     },
   },
   direction: "rtl",
   typography: {
     h1: { fontSize: `50px` },
-    allVariants: { color: "white" },
+    allVariants: { color: `#011e36` },
     fontFamily: [
       "farsi",
       "-apple-system",
@@ -31,7 +26,6 @@ export const theme = createTheme({
     ].join(","),
   },
   components: {
-    MuiAppBar: { styleOverrides: { root: { backgroundColor: `#011e36` } } },
     MuiContainer: {
       styleOverrides: {
         root: { background: `#f4f8ff`, height: `100vh`, paddingTop: 95 },
@@ -48,5 +42,10 @@ export const theme = createTheme({
       },
     },
   },
-  palette: {},
+  palette: {
+    primary: { main: `#011e36`, x: `#6193ac` },
+
+    secondary: { main: `#f4f8ff` },
+    success: { main: `#1dd9a7` },
+  },
 });
