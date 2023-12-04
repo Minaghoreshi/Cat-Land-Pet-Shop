@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginForm } from "../../login/loginForm";
+import { LoginForm } from "../../login";
 import { Container } from "@mui/material";
 export function LoginLayout() {
   return (
