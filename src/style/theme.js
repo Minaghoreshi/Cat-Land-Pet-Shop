@@ -1,7 +1,5 @@
 import { createTheme } from "@mui/material/styles";
 import "./font.css"; // Assuming this contains the font import
-import { green } from "@mui/material/colors";
-import { alpha } from "@mui/material/styles";
 
 export const theme = createTheme({
   breakpoints: {
