@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "farsi";
+  src: url("../assets/fonts/Farsi-Digits-Without-Latin/Vazir-Bold-FD-WOL.woff2")
+      format("woff2"),
+    url("../assets/fonts/Farsi-Digits-Without-Latin/Vazir-Bold-FD-WOL.ttf")
+      format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+/* * {
+  font-family: "farsi";
+} */
