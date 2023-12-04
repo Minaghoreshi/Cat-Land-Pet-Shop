@@ -1,5 +1,5 @@
 import React from "react";
-import CustomerLayout from "../../../layouts/customerLayout/customer-layout";
+import { CustomerLayout } from "../../../components";
 export const Cart = () => {
   return <CustomerLayout>Cart</CustomerLayout>;
 };
