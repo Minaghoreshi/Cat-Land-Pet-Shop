@@ -37,7 +37,7 @@ export const LoginForm = () => {
           autoComplete="current-password"
         />{" "}
         <Button
-          href="/admin-panel"
+          href="/products-table"
           variant="contained"
           sx={{
             width: 100,

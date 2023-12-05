@@ -18,7 +18,7 @@ export const BottomNav = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="کالاها" />
+        <BottomNavigationAction href="/products-table" label="کالاها" />
         <Divider orientation="vertical" flexItem />
         <BottomNavigationAction label="موجودی و قیمت" />
         <Divider orientation="vertical" flexItem />

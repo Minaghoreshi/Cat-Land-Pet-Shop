@@ -7,9 +7,12 @@ import {
   Payement,
   PayementResult,
   Product,
+  AdminOrders,
+  AdminProducts,
+  AdminStocks,
 } from "../pages";
 
-import { StockPrice, Orders, ProductManagement, AdminLogin } from "../pages";
+import { AdminLogin } from "../pages";
 
 const AppRoute = () => {
   return (
@@ -17,14 +20,14 @@ const AppRoute = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin-login" element={<AdminLogin />} />
-        <Route path="/admin-panel" element={<ProductManagement />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payement />} />
         <Route path="/payment-result" element={<PayementResult />} />
         <Route path="/products/:category?/:productId?" element={<Product />} />
-        <Route path="/stock-price" element={<StockPrice />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/products-table" element={<AdminProducts />} />
+        <Route path="/stocks-table" element={<AdminStocks />} />
+        <Route path="/orders-table" element={<AdminOrders />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>
