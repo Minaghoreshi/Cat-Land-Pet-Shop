@@ -4,10 +4,10 @@ import { AdminFooter } from "./adminFooter";
 import { Container } from "@mui/material";
 export function AdminLayout({ children }) {
   return (
-    <Container>
+    <>
       <AdminHeader />
       {children}
       {/* <AdminFooter /> */}
-    </Container>
+    </>
   );
 }
