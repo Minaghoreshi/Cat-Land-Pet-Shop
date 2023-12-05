@@ -7,6 +7,7 @@ module.exports = {
         primary: `#211e45`,
         secondary: `#e4e4f0`,
         save: `#038175`,
+        selected: `#df3395`,
       },
       fontFamily: { custom: "farsi" },
     },
