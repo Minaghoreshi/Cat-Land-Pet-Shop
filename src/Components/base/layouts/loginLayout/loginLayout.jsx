@@ -6,7 +6,7 @@ export function LoginLayout() {
   let navigate = useNavigate();
   return (
     <Container className="flex justify-center items-center">
-      <div className="text-primary w-1/4 rounded-lg text-lg p-11 shadow-2xl flex flex-col gap-16">
+      <div className="text-primary w-1/4 rounded-2xl text-lg p-11 shadow-2xl flex flex-col gap-16">
         <span className="text-2xl text-center">ورود به پنل مدیریت کت لند</span>
         <form action="" className="flex flex-col items-center gap-9">
           <div className="flex flex-col gap-2 w-2/3">
