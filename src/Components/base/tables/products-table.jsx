@@ -17,7 +17,7 @@ const ProductsTable = ({ data, columns }) => {
         {data.map((row, rowIndex) => (
           <tr key={rowIndex} className={"bg-gray-50"}>
             {columns.map((column) => (
-              <td key={column.key} className="table-td ">
+              <td key={column.key} className="table--td ">
                 {row[column.key]}
               </td>
             ))}

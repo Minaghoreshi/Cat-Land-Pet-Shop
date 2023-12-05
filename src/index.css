@@ -17,6 +17,9 @@ body {
 .table--th {
   @apply py-4 px-4 border border-gray-300 text-right font-extrabold;
 }
-.table-td {
-  @apply py-2 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
+.table--td {
+  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
+}
+.editable {
+  @apply text-blue-500 underline;
 }
