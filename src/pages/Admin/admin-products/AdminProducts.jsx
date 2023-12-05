@@ -1,6 +1,6 @@
 import React from "react";
 import { AdminLayout } from "../../../components";
-import Table from "../../../components/base/table";
+import ProductsTable from "../../../components/base/tables/products-table";
 export const AdminProducts = () => {
   const data = [
     { id: 1, image: "ندارد", name: "غذای خشک جوسرا سنسی کت", category: "غذا" },
@@ -21,7 +21,7 @@ export const AdminProducts = () => {
           افزودن کالا
         </button>
       </div>
-      <Table data={data} columns={columns} />
+      <ProductsTable data={data} columns={columns} />
     </AdminLayout>
   );
 };
