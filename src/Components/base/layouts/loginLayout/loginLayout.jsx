@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "../container";
 export function LoginLayout() {
-  return <div>loginlayout</div>;
+  return <Container>loginlayout</Container>;
 }
