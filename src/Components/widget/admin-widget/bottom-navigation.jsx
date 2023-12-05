@@ -5,24 +5,41 @@ import {
   Divider,
   Box,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 export const BottomNav = () => {
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   return (
     <Box>
       {" "}
       <BottomNavigation
         showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          console.log(newValue);
-          setValue(newValue);
-        }}
+        // value={value}
+        // onChange={(event, newValue) => {
+        //   console.log(newValue);
+        //   setValue(newValue);
+        // }}
       >
-        <BottomNavigationAction href="/products-table" label="کالاها" />
+        <BottomNavigationAction
+          onClick={() => {
+            navigate("/products-table");
+          }}
+          label="کالاها"
+        />
         <Divider orientation="vertical" flexItem />
-        <BottomNavigationAction label="موجودی و قیمت" />
+        <BottomNavigationAction
+          onClick={() => {
+            navigate("/stocks-table");
+          }}
+          label="موجودی و قیمت"
+        />
         <Divider orientation="vertical" flexItem />
-        <BottomNavigationAction label="سفارش ها" />
+        <BottomNavigationAction
+          onClick={() => {
+            navigate("/orders-table");
+          }}
+          label="سفارش ها"
+        />
       </BottomNavigation>
     </Box>
   );
