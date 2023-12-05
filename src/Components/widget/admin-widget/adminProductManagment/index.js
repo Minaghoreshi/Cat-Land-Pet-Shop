@@ -1,1 +1,1 @@
-export * from "./adminProductManagement";
+export * from "./products-table";

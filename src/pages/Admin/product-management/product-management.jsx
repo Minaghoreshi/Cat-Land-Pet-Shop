@@ -1,5 +1,9 @@
 import React from "react";
-import { AdminLayout } from "../../../components";
+import { AdminLayout, ProductsTable } from "../../../components";
 export const ProductManagement = () => {
-  return <AdminLayout>this is product management page</AdminLayout>;
+  return (
+    <AdminLayout>
+      <ProductsTable></ProductsTable>
+    </AdminLayout>
+  );
 };

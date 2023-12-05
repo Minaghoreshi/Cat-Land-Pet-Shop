@@ -15,7 +15,7 @@ export const AdminHeader = () => {
         <Box display={"flex"} gap={10}>
           {" "}
           <BottomNav />
-          <Button sx={{ color: "primary.x" }} href="/cart" variant="text">
+          <Button sx={{ color: "primary.x" }} href="/" variant="text">
             بازگشت به سایت
           </Button>
         </Box>

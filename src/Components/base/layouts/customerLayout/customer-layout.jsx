@@ -7,7 +7,7 @@ export function CustomerLayout({ children }) {
     <Container maxWidth="xxl">
       <CustomerHeader />
       {children}
-      <CustomerFooter />
+      {/* <CustomerFooter /> */}
     </Container>
   );
 }
