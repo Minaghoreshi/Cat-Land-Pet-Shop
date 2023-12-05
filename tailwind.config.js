@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: `#211e45`,
         secondary: `#e4e4f0`,
+        save: `#038175`,
       },
       fontFamily: { custom: "farsi" },
     },
