@@ -1,5 +1,4 @@
 @import url(./style/font.css);
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,4 +10,13 @@ body {
 }
 .admin--nav--selected {
   @apply bg-selected;
+}
+.table {
+  @apply bg-white border border-gray-300 w-3/4 mt-5 table-fixed rounded-xl overflow-hidden;
+}
+.table--th {
+  @apply py-4 px-4 border border-gray-300 text-right font-extrabold;
+}
+.table-td {
+  @apply py-2 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
 }
