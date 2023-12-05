@@ -26,6 +26,24 @@ export const theme = createTheme({
     ].join(","),
   },
   components: {
+    MuiBottomNavigationAction: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          width: 200,
+          "&.Mui-selected": {
+            background: `#6193ac`,
+            color: "white",
+          },
+        },
+        label: {
+          fontSize: "15px",
+          "&.Mui-selected": {
+            fontSize: "18px",
+          },
+        },
+      },
+    },
     MuiContainer: {
       styleOverrides: {
         root: { background: `#f4f8ff`, height: `100vh`, paddingTop: 95 },
