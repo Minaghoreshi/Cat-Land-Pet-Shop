@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminLayout, ProductsTable } from "../../../components";
+import { AdminLayout } from "../../../components";
 export const AdminProducts = () => {
   return <AdminLayout>products table</AdminLayout>;
 };
