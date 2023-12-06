@@ -4,7 +4,7 @@ import { AdminNavButton } from "./adminNavButton";
 export const AdminHeader = () => {
   let navigate = useNavigate();
   return (
-    <header className="flex px-9 py-5 bg-primary text-white items-center justify-between">
+    <header className="flex px-9 py-5 bg-primary text-white items-center justify-between w-full mb-20">
       <h1 className=" font-bold text-[60px] ">پنل مدیریت فروشگاه کت لند</h1>
       <AdminNavButton />
       <div className="flex gap-8 justify-self-end text-2xl">
@@ -13,7 +13,6 @@ export const AdminHeader = () => {
             navigate("/");
           }}
         >
-          {" "}
           بازگشت به سایت
         </button>
       </div>
