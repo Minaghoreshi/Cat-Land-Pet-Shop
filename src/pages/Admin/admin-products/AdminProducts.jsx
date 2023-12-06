@@ -1,6 +1,7 @@
 import React from "react";
 import { AdminLayout } from "../../../components";
 import ProductsTable from "../../../components/base/tables/products-table";
+import { TableTitle } from "../../../components/base/tables/TableTitle";
 export const AdminProducts = () => {
   const data = [
     { id: 1, image: "ندارد", name: "غذای خشک جوسرا سنسی کت", category: "غذا" },
@@ -15,12 +16,8 @@ export const AdminProducts = () => {
   ];
   return (
     <AdminLayout>
-      <div className="mt-5 flex justify-between items-center w-3/4">
-        <span className="text-3xl ">مدیریت کالاها</span>
-        <button className="bg-save text-white rounded-md font-thin py-2 px-4 shadow-2xl">
-          افزودن کالا
-        </button>
-      </div>
+      {" "}
+      <TableTitle button={"فزودن کالا"} title={"مدیریت کالا"} />
       <ProductsTable data={data} columns={columns} />
     </AdminLayout>
   );

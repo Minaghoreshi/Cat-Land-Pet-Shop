@@ -1,5 +1,6 @@
 import React from "react";
 import { AdminLayout } from "../../../components";
+import { TableTitle } from "../../../components/base/tables/TableTitle";
 import StocksTable from "../../../components/base/tables/stocks-table";
 export const AdminStocks = () => {
   const data = [
@@ -25,6 +26,7 @@ export const AdminStocks = () => {
   ];
   return (
     <AdminLayout>
+      <TableTitle button={"ذخیره"} title={"مدیریت موجودی و کالاها "} />
       <StocksTable data={data} columns={columns} />
     </AdminLayout>
   );
