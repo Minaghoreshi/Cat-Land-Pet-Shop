@@ -19,7 +19,19 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
           <tr key={rowIndex} className={"bg-gray-50"}>
             {columns.map((column) => (
               <td key={column.key} className="table--td ">
-                {row[column.key]}
+                {column.key === "thumbnail" ? (
+                  <div className="flex justify-center">
+                    <img
+                      className="w-[100px]"
+                      src={`http://localhost:8000/images/products/thumbnails/${row.thumbnail}`}
+                      alt="thumbnail"
+                    />
+                  </div>
+                ) : (
+                  row[column.key]
+                )}
+                {console.log(row[column.key])}
+                {/* {row[column.key]} */}
               </td>
             ))}
             <Customcolumn buttonsArray={buttonsArray} />

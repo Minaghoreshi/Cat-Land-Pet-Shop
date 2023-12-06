@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AdminLayout } from "../../../components";
+import { useQuery } from "react-query";
 import ProductsTable from "../../../components/base/tables/products-table";
 import { TableTitle } from "../../../components/base/tables/TableTitle";
 import { TableButton } from "../../../components/base/tables/TableButton";
+import { getProducts } from "../../../api/products/products-api";
 export const AdminProducts = () => {
   const buttonsArray = ["ویرایش", "حذف"];
-  const data = [
-    { id: 1, image: "ندارد", name: "غذای خشک جوسرا سنسی کت", category: "غذا" },
-    { id: 2, image: "ندارد", name: "مالت پرسا", category: "وسایل جانبی" },
-    // ... more data
-  ];
 
   const columns = [
-    { key: "image", label: "تصویر" },
+    { key: "thumbnail", label: "تصویر" },
     { key: "name", label: "نام کالا" },
     { key: "category", label: "دسته بندی" },
   ];
+  const { data, error, isLoading } = useQuery("products", () => getProducts(1));
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    console.error("Error fetching data:", error);
+    return <p>Error fetching data</p>;
+  }
+  console.log(data);
   return (
     <AdminLayout>
       {" "}
