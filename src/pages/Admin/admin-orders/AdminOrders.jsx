@@ -1,5 +1,7 @@
 import React from "react";
 import { AdminLayout } from "../../../components/base/layouts/adminLayout/adminLayout";
+import { TableTitle } from "../../../components/base/tables/TableTitle";
+import { TableFilter } from "../../../components/base/tables/TableFilter";
 import ProductsTable from "../../../components/base/tables/products-table";
 export const AdminOrders = () => {
   const data = [
@@ -22,19 +24,8 @@ export const AdminOrders = () => {
     <AdminLayout>
       {" "}
       <div className="mt-5 flex justify-between items-center w-3/4">
-        <span className="text-3xl ">مدیریت سفارشات </span>
-        <div className="flex gap-10">
-          <div className=" flex gap-3">
-            {" "}
-            <label>سفارش های ارسال شده</label>
-            <input type="radio" />
-          </div>
-          <div className=" flex gap-3">
-            {" "}
-            <label>سفارش های در انتظار ارسال</label>
-            <input type="radio" />
-          </div>
-        </div>
+        <TableTitle title={"مدیریت سفارش ها"} />
+        <TableFilter />
       </div>
       <ProductsTable
         data={data}
