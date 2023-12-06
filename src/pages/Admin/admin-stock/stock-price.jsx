@@ -1,5 +1,6 @@
 import React from "react";
 import { AdminLayout } from "../../../components";
+import { TableButton } from "../../../components/base/tables/TableButton";
 import { TableTitle } from "../../../components/base/tables/TableTitle";
 import StocksTable from "../../../components/base/tables/stocks-table";
 export const AdminStocks = () => {
@@ -26,7 +27,11 @@ export const AdminStocks = () => {
   ];
   return (
     <AdminLayout>
-      <TableTitle button={"ذخیره"} title={"مدیریت موجودی و کالاها "} />
+      <div className="mt-5 flex justify-between items-center w-3/4">
+        {" "}
+        <TableTitle title={"مدیریت موجودی و قیمت"} />
+        <TableButton button={"ذخیره "} />
+      </div>{" "}
       <StocksTable data={data} columns={columns} />
     </AdminLayout>
   );
