@@ -1,6 +1,7 @@
 import React from "react";
+import { Customcolumn } from "./custom-column";
 
-const ProductsTable = ({ data, columns }) => {
+const ProductsTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table">
       <thead>
@@ -21,10 +22,7 @@ const ProductsTable = ({ data, columns }) => {
                 {row[column.key]}
               </td>
             ))}
-            <td className="py-4 px-4 border border-gray-300">
-              <button className="text-blue-500  hover:underline">ویرایش</button>{" "}
-              / <button className="text-red-500 hover:underline">حذف</button>
-            </td>
+            <Customcolumn buttonsArray={buttonsArray} />
           </tr>
         ))}
       </tbody>
