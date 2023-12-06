@@ -4,7 +4,7 @@ import ProductsTable from "../../../components/base/tables/products-table";
 import { TableTitle } from "../../../components/base/tables/TableTitle";
 import { TableButton } from "../../../components/base/tables/TableButton";
 export const AdminProducts = () => {
-  const buttonsArray = ["حذف", "ویرایش"];
+  const buttonsArray = ["ویرایش", "حذف"];
   const data = [
     { id: 1, image: "ندارد", name: "غذای خشک جوسرا سنسی کت", category: "غذا" },
     { id: 2, image: "ندارد", name: "مالت پرسا", category: "وسایل جانبی" },

@@ -6,12 +6,12 @@ export const Customcolumn = ({ buttonsArray }) => {
     return null;
   }
   return (
-    <td className="py-4 px-4 border border-gray-300 ">
+    <td className="py-4 px-4 border-t border-gray-300 flex justify-center">
       {buttonsArray.map((btn, index) => (
         <>
           <button
             className={`hover:underline ${
-              index % 2 === 0 ? "text-blue-600" : "text-red-600"
+              index % 2 === 0 ? "text-blue-600" : "text-selected"
             }`}
           >
             {btn}
