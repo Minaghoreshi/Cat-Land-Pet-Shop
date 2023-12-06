@@ -1,5 +1,5 @@
 import React from "react";
-
+import { EditableItem } from "./EditableItem";
 const StocksTable = ({ data, columns }) => {
   return (
     <table className="table">
@@ -19,15 +19,12 @@ const StocksTable = ({ data, columns }) => {
         {data.map((row, rowIndex) => (
           <tr key={rowIndex} className={"bg-gray-50"}>
             {columns.map((column) => (
-              <td
-                key={column.key}
-                className={`table--td ${
-                  column.key === "price" || column.key === "quantity"
-                    ? "editable"
-                    : ""
-                }`}
-              >
-                {row[column.key]}
+              <td key={column.key} className="table--td">
+                {column.key === "price" || column.key === "quantity" ? (
+                  <EditableItem initialValue={row[column.key]} />
+                ) : (
+                  `${row[column.key]}`
+                )}
               </td>
             ))}
           </tr>

@@ -22,7 +22,9 @@ export const EditableItem = ({ initialValue }) => {
           onChange={handleChange}
         ></input>
       ) : (
-        <span onClick={handleEditClick}>{value}</span>
+        <span onClick={handleEditClick} className="editable cursor-pointer">
+          {value}
+        </span>
       )}
     </div>
   );
