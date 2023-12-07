@@ -32,6 +32,16 @@ const OrdersTable = ({ data, columns, buttonsArray }) => {
                   <>
                     <UsersName userId={row[column.key]}></UsersName>
                   </>
+                ) : column.key === "createdAt" ? (
+                  <p>
+                    {row[column.key] &&
+                      new Intl.DateTimeFormat("fa-IR", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        timeZone: "Asia/Tehran",
+                      }).format(new Date(row[column.key]))}
+                  </p>
                 ) : (
                   row[column.key]
                 )}

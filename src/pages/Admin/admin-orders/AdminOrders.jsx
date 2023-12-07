@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { AdminLayout } from "../../../components/base/layouts/adminLayout/adminLayout";
 import { TableTitle } from "../../../components/base/tables/TableTitle";
 import { TableFilter } from "../../../components/base/tables/TableFilter";
 import OrdersTable from "../../../components/base/tables/ordersTable";
 import { getAllOrders } from "../../../api/orders/orders-api";
 import { useQuery } from "react-query";
+import { PaginationComponent } from "../../../components/widget/pagination";
 export const AdminOrders = () => {
-  const { data, error, isLoading } = useQuery(["products"], () =>
-    getAllOrders()
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
+    getAllOrders(currentPage)
   );
   if (isLoading) {
     return <p>Loading...</p>;
@@ -17,17 +20,11 @@ export const AdminOrders = () => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
+  const onPageChange = (page) => {
+    console.log(page);
+    setCurrentPage(page);
+  };
   console.log(data.data.orders);
-  const initial = [
-    { id: 1, name: "مینا قرشی", total: "۲۶۰۰۰۰۰", date: "۱۴۰۲/۰۹/۱۰" },
-    {
-      id: 2,
-      name: "صادق دارابی",
-      total: "۱۵۰۰۰۰",
-      date: "۱۴۰۲/۰۹/۰۱",
-    },
-    // ... more data
-  ];
 
   const columns = [
     { key: "user", label: "نام کاربر" },
@@ -41,10 +38,19 @@ export const AdminOrders = () => {
         <TableTitle title={"مدیریت سفارش ها"} />
         <TableFilter />
       </div>
-      <OrdersTable
-        data={data.data.orders}
-        columns={columns}
-        buttonsArray={["بررسی سفارش"]}
+      {data.data && data.data.orders ? (
+        <OrdersTable
+          data={data.data.orders}
+          columns={columns}
+          buttonsArray={["بررسی سفارش"]}
+        />
+      ) : (
+        <p>No orders available</p>
+      )}
+      <PaginationComponent
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        totalPages={data.total_pages}
       />
     </AdminLayout>
   );

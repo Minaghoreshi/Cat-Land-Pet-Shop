@@ -40,11 +40,15 @@ export const AdminProducts = () => {
         <TableTitle title={ProductTableTitle} />
         <TableButton button={ProductTableButton} />
       </div>
-      <ProductsTable
-        data={data.data.products}
-        columns={ProductsTablecolumns}
-        buttonsArray={ProductTableCustomButtons}
-      />
+      {data.data && data.data.products ? (
+        <ProductsTable
+          data={data.data.products}
+          columns={ProductsTablecolumns}
+          buttonsArray={ProductTableCustomButtons}
+        />
+      ) : (
+        <p>nothing to show</p>
+      )}
       <PaginationComponent
         currentPage={currentPage}
         onPageChange={onPageChange}
