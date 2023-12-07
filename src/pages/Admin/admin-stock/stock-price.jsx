@@ -50,7 +50,7 @@ export const AdminStocks = () => {
         <TableButton button={"ذخیره "} />
       </div>
       {productData ? (
-        <Table data={data.data.products} columns={columns} />
+        <Table data={productData} columns={columns} />
       ) : (
         <p>loading</p>
       )}
