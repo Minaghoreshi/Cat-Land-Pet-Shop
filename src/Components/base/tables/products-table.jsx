@@ -1,5 +1,6 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
+import { CategoryandSubCategoryTitle } from "../../widget/categoryTitle";
 
 const ProductsTable = ({ data, columns, buttonsArray }) => {
   return (
@@ -27,10 +28,12 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
                       alt="thumbnail"
                     />
                   </div>
+                ) : column.key === "category" ? (
+                  <CategoryandSubCategoryTitle product={row} />
                 ) : (
                   row[column.key]
                 )}
-                {console.log(row[column.key])}
+                {console.log(row)}
                 {/* {row[column.key]} */}
               </td>
             ))}
