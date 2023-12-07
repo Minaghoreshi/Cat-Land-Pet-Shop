@@ -15,6 +15,5 @@ export const CategoryandSubCategoryTitle = ({ product }) => {
       return getSubCategoryById(product.subcategory);
     }
   );
-  console.log(subCategory);
   return <div>{`${category} / ${subCategory}`}</div>;
 };

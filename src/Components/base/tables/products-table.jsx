@@ -33,7 +33,7 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
                 ) : (
                   row[column.key]
                 )}
-                {console.log(row)}
+
                 {/* {row[column.key]} */}
               </td>
             ))}

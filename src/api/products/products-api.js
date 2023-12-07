@@ -10,5 +10,5 @@ export const getProducts = async (page) => {
       "quantity[gte]": 8,
     },
   });
-  return response.data.data.products;
+  return response.data;
 };
