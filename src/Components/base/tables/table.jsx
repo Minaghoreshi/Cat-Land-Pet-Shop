@@ -1,6 +1,7 @@
+// Table.js
 import React from "react";
-import { EditableItem } from "./EditableItem";
-const StocksTable = ({ data, columns }) => {
+
+const Table = ({ columns, data }) => {
   return (
     <table className="table">
       <thead>
@@ -8,7 +9,7 @@ const StocksTable = ({ data, columns }) => {
           {columns.map((column, index) => (
             <th
               key={column.key}
-              className={`table--th ${index === 0 ? "w-3/5" : "w-1/5"} `}
+              className={`table--th ${column.width ? column.width : ""}`}
             >
               {column.label}
             </th>
@@ -17,14 +18,10 @@ const StocksTable = ({ data, columns }) => {
       </thead>
       <tbody>
         {data.map((row, rowIndex) => (
-          <tr key={rowIndex} className={"bg-gray-50"}>
+          <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
             {columns.map((column) => (
               <td key={column.key} className="table--td">
-                {column.key === "price" || column.key === "quantity" ? (
-                  <EditableItem initialValue={row[column.key]} />
-                ) : (
-                  `${row[column.key]}`
-                )}
+                {column.render ? column.render(row) : row[column.key]}
               </td>
             ))}
           </tr>
@@ -34,4 +31,4 @@ const StocksTable = ({ data, columns }) => {
   );
 };
 
-export default StocksTable;
+export default Table;

@@ -1,0 +1,4 @@
+.pagination-custom-style .pagination-prev,
+.pagination-custom-style .pagination-next {
+  border-radius: 0; /* Set border-radius to 0 to remove the radius */
+}

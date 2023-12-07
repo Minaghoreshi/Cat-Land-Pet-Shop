@@ -15,16 +15,14 @@ import { PaginationComponent } from "../../../components/widget/pagination";
 export const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, error, isLoading, refetch } = useQuery(["products"], () =>
+  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
     getProducts(currentPage)
   );
   const onPageChange = (page) => {
     console.log(page);
     setCurrentPage(page);
   };
-  useEffect(() => {
-    refetch();
-  }, [currentPage, refetch]);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }

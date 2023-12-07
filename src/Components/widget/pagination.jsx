@@ -6,7 +6,7 @@ export const PaginationComponent = ({
   totalPages,
 }) => {
   return (
-    <div className="flex overflow-x-auto sm:justify-center">
+    <div className="flex overflow-x-auto sm:justify-center fixed bottom-24">
       <Pagination
         className="overflow-hidden rounded-none"
         layout="pagination"
