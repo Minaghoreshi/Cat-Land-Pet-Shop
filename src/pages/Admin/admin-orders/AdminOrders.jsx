@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AdminLayout } from "../../../components/base/layouts/adminLayout/adminLayout";
 import { TableTitle } from "../../../components/base/tables/TableTitle";
 import { TableFilter } from "../../../components/base/tables/TableFilter";
@@ -6,13 +6,29 @@ import OrdersTable from "../../../components/base/tables/ordersTable";
 import { getAllOrders } from "../../../api/orders/orders-api";
 import { useQuery } from "react-query";
 import { PaginationComponent } from "../../../components/widget/pagination";
+import {
+  ordersColumns,
+  OrdersTableTitle,
+  ordersTableButton,
+} from "../constants";
 export const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
-
-  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
-    getAllOrders(currentPage)
+  const [productData, setProductData] = useState(null);
+  const [deliveryStatus, setDeliveryStatus] = useState(false);
+  const { data, error, isLoading } = useQuery(
+    ["products", currentPage, deliveryStatus],
+    () => getAllOrders(currentPage, deliveryStatus)
   );
-  if (isLoading) {
+  useEffect(() => {
+    if (data) {
+      setProductData(data.data.orders);
+    }
+  }, [data]);
+  const handleStatusChange = (status) => {
+    setDeliveryStatus(status);
+    setCurrentPage(1);
+  };
+  if (isLoading || productData === null) {
     return <p>Loading...</p>;
   }
 
@@ -26,23 +42,21 @@ export const AdminOrders = () => {
   };
   console.log(data.data.orders);
 
-  const columns = [
-    { key: "user", label: "نام کاربر" },
-    { key: "totalPrice", label: "مجموع مبلغ" },
-    { key: "createdAt", label: "زمان ثبت سفارش " },
-  ];
   return (
     <AdminLayout>
       {" "}
       <div className="mt-5 flex justify-between items-center w-3/4">
-        <TableTitle title={"مدیریت سفارش ها"} />
-        <TableFilter />
+        <TableTitle title={OrdersTableTitle} />
+        <TableFilter
+          handleStatusChange={handleStatusChange}
+          deliveryStatus={deliveryStatus}
+        />
       </div>
-      {data.data && data.data.orders ? (
+      {productData ? (
         <OrdersTable
-          data={data.data.orders}
-          columns={columns}
-          buttonsArray={["بررسی سفارش"]}
+          data={productData}
+          columns={ordersColumns}
+          buttonsArray={ordersTableButton}
         />
       ) : (
         <p>No orders available</p>
