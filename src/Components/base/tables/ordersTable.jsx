@@ -1,8 +1,8 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
 import { CategoryandSubCategoryTitle } from "../../widget/categoryTitle";
-
-const ProductsTable = ({ data, columns, buttonsArray }) => {
+import { UsersName } from "../../widget/usersName";
+const OrdersTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table">
       <thead>
@@ -28,13 +28,23 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
                       alt="thumbnail"
                     />
                   </div>
-                ) : column.key === "category" ? (
-                  <CategoryandSubCategoryTitle product={row} />
+                ) : column.key === "user" ? (
+                  <>
+                    <UsersName userId={row[column.key]}></UsersName>
+                  </>
+                ) : column.key === "createdAt" ? (
+                  <p>
+                    {row[column.key] &&
+                      new Intl.DateTimeFormat("fa-IR", {
+                        year: "numeric",
+                        month: "numeric",
+                        day: "numeric",
+                        timeZone: "Asia/Tehran",
+                      }).format(new Date(row[column.key]))}
+                  </p>
                 ) : (
                   row[column.key]
                 )}
-
-                {/* {row[column.key]} */}
               </td>
             ))}
             <Customcolumn buttonsArray={buttonsArray} />
@@ -45,4 +55,4 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
   );
 };
 
-export default ProductsTable;
+export default OrdersTable;

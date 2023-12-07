@@ -8,7 +8,6 @@ export const AdminNavButton = () => {
   useEffect(() => {
     // Extract the last part of the pathname as the button name
     const buttonName = location.pathname.split("/").pop();
-    console.log(buttonName);
     setSelectedButton(buttonName);
   }, [location.pathname]);
   const handleClick = (buttonName, route) => {
