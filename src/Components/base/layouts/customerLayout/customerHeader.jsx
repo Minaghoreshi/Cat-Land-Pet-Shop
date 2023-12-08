@@ -5,7 +5,7 @@ import logo from "../../../../assets/9005223.jpg";
 export const CustomerHeader = () => {
   let navigate = useNavigate();
   return (
-    <header className="flex px-9 py-5 bg-primary text-white items-center justify-between">
+    <header className="flex px-9 py-5 bg-primary text-secondary items-center justify-between">
       <h1 className=" font-bold text-[60px] ">کت لند</h1>
       <div>
         <img

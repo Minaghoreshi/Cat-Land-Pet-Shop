@@ -1,12 +1,13 @@
-// AdminStocks.js
 import React, { useEffect, useState } from "react";
-import { AdminLayout } from "../../../components";
-import { TableButton } from "../../../components/base/tables/TableButton";
-import { TableTitle } from "../../../components/base/tables/TableTitle";
 import { getProducts } from "../../../api/products/products-api";
 import { useQuery } from "react-query";
-import Table from "../../../components/base/tables/table";
-import { PaginationComponent } from "../../../components/widget/pagination";
+import {
+  Table,
+  TableButton,
+  TableTitle,
+  AdminLayout,
+  PaginationComponent,
+} from "../../../components";
 
 export const AdminStocks = () => {
   const [currentPage, setCurrentPage] = useState(1);

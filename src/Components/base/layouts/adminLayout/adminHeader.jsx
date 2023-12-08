@@ -6,7 +6,7 @@ import logo from "../../../../assets/9005223.jpg";
 export const AdminHeader = () => {
   let navigate = useNavigate();
   return (
-    <header className="flex px-9 py-5 bg-primary text-white items-center justify-between w-full mb-20">
+    <header className="flex px-9 py-5 bg-primary text-secondary items-center justify-between w-full mb-20">
       <h1 className=" font-bold text-[60px] ">پنل مدیریت فروشگاه کت لند</h1>
       <div>
         <img
@@ -19,7 +19,7 @@ export const AdminHeader = () => {
         />
       </div>
       <AdminNavButton />
-      <div className="flex gap-8 justify-self-end text-2xl">
+      <div className="flex gap-8 justify-self-end text-2xl ">
         <button
           onClick={() => {
             navigate("/");

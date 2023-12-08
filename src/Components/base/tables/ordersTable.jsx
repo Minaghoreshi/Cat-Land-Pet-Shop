@@ -1,8 +1,7 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
-import { CategoryandSubCategoryTitle } from "../../widget/categoryTitle";
 import { UsersName } from "../../widget/usersName";
-const OrdersTable = ({ data, columns, buttonsArray }) => {
+export const OrdersTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table">
       <thead>
@@ -17,7 +16,10 @@ const OrdersTable = ({ data, columns, buttonsArray }) => {
       </thead>
       <tbody>
         {data.map((row, rowIndex) => (
-          <tr key={rowIndex} className={"bg-gray-50"}>
+          <tr
+            key={rowIndex}
+            className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
+          >
             {columns.map((column) => (
               <td key={column.key} className="table--td ">
                 {column.key === "thumbnail" ? (
@@ -54,5 +56,3 @@ const OrdersTable = ({ data, columns, buttonsArray }) => {
     </table>
   );
 };
-
-export default OrdersTable;

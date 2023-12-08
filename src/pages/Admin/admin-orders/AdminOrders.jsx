@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { AdminLayout } from "../../../components/base/layouts/adminLayout/adminLayout";
-import { TableTitle } from "../../../components/base/tables/TableTitle";
-import { TableFilter } from "../../../components/base/tables/TableFilter";
-import OrdersTable from "../../../components/base/tables/ordersTable";
-import { getAllOrders } from "../../../api/orders/orders-api";
 import { useQuery } from "react-query";
-import { PaginationComponent } from "../../../components/widget/pagination";
+import {
+  TableTitle,
+  TableFilter,
+  OrdersTable,
+  AdminLayout,
+  PaginationComponent,
+} from "../../../components";
+import { getAllOrders } from "../../../api/orders/orders-api";
 import {
   ordersColumns,
   OrdersTableTitle,
@@ -16,7 +18,7 @@ export const AdminOrders = () => {
   const [productData, setProductData] = useState(null);
   const [deliveryStatus, setDeliveryStatus] = useState(false);
   const { data, error, isLoading } = useQuery(
-    ["products", currentPage, deliveryStatus],
+    ["orders", currentPage, deliveryStatus],
     () => getAllOrders(currentPage, deliveryStatus)
   );
   useEffect(() => {
@@ -24,9 +26,14 @@ export const AdminOrders = () => {
       setProductData(data.data.orders);
     }
   }, [data]);
+  useEffect(() => {
+    if (data) {
+      setProductData(data.data.orders);
+    }
+  }, [data, currentPage, deliveryStatus]);
+
   const handleStatusChange = (status) => {
     setDeliveryStatus(status);
-    setCurrentPage(1);
   };
   if (isLoading || productData === null) {
     return <p>Loading...</p>;
@@ -37,10 +44,8 @@ export const AdminOrders = () => {
     return <p>Error fetching data</p>;
   }
   const onPageChange = (page) => {
-    console.log(page);
     setCurrentPage(page);
   };
-  console.log(data.data.orders);
 
   return (
     <AdminLayout>
