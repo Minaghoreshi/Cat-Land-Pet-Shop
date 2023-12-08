@@ -1,3 +1,26 @@
+@import url(./style/font.css);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body {
+  font-family: "farsi";
+}
+
+.admin--nav {
+  @apply font-bold py-2 px-4  bg-white text-primary border;
+}
+.admin--nav--selected {
+  @apply bg-selected;
+}
+.table {
+  @apply border shadow-xl w-3/4 mt-5 table-fixed rounded-xl overflow-hidden;
+}
+.table--th {
+  @apply py-4 px-4 border   border-gray-300 text-center font-extrabold;
+}
+.table--td {
+  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
+}
+.editable {
+  @apply text-blue-500 underline;
+}

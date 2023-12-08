@@ -1,5 +1,5 @@
 import React from "react";
-import CustomerLayout from "../../../layouts/customerLayout/customer-layout";
+import { CustomerLayout } from "../../../components";
 export const PayementResult = () => {
   return <CustomerLayout>this is Payement Result page</CustomerLayout>;
 };
