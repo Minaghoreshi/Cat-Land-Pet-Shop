@@ -19,7 +19,6 @@ export const AdminProducts = () => {
     getProducts(currentPage)
   );
   const onPageChange = (page) => {
-    console.log(page);
     setCurrentPage(page);
   };
 

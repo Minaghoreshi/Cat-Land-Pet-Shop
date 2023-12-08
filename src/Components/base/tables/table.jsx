@@ -18,7 +18,10 @@ const Table = ({ columns, data }) => {
       </thead>
       <tbody>
         {data.map((row, rowIndex) => (
-          <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}>
+          <tr
+            key={rowIndex}
+            className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
+          >
             {columns.map((column) => (
               <td key={column.key} className="table--td">
                 {column.render ? column.render(row) : row[column.key]}

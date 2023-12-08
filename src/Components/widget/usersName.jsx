@@ -8,7 +8,6 @@ export const UsersName = ({ userId }) => {
   const { data, error, isLoading } = useQuery(["user", userId], () => {
     return getUser(userId).then((res) => res);
   });
-  console.log(data);
 
   return <div>{`${data?.firstname} ${data?.lastname}`}</div>;
 };

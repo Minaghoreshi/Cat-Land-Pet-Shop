@@ -4,9 +4,9 @@ import { CategoryandSubCategoryTitle } from "../../widget/categoryTitle";
 
 const ProductsTable = ({ data, columns, buttonsArray }) => {
   return (
-    <table className="table">
+    <table className="table ">
       <thead>
-        <tr>
+        <tr className="">
           {columns.map((column) => (
             <th key={column.key} className="table--th">
               {column.label}
@@ -17,7 +17,10 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
       </thead>
       <tbody>
         {data.map((row, rowIndex) => (
-          <tr key={rowIndex} className={"bg-gray-50"}>
+          <tr
+            key={rowIndex}
+            className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
+          >
             {columns.map((column) => (
               <td key={column.key} className="table--td ">
                 {column.key === "thumbnail" ? (

@@ -8,9 +8,10 @@ module.exports = {
     extend: {
       colors: {
         primary: `#0e0b45`,
-        secondary: `#e4e4f0`,
-        save: `#038175`,
+        secondary: `#f9f9f9`,
+        save: `#36a2a6`,
         selected: `#df3395`,
+        head: `#fbe4ea`,
       },
       fontFamily: { custom: "farsi" },
     },
