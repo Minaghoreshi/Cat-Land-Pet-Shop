@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { AdminLayout } from "../../../components";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
-import ProductsTable from "../../../components/base/tables/products-table";
-import { TableTitle } from "../../../components/base/tables/TableTitle";
-import { TableButton } from "../../../components/base/tables/TableButton";
+import {
+  ProductsTable,
+  TableTitle,
+  TableButton,
+  AdminLayout,
+  PaginationComponent,
+} from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
 import {
   ProductTableCustomButtons,
@@ -11,7 +14,6 @@ import {
   ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
-import { PaginationComponent } from "../../../components/widget/pagination";
 export const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,7 +32,7 @@ export const AdminProducts = () => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
-  console.log(data);
+
   return (
     <AdminLayout>
       {" "}

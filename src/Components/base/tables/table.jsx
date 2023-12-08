@@ -1,7 +1,7 @@
 // Table.js
 import React from "react";
 
-const Table = ({ columns, data }) => {
+export const Table = ({ columns, data }) => {
   return (
     <table className="table">
       <thead>
@@ -33,5 +33,3 @@ const Table = ({ columns, data }) => {
     </table>
   );
 };
-
-export default Table;

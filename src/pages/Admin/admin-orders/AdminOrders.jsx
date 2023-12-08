@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { AdminLayout } from "../../../components/base/layouts/adminLayout/adminLayout";
-import { TableTitle } from "../../../components/base/tables/TableTitle";
-import { TableFilter } from "../../../components/base/tables/TableFilter";
-import OrdersTable from "../../../components/base/tables/ordersTable";
-import { getAllOrders } from "../../../api/orders/orders-api";
 import { useQuery } from "react-query";
-import { PaginationComponent } from "../../../components/widget/pagination";
+import {
+  TableTitle,
+  TableFilter,
+  OrdersTable,
+  AdminLayout,
+  PaginationComponent,
+} from "../../../components";
+import { getAllOrders } from "../../../api/orders/orders-api";
 import {
   ordersColumns,
   OrdersTableTitle,

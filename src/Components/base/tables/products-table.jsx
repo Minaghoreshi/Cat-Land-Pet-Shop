@@ -1,8 +1,7 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
-import { CategoryandSubCategoryTitle } from "../../widget/categoryTitle";
-
-const ProductsTable = ({ data, columns, buttonsArray }) => {
+import { CategoryandSubCategoryTitle } from "../../widget";
+export const ProductsTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table ">
       <thead>
@@ -47,5 +46,3 @@ const ProductsTable = ({ data, columns, buttonsArray }) => {
     </table>
   );
 };
-
-export default ProductsTable;
