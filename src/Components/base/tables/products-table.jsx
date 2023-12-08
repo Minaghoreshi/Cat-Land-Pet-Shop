@@ -1,6 +1,5 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
-import { CategoryandSubCategoryTitle } from "../../widget";
 export const ProductsTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table ">
@@ -11,7 +10,6 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
               {column.label}
             </th>
           ))}
-          {/* <th className="py-4 px-4 border border-gray-300 font-semibold text-right"></th> */}
         </tr>
       </thead>
       <tbody>
@@ -30,10 +28,8 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                       alt="thumbnail"
                     />
                   </div>
-                ) : column.key === "category" ? (
-                  <CategoryandSubCategoryTitle product={row} />
                 ) : (
-                  row[column.key]
+                  ` ${row.category} / ${row.subCategory}`
                 )}
 
                 {/* {row[column.key]} */}
