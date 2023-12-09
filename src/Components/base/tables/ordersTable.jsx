@@ -1,6 +1,5 @@
 import React from "react";
 import { Customcolumn } from "./custom-column";
-import { UsersName } from "../../widget/usersName";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
   return (
     <table className="table">
@@ -31,9 +30,7 @@ export const OrdersTable = ({ data, columns, buttonsArray }) => {
                     />
                   </div>
                 ) : column.key === "user" ? (
-                  <>
-                    <UsersName userId={row[column.key]}></UsersName>
-                  </>
+                  `${row.userFirstName} ${row.userLastName}`
                 ) : column.key === "createdAt" ? (
                   <p>
                     {row[column.key] &&

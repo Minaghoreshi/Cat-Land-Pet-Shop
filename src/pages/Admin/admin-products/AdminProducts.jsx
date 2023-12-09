@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   ProductsTable,
@@ -25,18 +25,18 @@ export const AdminProducts = () => {
     getProducts(currentPage)
   );
   //pass the data and get subcategpory and category and store in the wholedata state
-  const getDataDetails = async () => {
+  const getDataDetails = useCallback(async () => {
     if (data) {
       const combinedData = await combineProductsWithCategories(
         data.data.products
       );
       setWholeData(combinedData);
     }
-  };
+  }, [data]);
   //run use effect whenever data changes so that getting category and sub category be done
   useEffect(() => {
     getDataDetails();
-  }, [data]);
+  }, [data, getDataDetails]);
 
   //for pagination changing
   const onPageChange = (page) => {
