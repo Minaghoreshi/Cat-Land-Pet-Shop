@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
   TableTitle,
@@ -13,29 +13,35 @@ import {
   OrdersTableTitle,
   ordersTableButton,
 } from "../constants";
-export const AdminOrders = () => {
+import { combineUsersWithOrders } from "./usersandorders";
+const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [productData, setProductData] = useState(null);
+  const [ordersData, setOrdersData] = useState();
   const [deliveryStatus, setDeliveryStatus] = useState(false);
+  //get orders data
   const { data, error, isLoading } = useQuery(
     ["orders", currentPage, deliveryStatus],
     () => getAllOrders(currentPage, deliveryStatus)
   );
-  useEffect(() => {
+  //pass data to get the name and family name of user
+  const getOrdersWithUsers = useCallback(async () => {
     if (data) {
-      setProductData(data.data.orders);
+      const combinedData = await combineUsersWithOrders(data.data.orders);
+      setOrdersData(combinedData);
     }
-  }, [data]);
+    if (ordersData) {
+      console.log(ordersData);
+    }
+  }, [data, setOrdersData, ordersData]);
+
   useEffect(() => {
-    if (data) {
-      setProductData(data.data.orders);
-    }
-  }, [data, currentPage, deliveryStatus]);
+    getOrdersWithUsers();
+  }, [data, getOrdersWithUsers]);
 
   const handleStatusChange = (status) => {
     setDeliveryStatus(status);
   };
-  if (isLoading || productData === null) {
+  if (isLoading || ordersData === null) {
     return <p>Loading...</p>;
   }
 
@@ -53,13 +59,14 @@ export const AdminOrders = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         <TableTitle title={OrdersTableTitle} />
         <TableFilter
+          setCurrentPage={setCurrentPage}
           handleStatusChange={handleStatusChange}
           deliveryStatus={deliveryStatus}
         />
       </div>
-      {productData ? (
+      {ordersData ? (
         <OrdersTable
-          data={productData}
+          data={ordersData}
           columns={ordersColumns}
           buttonsArray={ordersTableButton}
         />
@@ -74,3 +81,4 @@ export const AdminOrders = () => {
     </AdminLayout>
   );
 };
+export default AdminOrders;

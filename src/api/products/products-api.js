@@ -5,9 +5,6 @@ export const getProducts = async (page) => {
     params: {
       page,
       limit: 5,
-      fields: "-rating,-createdAt,-updatedAt,-__v",
-      sort: "price",
-      "quantity[gte]": 8,
     },
   });
   return response.data;
