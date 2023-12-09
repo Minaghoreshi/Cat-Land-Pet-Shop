@@ -16,7 +16,7 @@ import {
   ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
-export const AdminProducts = () => {
+const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
 
@@ -75,3 +75,4 @@ export const AdminProducts = () => {
     </AdminLayout>
   );
 };
+export default AdminProducts;

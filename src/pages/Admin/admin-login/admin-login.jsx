@@ -1,5 +1,6 @@
 import React from "react";
 import { LoginLayout } from "../../../components/base";
-export const AdminLogin = () => {
+const AdminLogin = () => {
   return <LoginLayout />;
 };
+export default AdminLogin;

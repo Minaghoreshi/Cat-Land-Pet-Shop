@@ -14,7 +14,7 @@ import {
   ordersTableButton,
 } from "../constants";
 import { combineUsersWithOrders } from "./usersandorders";
-export const AdminOrders = () => {
+const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersData, setOrdersData] = useState();
   const [deliveryStatus, setDeliveryStatus] = useState(false);
@@ -81,3 +81,4 @@ export const AdminOrders = () => {
     </AdminLayout>
   );
 };
+export default AdminOrders;
