@@ -2,17 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import { lazy } from "react";
 import { Loadable } from "../components/base/loadable/Loadable";
-// import { Home } from "../pages/Customer/home/home";
-// import AdminLogin from "../pages/Admin/admin-login/admin-login";
-// import Cart from "../pages/Customer/cart/cart";
-// import Checkout from "../pages/Customer/checkout/checkout";
-// import Payement from "../pages/Customer/payement/payement";
-// import PayementResult from "../pages/Customer/payement-result/payement-result";
-// import Product from "../pages/Customer/product/product";
-// import AdminProducts from "../pages/Admin/admin-products/AdminProducts";
-// import AdminStocks from "../pages/Admin/admin-stock/stock-price";
-// import AdminOrders from "../pages/Admin/admin-orders/AdminOrders";
-// import Home from "../pages/Customer/home/home";
 const Home = Loadable(lazy(() => import("../pages/Customer/home/home")));
 const AdminLogin = Loadable(
   lazy(() => import("../pages/Admin/admin-login/admin-login"))
