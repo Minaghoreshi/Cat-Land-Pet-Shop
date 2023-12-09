@@ -9,7 +9,7 @@ import {
   PaginationComponent,
 } from "../../../components";
 
-export const AdminStocks = () => {
+const AdminStocks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productData, setProductData] = useState(null);
   const { data, error, isLoading } = useQuery(["products", currentPage], () =>
@@ -64,3 +64,4 @@ export const AdminStocks = () => {
     </AdminLayout>
   );
 };
+export default AdminStocks;

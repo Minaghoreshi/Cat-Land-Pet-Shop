@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { CustomerLayout } from "../../../components";
-export const Product = () => {
+const Product = () => {
   const { category, productId } = useParams();
   return (
     <CustomerLayout>
@@ -11,3 +11,4 @@ export const Product = () => {
     </CustomerLayout>
   );
 };
+export default Product;

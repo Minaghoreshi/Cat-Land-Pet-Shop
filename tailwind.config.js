@@ -14,6 +14,7 @@ module.exports = {
         head: `#fbe4ea`,
       },
       fontFamily: { custom: "farsi" },
+      boxShadow: { custom: `0px 0px 50px -20px rgba(107,107,107,1)` },
     },
   },
   plugins: [require("flowbite/plugin")],

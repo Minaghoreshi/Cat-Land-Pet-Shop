@@ -1,6 +1,7 @@
 import React from "react";
 import { CustomerLayout } from "../../../components";
 
-export const Payement = () => {
+const Payement = () => {
   return <CustomerLayout>this is payment page</CustomerLayout>;
 };
+export default Payement;

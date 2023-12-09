@@ -1,18 +1,33 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
-import {
-  Home,
-  Cart,
-  Checkout,
-  Payement,
-  PayementResult,
-  Product,
-  AdminOrders,
-  AdminProducts,
-  AdminStocks,
-} from "../pages";
-
-import { AdminLogin } from "../pages";
+import { lazy } from "react";
+import { Loadable } from "../components/base/loadable/Loadable";
+const Home = Loadable(lazy(() => import("../pages/Customer/home/home")));
+const AdminLogin = Loadable(
+  lazy(() => import("../pages/Admin/admin-login/admin-login"))
+);
+const Cart = Loadable(lazy(() => import("../pages/Customer/cart/cart")));
+const Checkout = Loadable(
+  lazy(() => import("../pages/Customer/checkout/checkout"))
+);
+const Payement = Loadable(
+  lazy(() => import("../pages/Customer/payement/payement"))
+);
+const PayementResult = Loadable(
+  lazy(() => import("../pages/Customer/payement-result/payement-result"))
+);
+const Product = Loadable(
+  lazy(() => import("../pages/Customer/product/product"))
+);
+const AdminProducts = Loadable(
+  lazy(() => import("../pages/Admin/admin-products/AdminProducts"))
+);
+const AdminStocks = Loadable(
+  lazy(() => import("../pages/Admin/admin-stock/stock-price"))
+);
+const AdminOrders = Loadable(
+  lazy(() => import("../pages/Admin/admin-orders/AdminOrders"))
+);
 
 const AppRoute = () => {
   return (
