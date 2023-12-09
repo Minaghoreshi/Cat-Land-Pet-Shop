@@ -13,7 +13,7 @@ body {
   @apply bg-selected;
 }
 .table {
-  @apply border shadow-xl w-3/4 mt-5 table-fixed rounded-xl overflow-hidden;
+  @apply border shadow-custom w-3/4 mt-8 table-fixed rounded-xl overflow-hidden;
 }
 .table--th {
   @apply py-4 px-4 border   border-gray-300 text-center font-extrabold;

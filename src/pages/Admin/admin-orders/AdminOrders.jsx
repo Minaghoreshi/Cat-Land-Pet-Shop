@@ -59,6 +59,7 @@ export const AdminOrders = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         <TableTitle title={OrdersTableTitle} />
         <TableFilter
+          setCurrentPage={setCurrentPage}
           handleStatusChange={handleStatusChange}
           deliveryStatus={deliveryStatus}
         />
