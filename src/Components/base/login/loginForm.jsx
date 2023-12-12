@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
-import { useFormik } from "formik";
+import { useFormik, Field, ErrorMessage } from "formik";
 import { useDispatch } from "react-redux";
 import { login } from "../../../features/auth/authThunk";
 export const LoginForm = ({ shouldNavigate = true }) => {
+  const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -21,6 +22,10 @@ export const LoginForm = ({ shouldNavigate = true }) => {
           if (shouldNavigate) {
             navigate("/products-table");
           }
+        })
+        .catch((error) => {
+          if (error.message === "نام کاربری یا رمز عبور اشتباه است")
+            setLoadingError(error.message);
         });
       // navigate("/products-table");
     },
@@ -61,6 +66,7 @@ export const LoginForm = ({ shouldNavigate = true }) => {
             <div className="text-red-500">{formik.errors.password}</div>
           )}
         </div>
+        {loadingError && <div className="text-red-500">{loadingError}</div>}
         <button
           type="submit"
           className="bg-save text-white w-28 py-4 px-6 rounded-xl"

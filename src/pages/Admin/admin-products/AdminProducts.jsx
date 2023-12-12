@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {

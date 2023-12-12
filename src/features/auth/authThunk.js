@@ -8,7 +8,12 @@ export const login = createAsyncThunk(`auth/userLogin`, async (data) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    throw error.response.massage;
+    if (error.response?.status === 401) {
+      // Custom error for incorrect username/password
+      throw new Error("نام کاربری یا رمز عبور اشتباه است");
+    } else {
+      throw error; // Let other errors propagate
+    }
   }
 });
 //data= refreshToken:string
