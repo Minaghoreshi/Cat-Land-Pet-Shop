@@ -24,8 +24,9 @@ export const LoginForm = ({ shouldNavigate = true }) => {
           }
         })
         .catch((error) => {
-          if (error.message === "نام کاربری یا رمز عبور اشتباه است")
-            setLoadingError(error.message);
+          if (error.message === "401") {
+            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+          }
         });
       // navigate("/products-table");
     },
