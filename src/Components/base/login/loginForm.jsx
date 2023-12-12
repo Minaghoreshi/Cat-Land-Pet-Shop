@@ -4,7 +4,7 @@ import { validationSchema } from "./loginSchema";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { login } from "../../../features/auth/authThunk";
-export const LoginForm = () => {
+export const LoginForm = ({ shouldNavigate = true }) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -15,9 +15,14 @@ export const LoginForm = () => {
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      dispatch(login(values));
-
-      navigate("/products-table");
+      dispatch(login(values))
+        .unwrap()
+        .then(() => {
+          if (shouldNavigate) {
+            navigate("/products-table");
+          }
+        });
+      // navigate("/products-table");
     },
   });
 
