@@ -2,18 +2,21 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { login } from "../../../features/auth/authThunk";
 export const LoginForm = () => {
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       password: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      // Your form submission logic here
-      // For now, let's just navigate to "/products-table"
+      console.log(values);
+      dispatch(login(values));
+
       navigate("/products-table");
     },
   });
@@ -26,17 +29,17 @@ export const LoginForm = () => {
         className="flex flex-col items-center gap-9"
       >
         <div className="flex flex-col gap-2 w-2/3">
-          <label htmlFor="name">نام کاربری</label>
+          <label htmlFor="username">نام کاربری</label>
           <input
             type="text"
-            name="name"
+            name="username"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.name}
+            value={formik.values.username}
             className="bg-gray-100 p-3 rounded-md"
           />
-          {formik.touched.name && formik.errors.name && (
-            <div className="text-red-500">{formik.errors.name}</div>
+          {formik.touched.username && formik.errors.username && (
+            <div className="text-red-500">{formik.errors.username}</div>
           )}
         </div>
         <div className="flex flex-col gap-2 w-2/3">

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 import React, { useCallback, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import {
@@ -16,6 +18,7 @@ import {
   ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
+import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
@@ -75,4 +78,4 @@ const AdminProducts = () => {
     </AdminLayout>
   );
 };
-export default AdminProducts;
+export default WithGuard(AdminProducts);
