@@ -15,7 +15,7 @@ export const login = createAsyncThunk(`auth/userLogin`, async (data) => {
 export const refresh = createAsyncThunk(`auth/refresh-token`, async (data) => {
   try {
     const response = await axios.post(userAPI, data);
-    return response.data;
+    return response;
   } catch (error) {
     throw error.response.massage;
   }
