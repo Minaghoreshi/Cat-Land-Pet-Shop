@@ -2,7 +2,7 @@ import { logOut } from "../features/auth/authSlice";
 import { refresh } from "../features/auth/authThunk";
 import { store } from "../store";
 import axios from "axios";
-const URL = `http://localhost:8000/api/auth/login`;
+const URL = `http://localhost:8000/api/auth`;
 
 const api = axios.create({ baseURL: URL });
 api.interceptors.request.use(
@@ -18,6 +18,7 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 api.interceptors.response.use(
   (response) => {
     return response;
@@ -25,16 +26,16 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const state = store.getState();
-    const refreshToken = state.auth.refreshToken;
+    const generatedRefreshToken = state.auth.refreshToken;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const refreshResponse = await refresh(refreshToken);
+        const response = await refresh({ refreshToken: generatedRefreshToken });
         originalRequest.headers[
           "Authorization"
-        ] = `Bearer ${refreshResponse.token.accessToken}`;
-        return api(originalRequest);
+        ] = `Bearer ${response.token.accessToken}`;
+        return axios(originalRequest);
       } catch (refreshError) {
         store.dispatch(logOut());
         throw refreshError;
@@ -43,4 +44,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default api;

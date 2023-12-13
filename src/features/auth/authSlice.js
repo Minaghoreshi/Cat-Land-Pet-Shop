@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login, refresh } from "./authThunk";
 const initialState = {
-  token: "",
+  token: localStorage.getItem("token") || "",
   isLogin: false,
-  refreshToken: "",
+  refreshToken: localStorage.getItem("refreshToken") || "",
   user: null,
   isLoading: false,
 };
@@ -18,6 +18,8 @@ export const auth = createSlice({
       state.refreshToken = "";
       state.user = null;
       state.isLoading = false;
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     },
   },
   extraReducers: (builder) => {
@@ -25,18 +27,20 @@ export const auth = createSlice({
       state.isLoading = true;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      // console.log(action.payload);
       state.isLogin = true;
       state.isLoading = false;
       state.token = action.payload.token.accessToken;
       state.refreshToken = action.payload.token.refreshToken;
       state.user = action.payload.data.user;
+      localStorage.setItem("token", state.token);
+      localStorage.setItem("refreshToken", state.refreshToken);
     });
     builder.addCase(login.rejected, (state) => {
       state.isLogin = false;
     });
     builder.addCase(refresh.fulfilled, (state, action) => {
-      state.token = action.payload.token.refreshToken;
+      state.refreshToken = action.payload.token.refreshToken;
+      localStorage.setItem("refreshToken", state.refreshToken);
     });
     builder.addCase(refresh.rejected, (state) => {
       state.token = "";
@@ -44,6 +48,8 @@ export const auth = createSlice({
       state.refreshToken = "";
       state.user = null;
       state.isLoading = false;
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
     });
   },
 });
