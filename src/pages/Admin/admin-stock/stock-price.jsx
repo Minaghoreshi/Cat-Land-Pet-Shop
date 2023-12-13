@@ -8,7 +8,7 @@ import {
   AdminLayout,
   PaginationComponent,
 } from "../../../components";
-
+import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminStocks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productData, setProductData] = useState(null);
@@ -64,4 +64,4 @@ const AdminStocks = () => {
     </AdminLayout>
   );
 };
-export default AdminStocks;
+export default WithGuard(AdminStocks);

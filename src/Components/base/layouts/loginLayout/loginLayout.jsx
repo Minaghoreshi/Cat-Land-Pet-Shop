@@ -1,10 +1,10 @@
 import React from "react";
 import { Container } from "../container";
 import { LoginForm } from "../../login/loginForm";
-export function LoginLayout() {
+export function LoginLayout({ shouldNavigate }) {
   return (
     <Container className="flex justify-center items-center">
-      <LoginForm />
+      <LoginForm shouldNavigate={shouldNavigate} />
     </Container>
   );
 }

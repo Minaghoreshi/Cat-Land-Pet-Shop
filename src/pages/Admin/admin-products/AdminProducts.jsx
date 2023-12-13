@@ -16,6 +16,7 @@ import {
   ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
+import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
@@ -75,4 +76,4 @@ const AdminProducts = () => {
     </AdminLayout>
   );
 };
-export default AdminProducts;
+export default WithGuard(AdminProducts);
