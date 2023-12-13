@@ -1,6 +1,7 @@
-import React from "react";
 import { Customcolumn } from "./custom-column";
+import { DeleteModal } from "../modals/DeleteModal";
 export const ProductsTable = ({ data, columns, buttonsArray }) => {
+  console.log(data);
   return (
     <table className="table ">
       <thead>
@@ -15,7 +16,7 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
       <tbody>
         {data.map((row, rowIndex) => (
           <tr
-            key={rowIndex}
+            key={row._id}
             className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
           >
             {columns.map((column) => (
@@ -28,6 +29,8 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                       alt="thumbnail"
                     />
                   </div>
+                ) : column.key === "name" ? (
+                  <div>{row.name}</div>
                 ) : (
                   ` ${row.category} / ${row.subCategory}`
                 )}
@@ -35,7 +38,17 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                 {/* {row[column.key]} */}
               </td>
             ))}
-            <Customcolumn buttonsArray={buttonsArray} />
+            {/* <Customcolumn buttonsArray={buttonsArray} /> */}
+            <td className="table--td text-center">
+              <div>
+                <DeleteModal name={row.name} />
+                {/* <button className="hover:underline text-selected">حذف</button> */}
+                <span> / </span>
+                <button className="hover:underline text-blue-600">
+                  ویرایش
+                </button>
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>
