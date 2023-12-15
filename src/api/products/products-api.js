@@ -9,3 +9,20 @@ export const getProducts = async (page) => {
   });
   return response.data;
 };
+export const addProduct = async (data) => {
+  const apiUrl = "http://localhost:8000/api/products";
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await api.post(apiUrl, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Product added successfully:", response.data);
+  } catch (error) {
+    console.error("Error adding product:", error.message);
+  }
+};

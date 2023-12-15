@@ -9,7 +9,7 @@ import {
 } from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
 import { combineProductsWithCategories } from "./dataCombining";
-
+import { addProduct } from "../../../api/products/products-api";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,

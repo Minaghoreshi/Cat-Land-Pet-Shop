@@ -1,7 +1,6 @@
-import { Customcolumn } from "./custom-column";
 import { DeleteModal } from "../modals/DeleteModal";
-export const ProductsTable = ({ data, columns, buttonsArray }) => {
-  console.log(data);
+import { EditModal } from "../modals/EditModal";
+export const ProductsTable = ({ data, columns }) => {
   return (
     <table className="table ">
       <thead>
@@ -38,15 +37,12 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                 {/* {row[column.key]} */}
               </td>
             ))}
-            {/* <Customcolumn buttonsArray={buttonsArray} /> */}
+
             <td className="table--td text-center">
               <div>
-                <DeleteModal name={row.name} />
-                {/* <button className="hover:underline text-selected">حذف</button> */}
+                <DeleteModal data={row} />
                 <span> / </span>
-                <button className="hover:underline text-blue-600">
-                  ویرایش
-                </button>
+                <EditModal />
               </div>
             </td>
           </tr>

@@ -39,8 +39,8 @@ export const auth = createSlice({
       state.isLogin = false;
     });
     builder.addCase(refresh.fulfilled, (state, action) => {
-      state.refreshToken = action.payload.token.refreshToken;
-      localStorage.setItem("refreshToken", action.payload.token.refreshToken);
+      state.token = action.payload.token.accessToken;
+      localStorage.setItem("accessToken", action.payload.token.accessToken);
     });
     builder.addCase(refresh.rejected, (state) => {
       state.token = "";
