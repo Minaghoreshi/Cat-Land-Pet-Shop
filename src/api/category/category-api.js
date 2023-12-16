@@ -9,10 +9,10 @@ export const getCategoryById = async (categoryId) => {
 };
 
 export const getAllCategories = async () => {
-  console.log(categoryURL);
+  // console.log(categoryURL);
   try {
     const response = await axios.get(`http://localhost:8000/api/categories`);
-    console.log(response.data.data.categories);
+    return response.data.data.categories;
   } catch (error) {
     console.log(error);
   }

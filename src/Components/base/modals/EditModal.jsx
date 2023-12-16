@@ -20,6 +20,7 @@ import { useQuery } from "react-query";
 export const EditModal = () => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const editorRef = useRef(null);
 
   //
@@ -28,9 +29,9 @@ export const EditModal = () => {
   // }, [data]);
   const categoryURL = `http://localhost:8000/api/categories`;
 
-  const { data, error, isLoading } = useQuery(["categories"], () => {
-    getAllCategories();
-  });
+  const { data, error, isLoading } = useQuery(["categories"], () =>
+    getAllCategories()
+  );
 
   const log = () => {
     if (editorRef.current) {
@@ -47,6 +48,11 @@ export const EditModal = () => {
     }
   }, [data]);
   useEffect(() => {
+    if (selectedCategory) {
+      console.log(selectedCategory);
+    }
+  }, [selectedCategory]);
+  useEffect(() => {
     const close = (e) => {
       if (e.keyCode === 27) {
         setOpenModal(false);
@@ -55,6 +61,11 @@ export const EditModal = () => {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, []);
+  const handleSelectCategory = (categoryId) => {
+    setSelectedCategory(categoryId);
+    console.log("hey");
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -95,13 +106,34 @@ export const EditModal = () => {
               </div>
               <TextInput id="password" type="text" required />
             </div>{" "}
+            {/* product name */}
+            {/* category options */}
+            <Select
+              id="category"
+              defaultValue={"سشیبس"}
+              // value={selectedCategory} // Assuming you have a state variable like selectedCategory to control the value
+              onChange={(e) => {
+                handleSelectCategory(e.target.value);
+              }}
+            >
+              <option value="" selected>
+                دسته بندی
+              </option>{" "}
+              {categories
+                ? categories.map((category, index) => (
+                    <option key={index} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))
+                : ""}
+            </Select>
+            {/* category options */}
+            {/* subcategory options */}
             <Select id="category" defaultValue={"دسته بندی"}>
               {" "}
-              <option selected>دسته بندی</option>
-              <option>op 1</option>
-              <option>op 2</option>
-            </Select>
-            {/* drop down */}{" "}
+              <option selected>زیرمجموعه </option>
+            </Select>{" "}
+            {/* subcategory options */}
             <Editor
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
               onInit={(evt, editor) => (editorRef.current = editor)}
@@ -140,7 +172,7 @@ export const EditModal = () => {
               }}
             />
             <div className="w-full flex justify-center">
-              <Button>ذخیره</Button>
+              <Button onClick={log}>ذخیره</Button>
             </div>
           </div>
         </Modal.Body>
