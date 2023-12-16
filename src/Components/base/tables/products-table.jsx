@@ -42,7 +42,7 @@ export const ProductsTable = ({ data, columns }) => {
               <div>
                 <DeleteModal data={row} />
                 <span> / </span>
-                <EditModal />
+                <EditModal product={row} />
               </div>
             </td>
           </tr>
