@@ -59,7 +59,6 @@ export const EditModal = () => {
   }
   useEffect(() => {
     if (data) {
-      console.log(data);
       setCategories(data);
     }
   }, [data]);

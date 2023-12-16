@@ -1,8 +1,26 @@
 import React from "react";
+import { useQueryClient } from "react-query";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { deletProduct } from "../../../api/products/products-api";
 export const DeleteModal = ({ data }) => {
+  const queryClient = useQueryClient();
+  const handleDelete = async (productId) => {
+    try {
+      const result = await deletProduct(productId);
+      if (result && result === 200) {
+        queryClient.invalidateQueries("products");
+
+        setOpenModal(false);
+      } else {
+        console.error("Deletion failed");
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
   const [openModal, setOpenModal] = useState(false);
   return (
     <>
@@ -26,7 +44,7 @@ export const DeleteModal = ({ data }) => {
               «{data.name}» از لیست محصولات حذف شود؟
             </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={() => setOpenModal(false)}>
+              <Button color="failure" onClick={() => handleDelete(data._id)}>
                 حذف
               </Button>
               <Button color="gray" onClick={() => setOpenModal(false)}>

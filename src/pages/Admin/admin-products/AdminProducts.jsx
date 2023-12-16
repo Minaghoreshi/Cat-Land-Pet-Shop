@@ -18,24 +18,6 @@ import {
 } from "../constants";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminProducts = () => {
-  const newData = {
-    name: "mina testing",
-    price: "5",
-    category: "65705fccaaf9c03da4301bd8",
-    subcategory: "65707184aaf9c03da4301c04",
-    quantity: "5",
-    brand: "ttest",
-    description: "test",
-    thumbail: "",
-  };
-
-  // addProduct(data2);
-  // setTimeout(() => {
-  //   addProduct(data2);
-  // }, 65000);
-  // setTimeout(() => {
-  //   addProduct(data2);
-  // }, 70000);
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
 
@@ -62,10 +44,6 @@ const AdminProducts = () => {
     setCurrentPage(page);
   };
   // console.log(wholeData);
-  const handleSubmit = () => {
-    console.log("submit");
-    addProduct(newData);
-  };
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -77,7 +55,6 @@ const AdminProducts = () => {
   }
   return (
     <AdminLayout>
-      <button onClick={handleSubmit}>add</button>
       <div className="mt-5 flex justify-between items-center w-3/4">
         {" "}
         <TableTitle title={ProductTableTitle} />

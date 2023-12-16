@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "../axios";
+const apiUrl = "http://localhost:8000/api/products";
 export const getProducts = async (page) => {
   const response = await api.get(`http://localhost:8000/api/products`, {
     params: {
@@ -11,7 +12,6 @@ export const getProducts = async (page) => {
 };
 export const addProduct = async (data) => {
   console.log(data);
-  const apiUrl = "http://localhost:8000/api/products";
   const token = localStorage.getItem("token");
 
   try {
@@ -25,5 +25,22 @@ export const addProduct = async (data) => {
     console.log("Product added successfully:", response.data);
   } catch (error) {
     console.error("Error adding product:", error.message);
+  }
+};
+
+//api for delting
+export const deletProduct = async (productId) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8000/api/products/${productId}`
+    );
+
+    // Handle the response data
+    return response.status;
+
+    // You can update your state or perform other actions with the subcategories here
+  } catch (error) {
+    // Handle errors
+    console.error("Error deleting product:", error);
   }
 };
