@@ -10,6 +10,7 @@ export const getProducts = async (page) => {
   return response.data;
 };
 export const addProduct = async (data) => {
+  console.log(data);
   const apiUrl = "http://localhost:8000/api/products";
   const token = localStorage.getItem("token");
 

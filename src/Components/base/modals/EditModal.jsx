@@ -8,12 +8,30 @@ import {
   FileInput,
   Select,
 } from "flowbite-react";
+import {
+  getAllCategories,
+  getCategoryById,
+} from "../../../api/category/category-api";
+import axios from "axios";
+
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
+import { useQuery } from "react-query";
 export const EditModal = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [email, setEmail] = useState("");
+  const [categories, setCategories] = useState();
   const editorRef = useRef(null);
+
+  //
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
+  const categoryURL = `http://localhost:8000/api/categories`;
+
+  const { data, error, isLoading } = useQuery(["categories"], () => {
+    getAllCategories();
+  });
+
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
@@ -21,8 +39,13 @@ export const EditModal = () => {
   };
   function onCloseModal() {
     setOpenModal(false);
-    setEmail("");
   }
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setCategories(data);
+    }
+  }, [data]);
   useEffect(() => {
     const close = (e) => {
       if (e.keyCode === 27) {
@@ -32,6 +55,15 @@ export const EditModal = () => {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, []);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    console.error("Error fetching data:", error);
+    return <p>Error fetching data</p>;
+  }
+
   return (
     <>
       {" "}
@@ -41,15 +73,7 @@ export const EditModal = () => {
       >
         ویرایش
       </button>
-      <Modal
-        show={openModal}
-        size="md"
-        onClose={onCloseModal}
-        popup
-        // onKeyDown={() => {
-        //   handleKEyDown(e);
-        // }}
-      >
+      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
