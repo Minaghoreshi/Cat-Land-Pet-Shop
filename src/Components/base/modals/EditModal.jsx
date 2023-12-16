@@ -13,7 +13,7 @@ import {
   getCategoryById,
 } from "../../../api/category/category-api";
 import axios from "axios";
-
+import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useQuery } from "react-query";
@@ -21,9 +21,9 @@ export const EditModal = () => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [subcategories, setSubCategories] = useState(null);
   const editorRef = useRef(null);
 
-  //
   // useEffect(() => {
   //   console.log(data);
   // }, [data]);
@@ -33,6 +33,22 @@ export const EditModal = () => {
     getAllCategories()
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (selectedCategory) {
+          const result = await getSubCategoryByCategoryId(selectedCategory);
+          setSubCategories(result);
+        }
+      } catch (error) {
+        // Handle errors if necessary
+        console.error("Error fetching subcategories:", error);
+      }
+    };
+
+    fetchData();
+    // console.log(subcategories);
+  }, [selectedCategory]);
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
@@ -111,7 +127,6 @@ export const EditModal = () => {
             <Select
               id="category"
               defaultValue={"سشیبس"}
-              // value={selectedCategory} // Assuming you have a state variable like selectedCategory to control the value
               onChange={(e) => {
                 handleSelectCategory(e.target.value);
               }}
@@ -129,10 +144,16 @@ export const EditModal = () => {
             </Select>
             {/* category options */}
             {/* subcategory options */}
-            <Select id="category" defaultValue={"دسته بندی"}>
-              {" "}
-              <option selected>زیرمجموعه </option>
-            </Select>{" "}
+            <Select id="category" defaultValue={"سشیبس"}>
+              <option value="" selected>
+                دسته بندی
+              </option>{" "}
+              {subcategories
+                ? subcategories.map((subcategory, index) => (
+                    <option key={index}>{subcategory.name}</option>
+                  ))
+                : ""}
+            </Select>
             {/* subcategory options */}
             <Editor
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
