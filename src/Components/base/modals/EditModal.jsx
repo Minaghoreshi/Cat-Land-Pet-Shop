@@ -14,6 +14,7 @@ import {
   getAllCategories,
   getCategoryById,
 } from "../../../api/category/category-api";
+import { editProduct } from "../../../api/products/products-api";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
 import { editValidationSchema } from "./editSchema";
@@ -29,6 +30,20 @@ export const EditModal = ({ product }) => {
   const [productThumbnail, setProductThumbnail] = useState(product.thumbnail);
   const [productImages, setProductImages] = useState(product.images);
   const editorRef = useRef(null);
+  const flattenArrays = (values) => {
+    const flattened = {};
+    for (const key in values) {
+      const value = values[key];
+      if (Array.isArray(value)) {
+        value.forEach((element, index) => {
+          flattened[`${key}[${index}]`] = element;
+        });
+      } else {
+        flattened[key] = value;
+      }
+    }
+    return flattened;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -37,6 +52,8 @@ export const EditModal = ({ product }) => {
       name: product.name, // Add initial values for your form fields
       category: "",
       subcategory: "",
+      quantity: product.quantity,
+      price: product.price,
     },
     validationSchema: editValidationSchema,
     onSubmit: async (values) => {
@@ -44,13 +61,24 @@ export const EditModal = ({ product }) => {
         values.thumbnail = values.thumbnail || productThumbnail;
         values.images = values.images || productImages;
         // Handle form submission logic here
-        console.log("Form data submitted:", values);
-        console.log(product);
-        // Example: Sending data to the server using axios
-        // await axios.post("/api/your-endpoint", values);
-        console.log(formik.values.name);
+        // console.log("Form data submitted:", values);
+        // console.log(product);
+        // // Example: Sending data to the server using axios
+        // // await axios.post("/api/your-endpoint", values);
+        // console.log(formik.values.name);
         // Close the modal after successful submission
+        const formdata = new FormData();
+        const flattenArray = flattenArrays(formik.values);
+        console.log(flattenArray);
+        Object.entries(flattenArray).forEach(([key, value]) => {
+          formdata.append(key, value);
+        });
+        // for (const [key, value] of formdata.entries()) {
+        //   console.log(`${key}: ${value}`);
+        // }
+        // console.log(product._id);
         setOpenModal(false);
+        editProduct(formdata, product._id);
       } catch (error) {
         console.error("Error submitting form:", error);
       }
@@ -167,7 +195,7 @@ export const EditModal = ({ product }) => {
                   // Update the formik values when the file input changes
                   formik.setFieldValue(
                     "thumbnail",
-                    event.currentTarget.files[0].name
+                    event.currentTarget.files[0]
                   );
                 }}
                 onBlur={formik.handleBlur}
@@ -203,11 +231,12 @@ export const EditModal = ({ product }) => {
                 type="file"
                 multiple
                 onChange={(event) => {
-                  const fileNames = Array.from(event.currentTarget.files).map(
-                    (file) => file.name
-                  );
-                  const allImages = fileNames.concat(productImages);
-                  // Update the formik values with an array of file names
+                  const files = event.currentTarget.files;
+                  const allImages = [...productImages];
+                  for (let i = 0; i < files.length; i++) {
+                    allImages.push(files[i]);
+                  }
+
                   formik.setFieldValue("images", allImages);
                 }}
                 onBlur={formik.handleBlur}
@@ -308,6 +337,38 @@ export const EditModal = ({ product }) => {
             {formik.touched.subcategory && formik.errors.subcategory && (
               <div className="text-red-500">{formik.errors.subcategory}</div>
             )}
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="name" value="موجودی " />
+              </div>
+              <TextInput
+                name="quantity"
+                id="quantity"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.quantity}
+              />
+              {formik.touched.quantity && formik.errors.quantity && (
+                <div className="text-red-500">{formik.errors.quantity}</div>
+              )}
+            </div>{" "}
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="price" value="مبلغ (تومان) " />
+              </div>
+              <TextInput
+                name="price"
+                id="price"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.price}
+              />
+              {formik.touched.price && formik.errors.price && (
+                <div className="text-red-500">{formik.errors.price}</div>
+              )}
+            </div>
             <Editor
               name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
