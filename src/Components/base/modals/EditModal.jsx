@@ -8,6 +8,8 @@ import {
   FileInput,
   Select,
 } from "flowbite-react";
+import { TiDelete } from "react-icons/ti";
+
 import {
   getAllCategories,
   getCategoryById,
@@ -24,19 +26,21 @@ export const EditModal = ({ product }) => {
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [subcategories, setSubCategories] = useState(null);
+  const [productThumbnail, setProductThumbnail] = useState(product.thumbnail);
   const editorRef = useRef(null);
 
   const formik = useFormik({
     initialValues: {
-      thumbnail: "",
+      thumbnail: productThumbnail,
       images: "",
-      name: "", // Add initial values for your form fields
+      name: product.name, // Add initial values for your form fields
       category: "",
-      subCategory: "",
+      subcategory: "",
     },
     validationSchema: editValidationSchema,
     onSubmit: async (values) => {
       try {
+        values.thumbnail = values.thumbnail || productThumbnail;
         // Handle form submission logic here
         console.log("Form data submitted:", values);
         console.log(product);
@@ -106,7 +110,11 @@ export const EditModal = ({ product }) => {
     setSelectedCategory(categoryId);
     console.log("hey");
   };
-
+  const handleThumbnailDelete = () => {
+    setProductThumbnail(null);
+    formik.setFieldValue("thumbnail", "");
+    console.log(productThumbnail);
+  };
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -140,13 +148,37 @@ export const EditModal = ({ product }) => {
                 <Label htmlFor="thumbnail" value="تصویر پیش نمایش کالا" />
               </div>
               <TextInput
+                disabled={productThumbnail ? true : false}
                 name="thumbnail"
                 id="multiple-file-upload"
                 type="file"
                 multiple
-                onChange={formik.handleChange}
+                // value={formik.values.thumbnail}
+                onChange={(event) => {
+                  // Update the formik values when the file input changes
+                  formik.setFieldValue(
+                    "thumbnail",
+                    event.currentTarget.files[0].name
+                  );
+                }}
                 onBlur={formik.handleBlur}
               />{" "}
+              {productThumbnail ? (
+                <div className="mt-3 relative">
+                  {" "}
+                  <TiDelete
+                    className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
+                    onClick={handleThumbnailDelete}
+                  />
+                  <img
+                    className="w-24 h-24 border "
+                    alt="thumbail"
+                    src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
               {formik.touched.thumbnail && formik.errors.thumbnail && (
                 <div className="text-red-500">{formik.errors.thumbnail}</div>
               )}
@@ -161,7 +193,14 @@ export const EditModal = ({ product }) => {
                 id="multiple-file-upload"
                 type="file"
                 multiple
-                onChange={formik.handleChange}
+                onChange={(event) => {
+                  const fileNames = Array.from(event.currentTarget.files).map(
+                    (file) => file.name
+                  );
+
+                  // Update the formik values with an array of file names
+                  formik.setFieldValue("images", fileNames);
+                }}
                 onBlur={formik.handleBlur}
               />{" "}
               {formik.touched.images && formik.errors.images && (
@@ -222,22 +261,24 @@ export const EditModal = ({ product }) => {
               <div className="text-red-500">{formik.errors.category}</div>
             )}
             <Select
-              name="subCategory"
-              id="subCategory"
+              name="subcategory"
+              id="subcategory"
               defaultValue={"زیر مجموعه"}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.subCategory}
+              value={formik.values.subcategory}
             >
-              {/* <option value="">زیرمجموعه </option> */}
+              <option value="">زیرمجموعه </option>
               {subcategories
                 ? subcategories.map((subcategory, index) => (
-                    <option key={index}>{subcategory.name}</option>
+                    <option key={index} value={subcategory._id}>
+                      {subcategory.name}
+                    </option>
                   ))
                 : ""}
             </Select>
-            {formik.touched.subCategory && formik.errors.subCategory && (
-              <div className="text-red-500">{formik.errors.subCategory}</div>
+            {formik.touched.subcategory && formik.errors.subcategory && (
+              <div className="text-red-500">{formik.errors.subcategory}</div>
             )}
             <Editor
               name="description"

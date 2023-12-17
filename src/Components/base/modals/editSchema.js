@@ -6,5 +6,5 @@ export const editValidationSchema = Yup.object().shape({
     .required("نام کالا الزامی است")
     .min(1, "نام کالا الزامی است"),
   category: Yup.string().required("دسته بندی الزامی است"),
-  subCategory: Yup.string().required("زیرمجموعه الزامی است"),
+  subcategory: Yup.string().required("زیرمجموعه الزامی است"),
 });
