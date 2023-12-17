@@ -28,19 +28,21 @@ export const EditModal = ({ product }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: product.name, // Add initial values for your form fields
+      thumbnail: "",
+      images: "",
+      name: "", // Add initial values for your form fields
       category: "",
-      subcategory: "",
+      subCategory: "",
     },
-    editValidationSchema,
+    validationSchema: editValidationSchema,
     onSubmit: async (values) => {
       try {
         // Handle form submission logic here
         console.log("Form data submitted:", values);
-
+        console.log(product);
         // Example: Sending data to the server using axios
         // await axios.post("/api/your-endpoint", values);
-
+        console.log(formik.values.name);
         // Close the modal after successful submission
         setOpenModal(false);
       } catch (error) {
@@ -134,13 +136,37 @@ export const EditModal = ({ product }) => {
               ویرایش کالا
             </h3>
             <div>
+              <div className="mb-2 block">
+                <Label htmlFor="thumbnail" value="تصویر پیش نمایش کالا" />
+              </div>
               <TextInput
+                name="thumbnail"
                 id="multiple-file-upload"
                 type="file"
                 multiple
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-              />
+              />{" "}
+              {formik.touched.thumbnail && formik.errors.thumbnail && (
+                <div className="text-red-500">{formik.errors.thumbnail}</div>
+              )}
+            </div>
+            <div>
+              {" "}
+              <div className="mb-2 block">
+                <Label htmlFor="images" value="تصویر کالا" />
+              </div>
+              <TextInput
+                name="images"
+                id="multiple-file-upload"
+                type="file"
+                multiple
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />{" "}
+              {formik.touched.images && formik.errors.images && (
+                <div className="text-red-500">{formik.errors.images}</div>
+              )}
             </div>
             <div>
               <div className="mb-2 block">
@@ -159,47 +185,62 @@ export const EditModal = ({ product }) => {
               )}
             </div>
             <Select
+              name="category"
               id="category"
-              defaultValue={"سشیبس"}
+              defaultValue={formik.values.category}
               onChange={(e) => {
                 formik.handleChange(e);
+
                 handleSelectCategory(e.target.value);
               }}
               onBlur={formik.handleBlur}
               value={formik.values.category}
             >
               <option value="" selected>
-                {product.category}
+                {" "}
               </option>
               {categories
-                ? categories.map((category, index) => (
-                    <option key={index} value={category._id}>
-                      {category.name}
-                    </option>
-                  ))
+                ? categories.map(
+                    (category, index) => {
+                      if (category.name !== product.category) {
+                        return (
+                          <option key={index} value={category._id}>
+                            {category.name}
+                          </option>
+                        );
+                      } else {
+                        return null;
+                      }
+                    }
+                    // <option key={index} value={category._id}>
+                    //   {category.name}
+                    // </option>
+                  )
                 : ""}
             </Select>
             {formik.touched.category && formik.errors.category && (
               <div className="text-red-500">{formik.errors.category}</div>
             )}
             <Select
-              id="subcategory"
+              name="subCategory"
+              id="subCategory"
               defaultValue={"زیر مجموعه"}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.subcategory}
+              value={formik.values.subCategory}
             >
-              <option value="">{product.subCategory} </option>
+              {/* <option value="">زیرمجموعه </option> */}
               {subcategories
                 ? subcategories.map((subcategory, index) => (
                     <option key={index}>{subcategory.name}</option>
                   ))
                 : ""}
             </Select>
-            {formik.touched.subcategory && formik.errors.subcategory && (
-              <div className="text-red-500">{formik.errors.subcategory}</div>
+            {formik.touched.subCategory && formik.errors.subCategory && (
+              <div className="text-red-500">{formik.errors.subCategory}</div>
             )}
             <Editor
+              name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
               onInit={(evt, editor) => (editorRef.current = editor)}
               initialValue={product.description}
