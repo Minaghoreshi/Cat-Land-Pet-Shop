@@ -27,6 +27,7 @@ export const EditModal = ({ product }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [subcategories, setSubCategories] = useState(null);
   const [productThumbnail, setProductThumbnail] = useState(product.thumbnail);
+  const [productImages, setProductImages] = useState(product.images);
   const editorRef = useRef(null);
 
   const formik = useFormik({
@@ -41,6 +42,7 @@ export const EditModal = ({ product }) => {
     onSubmit: async (values) => {
       try {
         values.thumbnail = values.thumbnail || productThumbnail;
+        values.images = values.images || productImages;
         // Handle form submission logic here
         console.log("Form data submitted:", values);
         console.log(product);
@@ -115,6 +117,13 @@ export const EditModal = ({ product }) => {
     formik.setFieldValue("thumbnail", "");
     console.log(productThumbnail);
   };
+  const handleImageDelete = (imageToDelete) => {
+    const newImageState = productImages.filter(
+      (image) => image !== imageToDelete
+    );
+    setProductImages(newImageState);
+  };
+  // console.log(productImages);
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -197,12 +206,31 @@ export const EditModal = ({ product }) => {
                   const fileNames = Array.from(event.currentTarget.files).map(
                     (file) => file.name
                   );
-
+                  const allImages = fileNames.concat(productImages);
                   // Update the formik values with an array of file names
-                  formik.setFieldValue("images", fileNames);
+                  formik.setFieldValue("images", allImages);
                 }}
                 onBlur={formik.handleBlur}
               />{" "}
+              <div className="mt-3 flex gap-3 flex-wrap">
+                {productImages
+                  ? productImages.map((image, index) => (
+                      <div className="relative">
+                        <TiDelete
+                          className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
+                          onClick={() => {
+                            handleImageDelete(image);
+                          }}
+                        />
+                        <img
+                          className="w-24 h-24 border "
+                          alt="product"
+                          src={`http://localhost:8000/images/products/images/${image}`}
+                        />
+                      </div>
+                    ))
+                  : ""}{" "}
+              </div>
               {formik.touched.images && formik.errors.images && (
                 <div className="text-red-500">{formik.errors.images}</div>
               )}
