@@ -14,7 +14,7 @@ import {
   getAllCategories,
   getCategoryById,
 } from "../../../api/category/category-api";
-import { editProduct } from "../../../api/products/products-api";
+import { addEditedProduct } from "../../../api/products/products-api";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
 import { editValidationSchema } from "./editSchema";
@@ -29,6 +29,9 @@ export const EditModal = ({ product }) => {
   const [subcategories, setSubCategories] = useState(null);
   const [productThumbnail, setProductThumbnail] = useState(product.thumbnail);
   const [productImages, setProductImages] = useState(product.images);
+  const [productDescription, seProductDescription] = useState(
+    product.description
+  );
   const editorRef = useRef(null);
   const flattenArrays = (values) => {
     const flattened = {};
@@ -44,7 +47,7 @@ export const EditModal = ({ product }) => {
     }
     return flattened;
   };
-
+  // console.log(product.description);
   const formik = useFormik({
     initialValues: {
       thumbnail: productThumbnail,
@@ -54,6 +57,7 @@ export const EditModal = ({ product }) => {
       subcategory: "",
       quantity: product.quantity,
       price: product.price,
+      description: productDescription,
     },
     validationSchema: editValidationSchema,
     onSubmit: async (values) => {
@@ -78,7 +82,7 @@ export const EditModal = ({ product }) => {
         // }
         // console.log(product._id);
         setOpenModal(false);
-        editProduct(formdata, product._id);
+        addEditedProduct(formdata, product._id);
       } catch (error) {
         console.error("Error submitting form:", error);
       }
@@ -151,7 +155,7 @@ export const EditModal = ({ product }) => {
     );
     setProductImages(newImageState);
   };
-  // console.log(productImages);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -160,7 +164,7 @@ export const EditModal = ({ product }) => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
-
+  // console.log(formik.values.description);
   return (
     <>
       {" "}
@@ -373,7 +377,7 @@ export const EditModal = ({ product }) => {
               name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
               onInit={(evt, editor) => (editorRef.current = editor)}
-              initialValue={product.description}
+              initialValue={formik.values.description}
               init={{
                 resize: false,
                 height: 300,

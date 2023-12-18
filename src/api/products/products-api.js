@@ -10,11 +10,33 @@ export const getProducts = async (page) => {
   });
   return response.data;
 };
-export const editProduct = async (formData, productID) => {
+export const addEditedProduct = async (formData, productID) => {
   const token = localStorage.getItem("token");
   try {
     const response = await api.patch(
       `http://localhost:8000/api/products/${productID}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Product edited successfully:", response.data);
+    return response.data; // Optionally, return the response data if needed
+  } catch (error) {
+    console.error("Error editing product:", error.message);
+    throw error; // Rethrow the error to handle it in the calling code if needed
+  }
+};
+
+export const addNewProduct = async (formData) => {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.post(
+      `http://localhost:8000/api/products`,
       formData,
       {
         headers: {
