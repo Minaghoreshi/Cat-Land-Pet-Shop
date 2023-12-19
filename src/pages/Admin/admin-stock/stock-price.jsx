@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getProducts } from "../../../api/products/products-api";
-import { useQuery } from "react-query";
+import { QueryClient, useQuery } from "react-query";
 import {
   Table,
   TableButton,
@@ -8,10 +8,12 @@ import {
   AdminLayout,
   PaginationComponent,
 } from "../../../components";
+import { addMultipleEditedProduct } from "../../../api/products/products-api";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminStocks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productData, setProductData] = useState(null);
+  const [dataToSend, setDataToSend] = useState(null);
   const { data, error, isLoading } = useQuery(["products", currentPage], () =>
     getProducts(currentPage)
   );
@@ -27,6 +29,17 @@ const AdminStocks = () => {
     }
   }, [data]);
 
+  const save = async () => {
+    try {
+      const result = await addMultipleEditedProduct(dataToSend);
+      if (result && result === 200) {
+        QueryClient.invalidateQueries("products");
+      }
+    } catch (error) {
+      console.log(error.response.status);
+    }
+  };
+
   // Check for loading state or if productData is null
   if (isLoading || productData === null) {
     return <p>Loading...</p>;
@@ -37,7 +50,7 @@ const AdminStocks = () => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
-  console.log(data.data.products);
+  // console.log(data.data.products);
   const columns = [
     { key: "name", label: "کالا", width: "w-3/5" },
     { key: "price", label: "قیمت" },
@@ -48,10 +61,19 @@ const AdminStocks = () => {
     <AdminLayout>
       <div className="mt-5 flex justify-between items-center w-3/4">
         <TableTitle title={"مدیریت موجودی و قیمت"} />
-        <TableButton button={"ذخیره "} />
+        <button
+          onClick={save}
+          className="bg-save text-white rounded-md font-thin py-2 px-4 shadow-2xl"
+        >
+          ذخیره
+        </button>{" "}
       </div>
       {productData ? (
-        <Table data={productData} columns={columns} />
+        <Table
+          data={productData}
+          columns={columns}
+          setDataToSend={setDataToSend}
+        />
       ) : (
         <p>loading</p>
       )}

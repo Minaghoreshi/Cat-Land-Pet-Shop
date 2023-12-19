@@ -1,6 +1,6 @@
-import React from "react";
-import { Customcolumn } from "./custom-column";
-export const ProductsTable = ({ data, columns, buttonsArray }) => {
+import { DeleteModal } from "../modals/DeleteModal";
+import { EditModal } from "../modals/EditModal";
+export const ProductsTable = ({ data, columns }) => {
   return (
     <table className="table ">
       <thead>
@@ -15,7 +15,7 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
       <tbody>
         {data.map((row, rowIndex) => (
           <tr
-            key={rowIndex}
+            key={row._id}
             className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
           >
             {columns.map((column) => (
@@ -28,6 +28,8 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                       alt="thumbnail"
                     />
                   </div>
+                ) : column.key === "name" ? (
+                  <div>{row.name}</div>
                 ) : (
                   ` ${row.category} / ${row.subCategory}`
                 )}
@@ -35,7 +37,14 @@ export const ProductsTable = ({ data, columns, buttonsArray }) => {
                 {/* {row[column.key]} */}
               </td>
             ))}
-            <Customcolumn buttonsArray={buttonsArray} />
+
+            <td className="table--td text-center">
+              <div>
+                <DeleteModal data={row} />
+                <span> / </span>
+                <EditModal product={row} />
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>

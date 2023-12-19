@@ -15,7 +15,6 @@ export const LoginForm = ({ shouldNavigate = true }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       dispatch(login(values))
         .unwrap()
         .then(() => {
