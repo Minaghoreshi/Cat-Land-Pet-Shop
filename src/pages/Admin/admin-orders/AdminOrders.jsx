@@ -8,10 +8,11 @@ import {
   PaginationComponent,
 } from "../../../components";
 import { getAllOrders } from "../../../api/orders/orders-api";
+
 import {
   ordersColumns,
-  OrdersTableTitle,
   ordersTableButton,
+  OrdersTableTitle,
 } from "../constants";
 import { combineUsersWithOrders } from "./usersandorders";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";

@@ -9,7 +9,7 @@ export const EditableItem = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
-  console.log(data);
+
   const handleEditClick = () => {
     setIsEditing(true);
   };
