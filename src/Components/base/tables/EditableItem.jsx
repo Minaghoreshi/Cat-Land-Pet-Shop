@@ -9,7 +9,6 @@ export const EditableItem = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
-  const [isEdited, setIsEdited] = useState(false);
   console.log(data);
   const handleEditClick = () => {
     setIsEditing(true);
@@ -19,7 +18,7 @@ export const EditableItem = ({
     setIsEditing(false);
     if (value !== initialValue) {
       update(event.target.id, event.target.name, event.target.value);
-      setIsEdited(true);
+      // setIsEdited(true);
     } else {
       setIsEditing(false);
     }
@@ -42,9 +41,7 @@ export const EditableItem = ({
         ></input>
       ) : (
         <span
-          className={`"editable cursor-pointer" ${
-            isEdited ? "text-selected" : "text-blue-500"
-          }`}
+          className="editable cursor-pointer text-blue-500"
           onClick={handleEditClick}
         >
           {value}
