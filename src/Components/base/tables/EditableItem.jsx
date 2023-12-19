@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export const EditableItem = ({ initialValue }) => {
+export const EditableItem = ({
+  initialValue,
+  productId,
+  fieldName,
+  update,
+  data,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
   const [isEdited, setIsEdited] = useState(false);
+  console.log(data);
   const handleEditClick = () => {
     setIsEditing(true);
   };
-  const handleBlur = () => {
+
+  const handleBlur = (event) => {
     setIsEditing(false);
     if (value !== initialValue) {
+      update(event.target.id, event.target.name, event.target.value);
       setIsEdited(true);
+    } else {
+      setIsEditing(false);
     }
   };
   const handleChange = (event) => {
@@ -20,9 +31,13 @@ export const EditableItem = ({ initialValue }) => {
     <div>
       {isEditing ? (
         <input
-          type="number"
+          name={fieldName}
+          id={productId}
+          type="text"
           value={value}
-          onBlur={handleBlur}
+          onBlur={(event) => {
+            handleBlur(event);
+          }}
           onChange={handleChange}
         ></input>
       ) : (

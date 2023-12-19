@@ -248,7 +248,7 @@ export const EditModal = ({ product }) => {
               <div className="mt-3 flex gap-3 flex-wrap">
                 {productImages
                   ? productImages.map((image, index) => (
-                      <div className="relative">
+                      <div key={image} className="relative">
                         <TiDelete
                           className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
                           onClick={() => {

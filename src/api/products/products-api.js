@@ -25,10 +25,10 @@ export const addEditedProduct = async (formData, productID) => {
     );
 
     console.log("Product edited successfully:", response.data);
-    return response.data; // Optionally, return the response data if needed
+    return response.data;
   } catch (error) {
     console.error("Error editing product:", error.message);
-    throw error; // Rethrow the error to handle it in the calling code if needed
+    throw error;
   }
 };
 
@@ -53,6 +53,31 @@ export const addNewProduct = async (formData) => {
     throw error; // Rethrow the error to handle it in the calling code if needed
   }
 };
+
+export const addMultipleEditedProduct = async (dataToSend) => {
+  try {
+    const promises = dataToSend.map(async (product) => {
+      const { productId, ...formData } = product;
+
+      const formDataObject = new FormData();
+      for (const key in formData) {
+        formDataObject.append(key, formData[key]);
+      }
+
+      return await addEditedProduct(formDataObject, productId);
+    });
+
+    const editedProducts = await Promise.all(promises);
+
+    console.log("Products edited successfully:", editedProducts);
+    return editedProducts;
+  } catch (error) {
+    console.log(error);
+    console.error("Error editing products:", error.message);
+    throw error;
+  }
+};
+
 // export const addProduct = async (data) => {
 //   console.log(data);
 //   const token = localStorage.getItem("token");

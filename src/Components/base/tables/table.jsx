@@ -1,7 +1,33 @@
 // Table.js
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { column } from "stylis";
+import { EditableItem } from "./EditableItem";
+export const Table = ({ columns, data, setDataToSend }) => {
+  const [editedData, setEditedData] = useState([]);
 
-export const Table = ({ columns, data }) => {
+  const update = (id, fieldName, valuForKey) => {
+    setEditedData((prevData) => {
+      const existingIndex = prevData.findIndex((item) => item.productId === id);
+
+      if (existingIndex !== -1) {
+        // If the product ID exists, update the existing entry
+        const updatedData = [...prevData];
+        updatedData[existingIndex][fieldName] = valuForKey;
+        return updatedData;
+      } else {
+        // If the product ID doesn't exist, add a new entry with provided values
+        const newData = {
+          productId: id,
+          [fieldName]: valuForKey,
+        };
+        return [...prevData, newData];
+      }
+    });
+  };
+
+  useEffect(() => {
+    setDataToSend(editedData);
+  }, [editedData]);
   return (
     <table className="table">
       <thead>
@@ -17,16 +43,28 @@ export const Table = ({ columns, data }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, rowIndex) => (
+        {data.map((item, index) => (
           <tr
-            key={rowIndex}
-            className={rowIndex % 2 !== 0 ? "bg-gray-50" : "bg-white"}
+            key={item._id}
+            className={index % 2 !== 0 ? "bg-gray-50" : "bg-white"}
           >
-            {columns.map((column) => (
-              <td key={column.key} className="table--td">
-                {column.render ? column.render(row) : row[column.key]}
-              </td>
-            ))}
+            {columns.map((column) => {
+              return (
+                <td key={column.key} className="table--td">
+                  {column.key === "price" || column.key === "quantity" ? (
+                    <EditableItem
+                      initialValue={item[column.key]}
+                      productId={item._id}
+                      fieldName={column.key}
+                      update={update}
+                      data={data}
+                    />
+                  ) : (
+                    item[column.key]
+                  )}
+                </td>
+              );
+            })}
           </tr>
         ))}
       </tbody>
