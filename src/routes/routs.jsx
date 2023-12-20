@@ -28,7 +28,9 @@ const AdminStocks = Loadable(
 const AdminOrders = Loadable(
   lazy(() => import("../pages/Admin/admin-orders/AdminOrders"))
 );
-
+const Category = Loadable(
+  lazy(() => import("../pages/Customer/category/Category"))
+);
 const AppRoute = () => {
   return (
     <BrowserRouter>
@@ -43,6 +45,7 @@ const AppRoute = () => {
         <Route path="/products-table" element={<AdminProducts />} />
         <Route path="/stocks-table" element={<AdminStocks />} />
         <Route path="/orders-table" element={<AdminOrders />} />
+        <Route path="/category" element={<Category />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

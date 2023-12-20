@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { HiPlus, HiMinus } from "react-icons/hi";
 import { useQuery } from "react-query";
-import { getAllCategories } from "../../../../api/category/category-api";
-import { getSubCategoryByCategoryId } from "../../../../api/subcategory/subcategory-api";
+import { getAllCategories } from "../../../api/category/category-api";
+import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 
 export const HomeSidebar = ({ menuItems, setMenuItems }) => {
   const showSubCategory = (categoryId) => {

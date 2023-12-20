@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ProductsSection } from "./products-section/ProductsSection";
-import { HomeSidebar } from "./sideBar/HomeSidebar";
+import { HomeSidebar } from "../sideBar/HomeSidebar";
 import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
@@ -78,9 +78,10 @@ export const Main = () => {
   }
   return (
     <div className="flex mt-8 gap-16">
-      <HomeSidebar menuItems={menuItems} setMenuItems={setMenuItems}>
-        this is nav
-      </HomeSidebar>
+      <HomeSidebar
+        menuItems={menuItems}
+        setMenuItems={setMenuItems}
+      ></HomeSidebar>
       <ProductsSection menuItems={menuItems}></ProductsSection>
     </div>
   );
