@@ -13,36 +13,44 @@ export const HomeSidebar = () => {
   } = useQuery(["test"], getAllCategories);
 
   useEffect(() => {
-    if (category) {
-      setMenuItems(
-        category.map((category, index) => {
-          return {
-            name: category.name,
-            _id: category._id,
-            isOpen: false,
-            subItems: [],
-          };
-        })
-      );
-    }
+    const fetchSubCategories = async () => {
+      if (category) {
+        const promises = category.map(async (category) => {
+          try {
+            const res = await getSubCategoryByCategoryId(category._id);
+            return {
+              name: category.name,
+              _id: category._id,
+              isOpen: false,
+              subItems: res,
+            };
+          } catch (error) {
+            console.log(error);
+            return {
+              name: category.name,
+              _id: category._id,
+              isOpen: false,
+              subItems: [],
+            };
+          }
+        });
+
+        const resolvedMenuItems = await Promise.all(promises);
+        setMenuItems(resolvedMenuItems);
+      }
+    };
+
+    fetchSubCategories();
   }, [category]);
 
-  const fetchSubItems = async (categoryId) => {
-    try {
-      const res = await getSubCategoryByCategoryId(categoryId);
-      if (res) {
-        setMenuItems((prevItems) => {
-          return prevItems.map((item) =>
-            item._id === categoryId
-              ? { ...item, isOpen: !item.isOpen, subItems: res }
-              : item
-          );
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const showSubCategory = (categoryId) => {
+    setMenuItems((prevItems) => {
+      return prevItems.map((item) =>
+        item._id === categoryId ? { ...item, isOpen: !item.isOpen } : item
+      );
+    });
   };
+
   if (categoryLoading) {
     return <p>Loading...</p>;
   }
@@ -60,12 +68,12 @@ export const HomeSidebar = () => {
             {!item.isOpen ? (
               <HiPlus
                 className="cursor-pointer"
-                onClick={() => fetchSubItems(item._id)}
+                onClick={() => showSubCategory(item._id)}
               />
             ) : (
               <HiMinus
                 className="cursor-pointer"
-                onClick={() => fetchSubItems(item._id)}
+                onClick={() => showSubCategory(item._id)}
               />
             )}
             <span>{item.name}</span>
