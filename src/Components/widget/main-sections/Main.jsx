@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ProductsSection } from "./ProductsSection";
+import { ProductsSection } from "./products-section/ProductsSection";
 import { HomeSidebar } from "./sideBar/HomeSidebar";
 import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
@@ -67,7 +67,6 @@ export const Main = () => {
   useEffect(() => {
     fetchSubCategories();
     fetchProductsForCategories();
-    console.log(menuItems);
   }, [category]);
   if (categoryLoading) {
     return <p>Loading...</p>;
@@ -78,7 +77,7 @@ export const Main = () => {
     return <p>Error fetching data</p>;
   }
   return (
-    <div className="flex pt-8 gap-16">
+    <div className="flex mt-8 gap-16">
       <HomeSidebar menuItems={menuItems} setMenuItems={setMenuItems}>
         this is nav
       </HomeSidebar>
