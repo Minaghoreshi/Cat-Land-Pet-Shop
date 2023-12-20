@@ -1,6 +1,6 @@
 // Table.js
 import React, { useEffect, useState } from "react";
-import { column } from "stylis";
+
 import { EditableItem } from "./EditableItem";
 export const Table = ({ columns, data, setDataToSend }) => {
   const [editedData, setEditedData] = useState([]);

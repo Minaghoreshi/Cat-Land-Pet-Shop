@@ -3,7 +3,6 @@ import { getProducts } from "../../../api/products/products-api";
 import { QueryClient, useQuery } from "react-query";
 import {
   Table,
-  TableButton,
   TableTitle,
   AdminLayout,
   PaginationComponent,

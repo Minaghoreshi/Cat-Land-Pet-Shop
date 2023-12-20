@@ -78,24 +78,6 @@ export const addMultipleEditedProduct = async (dataToSend) => {
   }
 };
 
-// export const addProduct = async (data) => {
-//   console.log(data);
-//   const token = localStorage.getItem("token");
-
-//   try {
-//     const response = await api.post(apiUrl, data, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-
-//     console.log("Product added successfully:", response.data);
-//   } catch (error) {
-//     console.error("Error adding product:", error.message);
-//   }
-// };
-
 //api for delting
 export const deletProduct = async (productId) => {
   try {
@@ -111,4 +93,15 @@ export const deletProduct = async (productId) => {
     // Handle errors
     console.error("Error deleting product:", error);
   }
+};
+export const getProductsByCategory = async (categoryId) => {
+  const params = {
+    category: categoryId,
+  };
+
+  const response = await api.get(apiUrl, {
+    params,
+  });
+
+  return response.data.data.products;
 };
