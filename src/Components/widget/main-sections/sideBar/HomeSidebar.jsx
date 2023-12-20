@@ -1,50 +1,73 @@
-import React, { useState } from "react";
-import { Sidebar } from "flowbite-react";
-import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi";
-import { twMerge } from "tailwind-merge";
+import React, { useEffect, useState } from "react";
 import { HiPlus, HiMinus } from "react-icons/hi";
+import { useQuery } from "react-query";
+import { getAllCategories } from "../../../../api/category/category-api";
+import { getSubCategoryByCategoryId } from "../../../../api/subcategory/subcategory-api";
 
 export const HomeSidebar = () => {
-  const [menuItems, setMenuItems] = useState([
-    {
-      id: 1,
-      label: "اسباب بازی",
-      isOpen: false,
-      subItems: ["تست ", "تست "],
-    },
-    {
-      id: 2,
-      label: "غذا",
-      isOpen: false,
-      subItems: ["تست ", "تست "],
-    },
-    // Add more items as needed
-  ]);
+  const [menuItems, setMenuItems] = useState([]);
+  const {
+    data: category,
+    error: categoryError,
+    isLoading: categoryLoading,
+  } = useQuery(["test"], getAllCategories);
 
-  const toggleSubMenu = (itemId) => {
-    setMenuItems((prevItems) =>
-      prevItems.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, isOpen: !item.isOpen };
-        }
-        return item;
-      })
-    );
+  useEffect(() => {
+    if (category) {
+      setMenuItems(
+        category.map((category, index) => {
+          return {
+            name: category.name,
+            _id: category._id,
+            isOpen: false,
+            subItems: [],
+          };
+        })
+      );
+    }
+  }, [category]);
+
+  const fetchSubItems = async (categoryId) => {
+    try {
+      const res = await getSubCategoryByCategoryId(categoryId);
+      if (res) {
+        setMenuItems((prevItems) => {
+          return prevItems.map((item) =>
+            item._id === categoryId
+              ? { ...item, isOpen: !item.isOpen, subItems: res }
+              : item
+          );
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+  if (categoryLoading) {
+    return <p>Loading...</p>;
+  }
 
+  if (categoryError) {
+    console.error("Error fetching data:", categoryError);
+    return <p>Error fetching data</p>;
+  }
   return (
     <div className="sidebar">
       {menuItems.map((item) => (
-        <div key={item.id} className="sidebar-item">
-          <button className="item-label" onClick={() => toggleSubMenu(item.id)}>
+        <div key={item._id} className="sidebar-item">
+          <button
+            className="item-label"
+            onClick={() => fetchSubItems(item._id)}
+          >
             {!item.isOpen ? <HiPlus /> : <HiMinus />}
-            {item.label}
+            {item.name}
           </button>
+          <hr />
           {item.isOpen && (
             <ul className="sub-items">
               {item.subItems.map((subItem, index) => (
-                <li key={index} className="sub-items-li">
-                  {subItem}
+                <li key={subItem._id} className="sub-items-li">
+                  {subItem.name}
                 </li>
               ))}
             </ul>
@@ -52,25 +75,5 @@ export const HomeSidebar = () => {
         </div>
       ))}
     </div>
-
-    // <Sidebar.Collapse
-    //   className="rtl:text-right"
-    //   renderChevronIcon={(theme, open) => {
-    //     const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm;
-
-    //     return (
-    //       <IconComponent
-    //         aria-hidden
-    //         className={twMerge(theme.label.icon.open[open ? "on" : "off"])}
-    //       />
-    //     );
-    //   }}
-    //   label={category}
-    // >
-    //   <Sidebar.Item href="#">Products</Sidebar.Item>
-    //   <Sidebar.Item href="#">Sales</Sidebar.Item>
-    //   <Sidebar.Item href="#">Refunds</Sidebar.Item>
-    //   <Sidebar.Item href="#">Shipping</Sidebar.Item>
-    // </Sidebar.Collapse>
   );
 };
