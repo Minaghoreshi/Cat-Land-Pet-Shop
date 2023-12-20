@@ -7,7 +7,7 @@ import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory
 import { useParams } from "react-router-dom";
 export const CategoryPage = () => {
   const { id } = useParams();
-  console.log(id);
+
   const [menuItems, setMenuItems] = useState([]);
   const {
     data: category,
@@ -47,7 +47,7 @@ export const CategoryPage = () => {
   return (
     <div className="flex mt-8 gap-16">
       <HomeSidebar menuItems={menuItems} setMenuItems={setMenuItems} />
-      <MainCategory />
+      <MainCategory categoryId={id} />
     </div>
   );
 };

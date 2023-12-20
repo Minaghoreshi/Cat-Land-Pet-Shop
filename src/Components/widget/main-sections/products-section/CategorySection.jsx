@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomCard } from "./CustomCard";
+import { CustomCard } from "../../CustomCard";
 
 export const CategorySection = ({ item }) => {
   return (
