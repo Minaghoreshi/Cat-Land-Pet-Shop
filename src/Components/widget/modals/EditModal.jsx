@@ -165,6 +165,10 @@ export const EditModal = ({ product }) => {
     return <p>Error fetching data</p>;
   }
   // console.log(formik.values.description);
+
+  const handleEditorChange = (content) => {
+    console.log(content);
+  };
   return (
     <>
       {" "}
@@ -299,24 +303,22 @@ export const EditModal = ({ product }) => {
               <option value="" selected>
                 {" "}
               </option>
-              {categories
-                ? categories.map(
-                    (category, index) => {
-                      if (category.name !== product.category) {
-                        return (
-                          <option key={index} value={category._id}>
-                            {category.name}
-                          </option>
-                        );
-                      } else {
-                        return null;
-                      }
-                    }
-                    // <option key={index} value={category._id}>
-                    //   {category.name}
-                    // </option>
-                  )
-                : ""}
+              {categories?.map(
+                (category, index) => {
+                  if (category.name !== product.category) {
+                    return (
+                      <option key={index} value={category._id}>
+                        {category.name}
+                      </option>
+                    );
+                  } else {
+                    return null;
+                  }
+                }
+                // <option key={index} value={category._id}>
+                //   {category.name}
+                // </option>
+              )}
             </Select>
             {formik.touched.category && formik.errors.category && (
               <div className="text-red-500">{formik.errors.category}</div>
@@ -377,6 +379,7 @@ export const EditModal = ({ product }) => {
               name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
               onInit={(evt, editor) => (editorRef.current = editor)}
+              onEditorChange={handleEditorChange}
               initialValue={formik.values.description}
               init={{
                 resize: false,

@@ -1,7 +1,10 @@
 import React from "react";
-import { CustomerLayout } from "../../../components";
-import { addProduct } from "../../../api/category/category-api";
+import { CustomerLayout, Main } from "../../../components";
 const Home = () => {
-  return <CustomerLayout>this is main part</CustomerLayout>;
+  return (
+    <CustomerLayout>
+      <Main />
+    </CustomerLayout>
+  );
 };
 export default Home;

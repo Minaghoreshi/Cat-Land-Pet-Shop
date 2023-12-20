@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { login, refresh } from "./authThunk";
 const initialState = {
   token: localStorage.getItem("token") || "",
-  isLogin: false,
+  isLogin: localStorage.getItem("token") ? true : false,
   refreshToken: localStorage.getItem("refreshToken") || "",
   user: null,
   isLoading: false,

@@ -1,11 +1,27 @@
 @import url(./style/font.css);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
   font-family: "farsi";
 }
-
+@layer utilities {
+  @variants responsive {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  }
+}
+.custom-scroll {
+  max-height: 700px;
+  overflow-y: auto;
+}
 .admin--nav {
   @apply font-bold py-2 px-4  bg-white text-primary border;
 }
@@ -23,4 +39,13 @@ body {
 }
 .editable {
   @apply text-blue-500 underline;
+}
+.sidebar {
+  @apply w-64 h-screen  mr-7 mt-7 shadow-custom overflow-auto custom-scroll no-scrollbar;
+}
+.item-label {
+  @apply flex my-2 gap-3;
+}
+.sub-items-li {
+  @apply my-1 mr-7 cursor-pointer list-none font-thin text-gray-500;
 }
