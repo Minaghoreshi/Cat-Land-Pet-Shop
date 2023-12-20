@@ -51,17 +51,25 @@ export const HomeSidebar = () => {
     console.error("Error fetching data:", categoryError);
     return <p>Error fetching data</p>;
   }
+
   return (
     <div className="sidebar">
       {menuItems.map((item) => (
         <div key={item._id} className="sidebar-item">
-          <button
-            className="item-label"
-            onClick={() => fetchSubItems(item._id)}
-          >
-            {!item.isOpen ? <HiPlus /> : <HiMinus />}
-            {item.name}
-          </button>
+          <div className="item-label">
+            {!item.isOpen ? (
+              <HiPlus
+                className="cursor-pointer"
+                onClick={() => fetchSubItems(item._id)}
+              />
+            ) : (
+              <HiMinus
+                className="cursor-pointer"
+                onClick={() => fetchSubItems(item._id)}
+              />
+            )}
+            <span>{item.name}</span>
+          </div>
           <hr />
           {item.isOpen && (
             <ul className="sub-items">

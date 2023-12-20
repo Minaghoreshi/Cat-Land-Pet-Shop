@@ -47,8 +47,11 @@ body {
   @apply flex my-2 gap-3;
 }
 .sub-items-li {
-  @apply my-1 mr-7 cursor-pointer list-none font-thin text-gray-500;
+  @apply my-2 hover:text-selected mr-7 cursor-pointer list-none font-thin text-gray-500;
 }
 .sidebar-item {
   @apply mb-8;
+}
+.item-label span {
+  @apply cursor-pointer hover:underline underline-offset-8 hover:text-selected;
 }
