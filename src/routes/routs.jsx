@@ -45,7 +45,7 @@ const AppRoute = () => {
         <Route path="/products-table" element={<AdminProducts />} />
         <Route path="/stocks-table" element={<AdminStocks />} />
         <Route path="/orders-table" element={<AdminOrders />} />
-        <Route path="/category" element={<Category />} />
+        <Route path="/category/:id?" element={<Category />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

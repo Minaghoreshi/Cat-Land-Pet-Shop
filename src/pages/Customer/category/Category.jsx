@@ -1,6 +1,6 @@
 import React from "react";
-import { CustomerLayout } from "../../../components";
-import { CategoryPage } from "../../../components/widget/category/CategoryPage";
+import { CustomerLayout, CategoryPage } from "../../../components";
+
 const Category = () => {
   return (
     <CustomerLayout>

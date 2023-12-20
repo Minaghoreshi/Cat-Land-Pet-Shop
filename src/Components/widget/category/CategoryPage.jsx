@@ -4,7 +4,10 @@ import { MainCategory } from "./MainCategory";
 import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
+import { useParams } from "react-router-dom";
 export const CategoryPage = () => {
+  const { id } = useParams();
+  console.log(id);
   const [menuItems, setMenuItems] = useState([]);
   const {
     data: category,
@@ -40,6 +43,7 @@ export const CategoryPage = () => {
   useEffect(() => {
     fetchSubCategories();
   }, [category]);
+
   return (
     <div className="flex mt-8 gap-16">
       <HomeSidebar menuItems={menuItems} setMenuItems={setMenuItems} />
