@@ -1,3 +1,4 @@
+import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
 export const ProductsTable = ({ data, columns }) => {
@@ -42,7 +43,7 @@ export const ProductsTable = ({ data, columns }) => {
               <div>
                 <DeleteModal data={row} />
                 <span> / </span>
-                <EditModal product={row} />
+                <AddModal product={row} />
               </div>
             </td>
           </tr>

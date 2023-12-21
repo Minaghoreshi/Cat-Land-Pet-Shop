@@ -17,6 +17,7 @@ import {
   ProductsTablecolumns,
 } from "../constants";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
+import { AddModal } from "../../../components/widget/modals/AddModal";
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
@@ -58,7 +59,8 @@ const AdminProducts = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         {" "}
         <TableTitle title={ProductTableTitle} />
-        <TableButton button={ProductTableButton} />
+        {/* <TableButton button={ProductTableButton} /> */}
+        <AddModal />
       </div>
       {data.data && wholeData ? (
         <ProductsTable

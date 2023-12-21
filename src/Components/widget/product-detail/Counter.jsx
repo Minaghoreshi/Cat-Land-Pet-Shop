@@ -28,7 +28,7 @@ export const Counter = ({ initialValue = 1, min = 0, max, onChange }) => {
       >
         -
       </Button>
-      <span className="text-lg text-2xl">{count}</span>
+      <span className="text-lg text-2xl">{max === 0 ? 0 : count}</span>
       <Button
         disabled={max === 0 ? true : false}
         pill
