@@ -9,7 +9,7 @@ export const HomeSidebar = ({ menuItems, setMenuItems }) => {
     });
   };
   const { id } = useParams();
-  console.log(id);
+
   return (
     <div className="sidebar">
       {menuItems.map((item) => (
