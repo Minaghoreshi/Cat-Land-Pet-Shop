@@ -22,10 +22,22 @@ export const AddModal = ({ product }) => {
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [subcategories, setSubCategories] = useState(null);
+  const [productImages, setProductImages] = useState([]);
+  const [productThumbnail, setProductThumbnail] = useState("");
+
   const editorRef = useRef(null);
   function onCloseModal() {
     setOpenModal(false);
   }
+  useEffect(() => {
+    if (product && product.images) {
+      setProductImages(product.images);
+    }
+    if (product && product.thumbnail) {
+      setProductThumbnail(product.thumbnail);
+    }
+  }, [product]);
+
   const handleSelectCategory = (categoryId) => {
     setSelectedCategory(categoryId);
     console.log("hey");
@@ -103,10 +115,13 @@ export const AddModal = ({ product }) => {
       }
     },
   });
+  const handleThumbnailDelete = () => {
+    setProductThumbnail("");
+  };
   const handleImageDelete = (index) => {
-    const updatedImages = [...formik.values.images];
+    const updatedImages = [...productImages];
     updatedImages.splice(index, 1);
-    formik.setFieldValue("images", updatedImages);
+    setProductImages(updatedImages);
   };
   const { data, error, isLoading } = useQuery(["categories"], () =>
     getAllCategories()
@@ -187,23 +202,21 @@ export const AddModal = ({ product }) => {
                 onBlur={formik.handleBlur}
               />{" "}
               <div className="mt-3 flex gap-3 flex-wrap">
-                {product && formik.values.thumbnail ? (
+                {productThumbnail ? (
                   <div className="relative">
                     <TiDelete
                       className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
-                      onClick={() => {
-                        formik.setFieldValue("thumbnail", ""); // Clear the thumbnail value
-                      }}
+                      onClick={handleThumbnailDelete}
                     />
                     <img
-                      className="w-24 h-24 border "
-                      alt={`product-${formik.values.thumbnail}`}
-                      src={`http://localhost:8000/images/products/thumbnails/${formik.values.thumbnail}`}
+                      className="w-24 h-24 border"
+                      alt={`product-${productThumbnail}`}
+                      src={`http://localhost:8000/images/products/thumbnails/${productThumbnail}`}
                     />
                   </div>
                 ) : (
                   ""
-                )}{" "}
+                )}
               </div>
               {formik.touched.thumbnail && formik.errors.thumbnail && (
                 <div className="text-red-500">{formik.errors.thumbnail}</div>
@@ -227,7 +240,7 @@ export const AddModal = ({ product }) => {
             />{" "}
             <div className="mt-3 flex gap-3 flex-wrap">
               {product
-                ? formik.values.images.map((image, index) => (
+                ? productImages.map((image, index) => (
                     <div key={index} className="relative">
                       <TiDelete
                         className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
