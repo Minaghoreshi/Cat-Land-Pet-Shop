@@ -1,6 +1,7 @@
 import { AddModal } from "../modals/AddModal";
 import { DeleteModal } from "../modals/DeleteModal";
 import { EditModal } from "../modals/EditModal";
+
 export const ProductsTable = ({ data, columns }) => {
   return (
     <table className="table ">

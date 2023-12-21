@@ -2,7 +2,8 @@ import { Button, Label, Modal, Select, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { validationSchema } from "./AddSchema";
 import { useFormik } from "formik";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
+import { queryClient } from "../../../../src/index";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import {
@@ -15,9 +16,7 @@ import { TiDelete } from "react-icons/ti";
 import { store } from "../../../store";
 import { Editor } from "@tinymce/tinymce-react";
 
-export const AddModal = ({ product }) => {
-  const queryClient = useQueryClient();
-
+export const AddModal = ({ product, client }) => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -60,7 +59,7 @@ export const AddModal = ({ product }) => {
   const formik = useFormik({
     initialValues: {
       thumbnail: product?.thumbnail || "",
-      images: product?.images || "",
+      images: product?.images || [],
       name: product?.name || "",
       category: product?.category || "",
       subcategory: product?.subcategory || "",
@@ -95,22 +94,14 @@ export const AddModal = ({ product }) => {
           console.log(pair[0] + ", " + pair[1]);
         }
         setOpenModal(false);
-        if (product) {
-          // If product exists, update the product
-          await addEditedProduct(product._id, formdata);
-        } else {
-          // If no product, add a new product
-          const result = await addNewProduct(formdata);
-          if (result && result === 200) {
-            queryClient.invalidateQueries("products");
-          }
-        }
-
-        // Refetch the query after a successful request
-        // queryClient.invalidateQueries("products");
-
-        // addNewProduct(formdata);
+        await (product
+          ? addEditedProduct(formdata, product._id)
+          : addNewProduct(formdata));
+        client.invalidateQueries("products");
       } catch (error) {
+        client.invalidateQueries("products");
+
+        console.log("here");
         const state = store.getState();
         const isLogin = state.auth.isLogin;
         if (error.response.status === "401" && isLogin) {

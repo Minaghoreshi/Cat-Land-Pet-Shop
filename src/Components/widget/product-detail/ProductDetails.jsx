@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../../api/products/products-api";
@@ -6,9 +6,9 @@ import { Breadcrumb, Button, Card, Carousel } from "flowbite-react";
 import { CustomBreadCrump } from "./CustomBreadCrump";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-import Counter from "./Counter";
+
 import "swiper/css";
-import DOMPurify from "dompurify";
+import * as DOMPurify from "dompurify";
 
 // Import Swiper styles
 import "swiper/css";
@@ -24,6 +24,15 @@ export const ProductDetails = () => {
   const { data, error, isLoading } = useQuery(["product", id], () => {
     return getProductById(id);
   });
+  const myRef = useRef();
+
+  useEffect(() => {
+    if (myRef.current && product) {
+      const sanitizedHTML = DOMPurify.sanitize(product.description);
+      myRef.current.innerHTML = sanitizedHTML;
+    }
+  }, [myRef, product]);
+
   useEffect(() => {
     if (data) {
       setProduct(data);
@@ -55,13 +64,11 @@ export const ProductDetails = () => {
       </div>
       <div className="flex flex-col gap-7">
         <h2 className="text-primary text-3xl ">توضیحات محصول</h2>
-        <p
-          className="font-thin text-gray-500"
-          dangerouslySetInnerHTML={{ __html: product.description }}
-        >
-          {/* {" "} */}
-          {/* {product.description} */}
-        </p>
+        <div
+          className="text-gray-500"
+          ref={myRef}
+          dangerouslySetInnerHTML={{ __html: myRef.current?.innerHTML || "" }}
+        ></div>
       </div>
     </div>
   ) : (

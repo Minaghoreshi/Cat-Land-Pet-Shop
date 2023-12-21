@@ -48,12 +48,14 @@ export const addNewProduct = async (formData) => {
     console.log("Product edited successfully:", response.data);
     return response.data; // Optionally, return the response data if needed
   } catch (error) {
-    if (error.response && error.response.status === 401) {
+    if (error.response.status === 401) {
       return null;
     }
 
     // If it's not a 401 error, log it as an actual error
-    console.error("Error adding product:", error.message);
+    else {
+      console.log(console.error());
+    }
     // Rethrow the error to handle it in the calling code if needed
   }
 };
