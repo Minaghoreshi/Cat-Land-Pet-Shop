@@ -20,11 +20,21 @@ export const Counter = ({ initialValue = 1, min = 0, max, onChange }) => {
 
   return (
     <div className="flex flex-col justify-center items-center shadow-custom ">
-      <Button pill onClick={handleDecrement} className="w-[45px] h-[45px]">
+      <Button
+        disabled={max === 0 ? true : false}
+        pill
+        onClick={handleDecrement}
+        className="w-[45px] h-[45px]"
+      >
         -
       </Button>
       <span className="text-lg text-2xl">{count}</span>
-      <Button pill onClick={handleIncrement} className="w-[45px] h-[45px]">
+      <Button
+        disabled={max === 0 ? true : false}
+        pill
+        onClick={handleIncrement}
+        className="w-[45px] h-[45px]"
+      >
         +
       </Button>
     </div>
