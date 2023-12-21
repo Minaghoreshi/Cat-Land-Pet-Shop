@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import { getProductById } from "../../../api/products/products-api";
 import { Breadcrumb, Button, Card, Carousel } from "flowbite-react";
 import { CustomBreadCrump } from "./CustomBreadCrump";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import Counter from "./Counter";
+import "swiper/css";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -24,20 +25,21 @@ export const ProductDetails = () => {
       setProduct(data);
     }
   }, [data, product]);
-  if (product) {
-    console.log(product);
-  }
+
   return product ? (
     <div className="w-screen-3xl py-12 px-28 flex flex-col gap-20 ">
       {" "}
       <div className="flex gap-14">
         {" "}
         <Swiper
-          spaceBetween={10}
+          spaceBetween={50}
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
           slidesPerView={1}
           navigation
           pagination={{ clickable: true }}
           autoplay={{ delay: 3000 }}
+          onSlideChange={() => console.log("slide change")}
+          onSwiper={(swiper) => console.log(swiper)}
           style={{ margin: 0, maxWidth: "600px" }}
         >
           {product.images.map((image, index) => (
