@@ -39,12 +39,12 @@ api.interceptors.response.use(
           .dispatch(refresh(generatedRefreshToken))
           .unwrap()
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             localStorage.setItem("token", data.token.accessToken);
             originalRequest.headers[
               "Authorization"
             ] = `Bearer ${data.token.accessToken}`;
-            console.log(originalRequest);
+            // console.log(originalRequest);
             return api(originalRequest);
           });
       } catch (refreshError) {

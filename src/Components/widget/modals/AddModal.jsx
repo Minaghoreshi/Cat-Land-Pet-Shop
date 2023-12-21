@@ -97,13 +97,17 @@ export const AddModal = ({ product }) => {
         setOpenModal(false);
         if (product) {
           // If product exists, update the product
-          addEditedProduct(product._id, formdata);
-          queryClient.invalidateQueries("products");
+          await addEditedProduct(product._id, formdata);
         } else {
           // If no product, add a new product
-          addNewProduct(formdata);
-          queryClient.invalidateQueries("products");
+          const result = await addNewProduct(formdata);
+          if (result && result === 200) {
+            queryClient.invalidateQueries("products");
+          }
         }
+
+        // Refetch the query after a successful request
+        // queryClient.invalidateQueries("products");
 
         // addNewProduct(formdata);
       } catch (error) {
@@ -352,7 +356,7 @@ export const AddModal = ({ product }) => {
             </div>{" "}
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="price" />
+                <Label htmlFor="price" value="برند" />
               </div>
               <TextInput
                 name="brand"

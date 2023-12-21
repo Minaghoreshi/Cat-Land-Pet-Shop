@@ -28,7 +28,6 @@ export const addEditedProduct = async (formData, productID) => {
     return response.data;
   } catch (error) {
     console.error("Error editing product:", error.message);
-    throw error;
   }
 };
 
@@ -49,7 +48,12 @@ export const addNewProduct = async (formData) => {
     console.log("Product edited successfully:", response.data);
     return response.data; // Optionally, return the response data if needed
   } catch (error) {
-    console.error("Error editing product:", error.message);
+    if (error.response && error.response.status === 401) {
+      return null;
+    }
+
+    // If it's not a 401 error, log it as an actual error
+    console.error("Error adding product:", error.message);
     // Rethrow the error to handle it in the calling code if needed
   }
 };
@@ -74,7 +78,6 @@ export const addMultipleEditedProduct = async (dataToSend) => {
   } catch (error) {
     console.log(error);
     console.error("Error editing products:", error.message);
-    throw error;
   }
 };
 
