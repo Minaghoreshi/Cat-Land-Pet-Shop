@@ -9,6 +9,12 @@ export const EditableItem = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
+  const [originalValue, setOriginalValue] = useState(initialValue);
+
+  useEffect(() => {
+    setOriginalValue(initialValue);
+    setValue(initialValue);
+  }, [initialValue]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -16,16 +22,25 @@ export const EditableItem = ({
 
   const handleBlur = (event) => {
     setIsEditing(false);
-    if (value !== initialValue) {
+    if (value !== originalValue) {
       update(event.target.id, event.target.name, event.target.value);
       // setIsEdited(true);
     } else {
       setIsEditing(false);
     }
   };
+
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setIsEditing(false);
+      setValue(originalValue);
+    }
+  };
+
   return (
     <div>
       {isEditing ? (
@@ -38,7 +53,8 @@ export const EditableItem = ({
             handleBlur(event);
           }}
           onChange={handleChange}
-        ></input>
+          onKeyDown={handleKeyDown}
+        />
       ) : (
         <span
           className="editable cursor-pointer text-blue-500"
