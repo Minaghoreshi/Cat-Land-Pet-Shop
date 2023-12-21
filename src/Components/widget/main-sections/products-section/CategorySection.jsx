@@ -1,5 +1,5 @@
 import React from "react";
-import { CustomCard } from "./CustomCard";
+import { CustomCard } from "../../CustomCard";
 
 export const CategorySection = ({ item }) => {
   return (
@@ -13,7 +13,7 @@ export const CategorySection = ({ item }) => {
       <div className="flex flex-wrap gap-16 justify-center">
         {" "}
         {item.products?.slice(0, 6).map((product) => (
-          <CustomCard product={product} />
+          <CustomCard product={product} key={product._id} />
         ))}
       </div>
     </div>

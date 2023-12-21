@@ -105,3 +105,24 @@ export const getProductsByCategory = async (categoryId) => {
 
   return response.data.data.products;
 };
+export const getProductsBySubcategory = async (subCategoryId) => {
+  const params = {
+    subcategory: subCategoryId,
+  };
+
+  const response = await api.get(apiUrl, {
+    params,
+  });
+
+  return response.data.data.products;
+};
+export const getProductById = async (productId) => {
+  try {
+    const response = await api.get(
+      `http://localhost:8000/api/products/${productId}`
+    );
+    return response.data.data.product;
+  } catch (error) {
+    console.log(error);
+  }
+};

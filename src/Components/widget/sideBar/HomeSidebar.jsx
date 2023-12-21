@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { HiPlus, HiMinus } from "react-icons/hi";
-import { useQuery } from "react-query";
-import { getAllCategories } from "../../../api/category/category-api";
-import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
-
+import { Link, useParams } from "react-router-dom";
 export const HomeSidebar = ({ menuItems, setMenuItems }) => {
   const showSubCategory = (categoryId) => {
     setMenuItems((prevItems) => {
@@ -12,6 +8,7 @@ export const HomeSidebar = ({ menuItems, setMenuItems }) => {
       );
     });
   };
+  const { id } = useParams();
 
   return (
     <div className="sidebar">
@@ -29,15 +26,30 @@ export const HomeSidebar = ({ menuItems, setMenuItems }) => {
                 onClick={() => showSubCategory(item._id)}
               />
             )}
-            <span>{item.name}</span>
+            <Link to={`/category/${item._id}`}>
+              <span className={id && item._id === id ? "text-selected" : ""}>
+                {item.name}
+              </span>
+            </Link>
           </div>
           <hr />
           {item.isOpen && (
             <ul className="sub-items">
               {item.subCategories.map((subcategory, index) => (
-                <li key={subcategory._id} className="sub-items-li">
-                  {subcategory.name}
-                </li>
+                <Link
+                  to={`/SubCategory/${subcategory._id}`}
+                  key={subcategory._id}
+                >
+                  <li
+                    className={
+                      id && subcategory._id === id
+                        ? " sub-items-li text-selected"
+                        : "sub-items-li"
+                    }
+                  >
+                    {subcategory.name}{" "}
+                  </li>
+                </Link>
               ))}
             </ul>
           )}
