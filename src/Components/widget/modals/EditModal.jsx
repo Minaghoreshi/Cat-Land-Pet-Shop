@@ -37,13 +37,13 @@ export const EditModal = ({ product }) => {
     const flattened = {};
     for (const key in values) {
       const value = values[key];
-      if (Array.isArray(value)) {
-        value.forEach((element, index) => {
-          flattened[`${key}[${index}]`] = element;
-        });
-      } else {
-        flattened[key] = value;
-      }
+      // if (Array.isArray(value)) {
+      //   value.forEach((element, index) => {
+      //     flattened[`${key}[${index}]`] = element;
+      //   });
+      // } else {
+      flattened[key] = value;
+      // }
     }
     return flattened;
   };
@@ -75,7 +75,18 @@ export const EditModal = ({ product }) => {
         const flattenArray = flattenArrays(formik.values);
         console.log(flattenArray);
         Object.entries(flattenArray).forEach(([key, value]) => {
-          formdata.append(key, value);
+          // Check if key is 'thumbnail' or 'images'
+          if (key === "thumbnail" && value) {
+            formdata.append("thumbnail", value);
+          } else if (key === "images" && value) {
+            // If 'images' key, and value is an array, iterate and append each image
+            value.forEach((image) => {
+              formdata.append("images", image);
+            });
+          } else {
+            // For other keys, append as usual
+            formdata.append(key, value);
+          }
         });
         // for (const [key, value] of formdata.entries()) {
         //   console.log(`${key}: ${value}`);

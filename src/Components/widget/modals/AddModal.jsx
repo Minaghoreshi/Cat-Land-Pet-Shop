@@ -1,16 +1,23 @@
 import { Button, Label, Modal, Select, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
-import { addValidationSchema } from "./AddSchema";
+import { validationSchema } from "./AddSchema";
 import { useFormik } from "formik";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
-import { addNewProduct } from "../../../api/products/products-api";
+import {
+  addEditedProduct,
+  addNewProduct,
+} from "../../../api/products/products-api";
+import { TiDelete } from "react-icons/ti";
+
 // import { Store } from "@reduxjs/toolkit";
 import { store } from "../../../store";
 import { Editor } from "@tinymce/tinymce-react";
 
-export const AddModal = () => {
+export const AddModal = ({ product }) => {
+  const queryClient = useQueryClient();
+
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -24,37 +31,33 @@ export const AddModal = () => {
     console.log("hey");
   };
   const handleEditorChange = (content) => {
-    formik.setFieldValue("description", content);
-
-    console.log(formik.values.description);
+    if (editorRef.current) {
+      console.log(editorRef.current.getContent());
+    }
   };
+
   const flattenArrays = (values) => {
     const flattened = {};
     for (const key in values) {
       const value = values[key];
-      // if (Array.isArray(value)) {
-      //   value.forEach((element, index) => {
-      //     flattened[`${key}[${index}]`] = element;
-      //   });
-      // } else {
+
       flattened[key] = value;
-      // }
     }
     return flattened;
   };
   const formik = useFormik({
     initialValues: {
-      thumbnail: "",
-      images: "",
-      name: "",
-      category: "",
-      subcategory: "",
-      quantity: "",
-      price: "",
-      description: "",
-      brand: "",
+      thumbnail: product?.thumbnail || "",
+      images: product?.images || "",
+      name: product?.name || "",
+      category: product?.category || "",
+      subcategory: product?.subcategory || "",
+      quantity: product?.quantity || "",
+      price: product?.price || "",
+      description: product?.description || "",
+      brand: product?.brand || "",
     },
-    validationSchema: addValidationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
         const flattenArray = flattenArrays(formik.values);
@@ -80,7 +83,17 @@ export const AddModal = () => {
           console.log(pair[0] + ", " + pair[1]);
         }
         setOpenModal(false);
-        addNewProduct(formdata);
+        if (product) {
+          // If product exists, update the product
+          addEditedProduct(product._id, formdata);
+          queryClient.invalidateQueries("products");
+        } else {
+          // If no product, add a new product
+          addNewProduct(formdata);
+          queryClient.invalidateQueries("products");
+        }
+
+        // addNewProduct(formdata);
       } catch (error) {
         const state = store.getState();
         const isLogin = state.auth.isLogin;
@@ -90,6 +103,11 @@ export const AddModal = () => {
       }
     },
   });
+  const handleImageDelete = (index) => {
+    const updatedImages = [...formik.values.images];
+    updatedImages.splice(index, 1);
+    formik.setFieldValue("images", updatedImages);
+  };
   const { data, error, isLoading } = useQuery(["categories"], () =>
     getAllCategories()
   );
@@ -119,23 +137,35 @@ export const AddModal = () => {
       console.log(editorRef.current.getContent());
     }
   };
+  const setContent = () => {
+    const content = editorRef.current.getContent();
+    // console.log(content);
+    formik.setFieldValue("description", content);
+    console.log(formik.values.description);
+  };
   return (
     <>
-      <button
-        className="hover:underline text-blue-600"
-        onClick={() => setOpenModal(true)}
-      >
-        افزودن کالا
-      </button>{" "}
+      {product ? (
+        <button
+          className="hover:underline text-blue-600"
+          onClick={() => setOpenModal(true)}
+        >
+          ویرایش
+        </button>
+      ) : (
+        <Button onClick={() => setOpenModal(true)}>افزودن کالا</Button>
+      )}
+
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         {" "}
+        <Modal.Header />
         <Modal.Body>
           <form
             className="flex max-w-md flex-col gap-4"
             onSubmit={formik.handleSubmit}
           >
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              افزودن کالا
+              {product ? "ویرایش کالا" : "افزودن کالا"}
             </h3>{" "}
             <div>
               <div className="mb-2 block">
@@ -156,35 +186,64 @@ export const AddModal = () => {
                 }}
                 onBlur={formik.handleBlur}
               />{" "}
+              <div className="mt-3 flex gap-3 flex-wrap">
+                {product && formik.values.thumbnail ? (
+                  <div className="relative">
+                    <TiDelete
+                      className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
+                      onClick={() => {
+                        formik.setFieldValue("thumbnail", ""); // Clear the thumbnail value
+                      }}
+                    />
+                    <img
+                      className="w-24 h-24 border "
+                      alt={`product-${formik.values.thumbnail}`}
+                      src={`http://localhost:8000/images/products/thumbnails/${formik.values.thumbnail}`}
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}{" "}
+              </div>
               {formik.touched.thumbnail && formik.errors.thumbnail && (
                 <div className="text-red-500">{formik.errors.thumbnail}</div>
               )}
             </div>{" "}
-            <div>
-              {" "}
-              <div className="mb-2 block">
-                <Label htmlFor="images" value="تصویر کالا" />
-              </div>
-              <TextInput
-                name="images"
-                id="multiple-file-upload"
-                type="file"
-                multiple
-                onChange={(event) => {
-                  const files = event.currentTarget.files;
-                  const allImages = [];
-                  for (let i = 0; i < files.length; i++) {
-                    allImages.push(files[i]);
-                  }
+            <TextInput
+              name="images"
+              id="multiple-file-upload"
+              type="file"
+              multiple
+              onChange={(event) => {
+                const files = event.currentTarget.files;
+                const allImages = [];
+                for (let i = 0; i < files.length; i++) {
+                  allImages.push(files[i]);
+                }
 
-                  formik.setFieldValue("images", allImages);
-                }}
-                onBlur={formik.handleBlur}
-              />{" "}
-              {formik.touched.images && formik.errors.images && (
-                <div className="text-red-500">{formik.errors.images}</div>
-              )}
-            </div>{" "}
+                formik.setFieldValue("images", allImages);
+              }}
+              onBlur={formik.handleBlur}
+            />{" "}
+            <div className="mt-3 flex gap-3 flex-wrap">
+              {product
+                ? formik.values.images.map((image, index) => (
+                    <div key={index} className="relative">
+                      <TiDelete
+                        className="w-8 absolute z-10 top-0 h-8 cursor-pointer"
+                        onClick={() => {
+                          handleImageDelete(index);
+                        }}
+                      />
+                      <img
+                        className="w-24 h-24 border "
+                        alt={`product-${index}`}
+                        src={`http://localhost:8000/images/products/images/${image}`}
+                      />
+                    </div>
+                  ))
+                : ""}{" "}
+            </div>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="name" value="نام کالا" />
@@ -214,7 +273,7 @@ export const AddModal = () => {
               value={formik.values.category}
             >
               <option value="" selected>
-                {" "}
+                دسته بندی
               </option>
               {categories?.map(
                 (category, index) => {
@@ -298,7 +357,9 @@ export const AddModal = () => {
               name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
               onEditorChange={handleEditorChange}
+              onInit={(evt, editor) => (editorRef.current = editor)}
               initialValue={formik.values.description}
+              onBlur={setContent}
               init={{
                 resize: false,
                 height: 300,

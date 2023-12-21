@@ -8,6 +8,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 import Counter from "./Counter";
 import "swiper/css";
+import DOMPurify from "dompurify";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -53,7 +55,13 @@ export const ProductDetails = () => {
       </div>
       <div className="flex flex-col gap-7">
         <h2 className="text-primary text-3xl ">توضیحات محصول</h2>
-        <p className="font-thin text-gray-500"> {product.description}</p>
+        <p
+          className="font-thin text-gray-500"
+          dangerouslySetInnerHTML={{ __html: product.description }}
+        >
+          {/* {" "} */}
+          {/* {product.description} */}
+        </p>
       </div>
     </div>
   ) : (
