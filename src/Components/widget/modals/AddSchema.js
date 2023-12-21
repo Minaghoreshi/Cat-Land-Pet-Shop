@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const editValidationSchema = Yup.object().shape({
+export const addValidationSchema = Yup.object().shape({
   thumbnail: Yup.mixed().required("تصویر پیش نمایش کالا الزامی است"),
   name: Yup.string()
     .required("نام کالا الزامی است")

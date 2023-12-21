@@ -50,7 +50,7 @@ export const addNewProduct = async (formData) => {
     return response.data; // Optionally, return the response data if needed
   } catch (error) {
     console.error("Error editing product:", error.message);
-    throw error; // Rethrow the error to handle it in the calling code if needed
+    // Rethrow the error to handle it in the calling code if needed
   }
 };
 

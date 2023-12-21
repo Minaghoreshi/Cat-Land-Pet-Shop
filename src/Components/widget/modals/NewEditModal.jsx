@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Checkbox,
@@ -22,15 +23,19 @@ import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useQuery } from "react-query";
-export const EditModal = ({ product }) => {
+export const NewEditModal = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [subcategories, setSubCategories] = useState(null);
-  const [productThumbnail, setProductThumbnail] = useState(product.thumbnail);
-  const [productImages, setProductImages] = useState(product.images);
-  const [productDescription, seProductDescription] = useState(
-    product.description
+  const [productThumbnail, setProductThumbnail] = useState(
+    product ? product.thumbnail : null
+  );
+  const [productImages, setProductImages] = useState(
+    product ? product.images : []
+  );
+  const [productDescription, setProductDescription] = useState(
+    product ? product.description : ""
   );
   const editorRef = useRef(null);
   const flattenArrays = (values) => {
@@ -47,50 +52,39 @@ export const EditModal = ({ product }) => {
     }
     return flattened;
   };
-  // console.log(product.description);
+
   const formik = useFormik({
     initialValues: {
-      thumbnail: productThumbnail,
-      images: "",
-      name: product.name, // Add initial values for your form fields
-      category: "",
-      subcategory: "",
-      quantity: product.quantity,
-      price: product.price,
-      description: productDescription,
+      thumbnail: product ? productThumbnail : null,
+      images: product ? productImages : [],
+      name: product ? product.name : "", // Add initial values for your form fields
+      category: product ? product.category : "",
+      subcategory: product ? product.subcategory : "",
+      quantity: product ? product.quantity : "",
+      price: product ? product.price : "",
+      description: product ? productDescription : "",
     },
     validationSchema: editValidationSchema,
     onSubmit: async (values) => {
       try {
         values.thumbnail = values.thumbnail || productThumbnail;
-        values.images = values.images || productImages;
+        values.images =
+          values.images.length > 0 ? values.images : productImages;
         // Handle form submission logic here
-        // console.log("Form data submitted:", values);
-        // console.log(product);
-        // // Example: Sending data to the server using axios
-        // // await axios.post("/api/your-endpoint", values);
-        // console.log(formik.values.name);
-        // Close the modal after successful submission
         const formdata = new FormData();
         const flattenArray = flattenArrays(formik.values);
-        console.log(flattenArray);
         Object.entries(flattenArray).forEach(([key, value]) => {
           formdata.append(key, value);
         });
-        // for (const [key, value] of formdata.entries()) {
-        //   console.log(`${key}: ${value}`);
-        // }
-        // console.log(product._id);
         setOpenModal(false);
+        // Add logic to handle the form submission (e.g., calling an API)
         addEditedProduct(formdata, product._id);
       } catch (error) {
         console.error("Error submitting form:", error);
       }
     },
   });
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
+
   const categoryURL = `http://localhost:8000/api/categories`;
 
   const { data, error, isLoading } = useQuery(["categories"], () =>
@@ -303,22 +297,17 @@ export const EditModal = ({ product }) => {
               <option value="" selected>
                 {" "}
               </option>
-              {categories?.map(
-                (category, index) => {
-                  if (category.name !== product.category) {
-                    return (
-                      <option key={index} value={category._id}>
-                        {category.name}
-                      </option>
-                    );
-                  } else {
-                    return null;
-                  }
+              {categories?.map((category, index) => {
+                if (category.name !== product.category) {
+                  return (
+                    <option key={index} value={category._id}>
+                      {category.name}
+                    </option>
+                  );
+                } else {
+                  return null;
                 }
-                // <option key={index} value={category._id}>
-                //   {category.name}
-                // </option>
-              )}
+              })}
             </Select>
             {formik.touched.category && formik.errors.category && (
               <div className="text-red-500">{formik.errors.category}</div>
@@ -421,94 +410,3 @@ export const EditModal = ({ product }) => {
     </>
   );
 };
-// {/* <div className="space-y-6">
-//   <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-//     ویرایش کالا
-//   </h3>
-//   {/* file Upload */}
-//   <div>
-//     <div>
-//       <Label htmlFor="multiple-file-upload" value="تصویر کالا" />
-//     </div>
-//     <input type="file" id="multiple-file-upload" multiple />
-//   </div>
-//   {/* file Upload */}
-//   {/* product name */}
-//   <div>
-//     <div className="mb-2 block">
-//       <Label htmlFor="password" value="نام کالا" />
-//     </div>
-//     <TextInput id="password" type="text" required />
-//   </div>{" "}
-//   {/* product name */}
-//   {/* category options */}
-//   <Select
-//     id="category"
-//     defaultValue={"سشیبس"}
-//     onChange={(e) => {
-//       handleSelectCategory(e.target.value);
-//     }}
-//   >
-//     <option value="" selected>
-//       دسته بندی
-//     </option>{" "}
-//     {categories
-//       ? categories.map((category, index) => (
-//           <option key={index} value={category._id}>
-//             {category.name}
-//           </option>
-//         ))
-//       : ""}
-//   </Select>
-//   {/* category options */}
-//   {/* subcategory options */}
-//   <Select id="category" defaultValue={"زیر مجموعه"}>
-//     <option value="">زیرمجموعه </option>{" "}
-//     {subcategories
-//       ? subcategories.map((subcategory, index) => (
-//           <option key={index}>{subcategory.name}</option>
-//         ))
-//       : ""}
-//   </Select>
-//   {/* subcategory options */}
-//   <Editor
-//     apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
-//     onInit={(evt, editor) => (editorRef.current = editor)}
-//     initialValue=""
-//     init={{
-//       resize: false,
-//       height: 300,
-//       menubar: false,
-//       plugins: [
-//         "advlist",
-//         "autolink",
-//         "lists",
-//         "link",
-//         "image",
-//         "charmap",
-//         "preview",
-//         "anchor",
-//         "searchreplace",
-//         "visualblocks",
-//         "code",
-//         "fullscreen",
-//         "insertdatetime",
-//         "media",
-//         "table",
-//         "code",
-//         "help",
-//         "wordcount",
-//       ],
-//       toolbar:
-//         "undo redo | blocks | " +
-//         "bold italic forecolor | alignleft aligncenter " +
-//         "alignright alignjustify | bullist numlist outdent indent | " +
-//         "removeformat | help",
-//       content_style:
-//         "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
-//     }}
-//   />
-//   <div className="w-full flex justify-center">
-//     <Button onClick={log}>ذخیره</Button>
-//   </div>
-// </div>; */}
