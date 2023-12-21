@@ -13,6 +13,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { CustomSwiper } from "./Swiper";
+import { ProductDescript } from "./ProductDescript";
 export const ProductDetails = () => {
   const { id } = useParams();
 
@@ -31,41 +33,14 @@ export const ProductDetails = () => {
       {" "}
       <div className="flex gap-14">
         {" "}
-        <Swiper
-          spaceBetween={50}
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
-          onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
-          style={{ margin: 0, maxWidth: "600px" }}
-        >
-          {product.images.map((image, index) => (
-            <SwiperSlide key={image}>
-              <img
-                src={`http://localhost:8000/images/products/images/${image}`}
-                alt={`Slide ${index + 1}`}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div className="flex flex-col justify-between">
-          <h1 className="text-primary text-3xl">{product.name}</h1>{" "}
-          <CustomBreadCrump
-            category={product.category.name}
-            subcategory={product.subcategory.name}
-          />
-          <span className="text-lg text-xl">
-            {" "}
-            {` ${product.price.toLocaleString("en-US")} تومان`}
-          </span>
-          <div className="flex gap-20 items-center ">
-            <Counter max={product.quantity} />
-            <Button size="xl">افزودن به سبد خرید</Button>
-          </div>
-        </div>
+        <CustomSwiper images={product.images} />
+        <ProductDescript
+          name={product.name}
+          category={product.category.name}
+          subcategory={product.subcategory.name}
+          price={`${product.price.toLocaleString("en-US")}`}
+          quantity={product.quantity}
+        />
         {product.quantity === 0 ? (
           <div className="flex flex-col justify-center">
             <span className="text-3xl text-selected">

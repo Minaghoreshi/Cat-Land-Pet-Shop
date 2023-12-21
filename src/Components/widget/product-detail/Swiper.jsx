@@ -6,16 +6,18 @@ export const CustomSwiper = ({ images }) => {
   console.log(images);
   return (
     <Swiper
-      style={{ margin: 0 }}
-      spaceBetween={10}
+      spaceBetween={50}
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
       autoplay={{ delay: 3000 }}
-      className="w-[400px] m-0"
+      onSlideChange={() => console.log("slide change")}
+      onSwiper={(swiper) => console.log(swiper)}
+      style={{ margin: 0, maxWidth: "600px" }}
     >
       {images.map((image, index) => (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={image}>
           <img
             src={`http://localhost:8000/images/products/images/${image}`}
             alt={`Slide ${index + 1}`}
