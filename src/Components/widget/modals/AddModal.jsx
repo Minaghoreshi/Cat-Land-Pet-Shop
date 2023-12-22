@@ -23,7 +23,17 @@ export const AddModal = ({ product }) => {
   const [subcategories, setSubCategories] = useState(null);
   const [productImages, setProductImages] = useState([]);
   const [productThumbnail, setProductThumbnail] = useState("");
-
+  const formikInitialValues = {
+    thumbnail: productImages || "",
+    images: [],
+    name: product?.name || "",
+    category: "",
+    subcategory: "",
+    quantity: product?.quantity || "",
+    price: product?.price || "",
+    description: product?.description || "",
+    brand: product?.brand || "",
+  };
   const editorRef = useRef(null);
   function onCloseModal() {
     setOpenModal(false);
@@ -41,11 +51,6 @@ export const AddModal = ({ product }) => {
     setSelectedCategory(categoryId);
     console.log("hey");
   };
-  const handleEditorChange = (content) => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
 
   const flattenArrays = (values) => {
     const flattened = {};
@@ -57,35 +62,26 @@ export const AddModal = ({ product }) => {
     return flattened;
   };
   const formik = useFormik({
-    initialValues: {
-      thumbnail: product?.thumbnail || "",
-      images: product?.images || [],
-      name: product?.name || "",
-      category: product?.category || "",
-      subcategory: product?.subcategory || "",
-      quantity: product?.quantity || "",
-      price: product?.price || "",
-      description: product?.description || "",
-      brand: product?.brand || "",
-    },
+    initialValues: formikInitialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
         const flattenArray = flattenArrays(formik.values);
         console.log(flattenArray);
         const formdata = new FormData();
-
-        Object.entries(flattenArray).forEach(([key, value]) => {
+        console.log(formik.values.thumbnail);
+        Object.entries(formik.values).forEach(([key, value]) => {
           // Check if key is 'thumbnail' or 'images'
-          if (key === "thumbnail" && value) {
+          if (key === "thumbnail" && value instanceof File) {
+            // Check if 'thumbnail' key and value is an array
             formdata.append("thumbnail", value);
-          } else if (key === "images" && value) {
-            // If 'images' key, and value is an array, iterate and append each image
+          } else if (key === "images" && value instanceof Array) {
+            // If 'images' key and value is an array, iterate and append each image
             value.forEach((image) => {
               formdata.append("images", image);
             });
-          } else {
-            // For other keys, append as usual
+          } else if (key !== "thumbnail") {
+            // For other keys (excluding 'thumbnail'), append as usual
             formdata.append(key, value);
           }
         });
@@ -100,13 +96,7 @@ export const AddModal = ({ product }) => {
         queryClient.invalidateQueries("products");
       } catch (error) {
         queryClient.invalidateQueries("products");
-
         console.log("here");
-        const state = store.getState();
-        const isLogin = state.auth.isLogin;
-        if (error.response.status === "401" && isLogin) {
-          console.log(error.message);
-        }
       }
     },
   });
@@ -140,16 +130,13 @@ export const AddModal = ({ product }) => {
     };
 
     fetchData();
-    // console.log(subcategories);
   }, [selectedCategory]);
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
     }
   };
-  const setContent = () => {
-    const content = editorRef.current.getContent();
-    // console.log(content);
+  const setContent = (content) => {
     formik.setFieldValue("description", content);
     console.log(formik.values.description);
   };
@@ -166,7 +153,13 @@ export const AddModal = ({ product }) => {
         <Button onClick={() => setOpenModal(true)}>افزودن کالا</Button>
       )}
 
-      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+      <Modal
+        dismissible
+        show={openModal}
+        size="md"
+        onClose={onCloseModal}
+        popup
+      >
         {" "}
         <Modal.Header />
         <Modal.Body>
@@ -189,6 +182,7 @@ export const AddModal = ({ product }) => {
                 // value={formik.values.thumbnail}
                 onChange={(event) => {
                   // Update the formik values when the file input changes
+                  setProductThumbnail("");
                   formik.setFieldValue(
                     "thumbnail",
                     event.currentTarget.files[0]
@@ -296,6 +290,9 @@ export const AddModal = ({ product }) => {
                 // </option>
               )}
             </Select>{" "}
+            {formik.touched.category && formik.errors.category ? (
+              <div className="text-red-500">{formik.errors.category}</div>
+            ) : null}
             <Select
               name="subcategory"
               id="subcategory"
@@ -313,6 +310,9 @@ export const AddModal = ({ product }) => {
                   ))
                 : ""}
             </Select>{" "}
+            {formik.touched.category && formik.errors.subcategory ? (
+              <div className="text-red-500">{formik.errors.subcategory}</div>
+            ) : null}
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="name" value="موجودی " />
@@ -364,10 +364,11 @@ export const AddModal = ({ product }) => {
             <Editor
               name="description"
               apiKey="xqt3jzmt4hl3qfdunazekutixv0ihakcq2kjijkym918v30w"
-              onEditorChange={handleEditorChange}
               onInit={(evt, editor) => (editorRef.current = editor)}
               initialValue={formik.values.description}
-              onBlur={setContent}
+              onBlur={() => {
+                setContent(editorRef.current.getContent());
+              }}
               init={{
                 resize: false,
                 height: 300,
