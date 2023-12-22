@@ -1,8 +1,11 @@
 import axios from "axios";
 import api from "../axios";
+import Cookies from "js-cookie";
+
 const apiUrl = "http://localhost:8000/api/products";
+
 export const getProducts = async (page) => {
-  const response = await api.get(`http://localhost:8000/api/products`, {
+  const response = await api.get(apiUrl, {
     params: {
       page,
       limit: 5,
@@ -10,19 +13,16 @@ export const getProducts = async (page) => {
   });
   return response.data;
 };
+
 export const addEditedProduct = async (formData, productID) => {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   try {
-    const response = await api.patch(
-      `http://localhost:8000/api/products/${productID}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await api.patch(`${apiUrl}/${productID}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     console.log("Product edited successfully:", response.data);
     return response.data;
@@ -32,21 +32,17 @@ export const addEditedProduct = async (formData, productID) => {
 };
 
 export const addNewProduct = async (formData) => {
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   try {
-    const response = await api.post(
-      `http://localhost:8000/api/products`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await api.post(apiUrl, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    console.log("Product edited successfully:", response.data);
-    return response.data; // Optionally, return the response data if needed
+    console.log("Product added successfully:", response.data);
+    return response.data;
   } catch (error) {
     if (error.response.status === 401) {
       return null;
@@ -54,9 +50,10 @@ export const addNewProduct = async (formData) => {
 
     // If it's not a 401 error, log it as an actual error
     else {
-      console.log(console.error());
+      console.error(error);
     }
     // Rethrow the error to handle it in the calling code if needed
+    throw error;
   }
 };
 
@@ -78,17 +75,14 @@ export const addMultipleEditedProduct = async (dataToSend) => {
     console.log("Products edited successfully:", editedProducts);
     return editedProducts;
   } catch (error) {
-    console.log(error);
     console.error("Error editing products:", error.message);
   }
 };
 
-//api for delting
-export const deletProduct = async (productId) => {
+// API for deleting
+export const deleteProduct = async (productId) => {
   try {
-    const response = await api.delete(
-      `http://localhost:8000/api/products/${productId}`
-    );
+    const response = await api.delete(`${apiUrl}/${productId}`);
 
     // Handle the response data
     return response.status;
@@ -99,6 +93,7 @@ export const deletProduct = async (productId) => {
     console.error("Error deleting product:", error);
   }
 };
+
 export const getProductsByCategory = async (categoryId) => {
   const params = {
     category: categoryId,
@@ -110,6 +105,7 @@ export const getProductsByCategory = async (categoryId) => {
 
   return response.data.data.products;
 };
+
 export const getProductsBySubcategory = async (subCategoryId) => {
   const params = {
     subcategory: subCategoryId,
@@ -121,13 +117,12 @@ export const getProductsBySubcategory = async (subCategoryId) => {
 
   return response.data.data.products;
 };
+
 export const getProductById = async (productId) => {
   try {
-    const response = await api.get(
-      `http://localhost:8000/api/products/${productId}`
-    );
+    const response = await api.get(`${apiUrl}/${productId}`);
     return response.data.data.product;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

@@ -1,17 +1,17 @@
-import { logOut } from "../features/auth/authSlice";
-import { refresh } from "../features/auth/authThunk";
-import { store } from "../store";
 import axios from "axios";
-const URL = `http://localhost:8000/api/token`;
+import Cookies from "js-cookie";
+import { store } from "../store";
+import { refresh } from "../features/auth/authThunk";
+import { logOut } from "../features/auth/authSlice";
+
+const URL = "http://localhost:8000/api/token";
 
 const api = axios.create({ baseURL: URL });
+
 api.interceptors.request.use(
   (config) => {
-    // const state = store.getState();
-    // const accessToken = state.auth.token;const
-    const accessToken = localStorage.getItem("token");
+    const accessToken = Cookies.get("token");
     if (accessToken) {
-      // console.log("accesstoken");
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
     return config;
@@ -27,27 +27,20 @@ api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-    // const state = store.getState();
-    // const generatedRefreshToken = state.auth.refreshToken;
-    const generatedRefreshToken = localStorage.getItem("refreshToken");
+    const generatedRefreshToken = Cookies.get("refreshToken");
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      console.log(originalRequest);
       try {
-        // const response = await refresh(generatedRefreshToken);
-        store
+        const data = await store
           .dispatch(refresh(generatedRefreshToken))
-          .unwrap()
-          .then((data) => {
-            // console.log(data);
-            localStorage.setItem("token", data.token.accessToken);
-            originalRequest.headers[
-              "Authorization"
-            ] = `Bearer ${data.token.accessToken}`;
-            // console.log(originalRequest);
-            return api(originalRequest);
-          });
+          .unwrap();
+        Cookies.set("token", data.token.accessToken);
+        originalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${data.token.accessToken}`;
+        return api(originalRequest);
       } catch (refreshError) {
+        // Handle refresh error or dispatch logout if necessary
         // store.dispatch(logOut());
         // throw refreshError;
       }
@@ -57,72 +50,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
-// import axios from "axios";
-// import { store } from "../store";
-// import { refresh } from "../features/auth/authThunk";
-// import { logOut } from "../features/auth/authSlice";
-// const api = axios.create({
-//   baseURL: "http://localhost:8000/api/auth/token",
-//   timeout: 5000,
-// });
-// // const accessToken = localStorage.getItem("token");
-
-// api.interceptors.request.use(
-//   function (config) {
-//     console.log("reques use");
-//     const state = store.getState();
-//     const { token, isLogin } = state.auth;
-//     if (isLogin) {
-//       console.log("is login true");
-//       config.headers["Authorization"] = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   function (error) {
-//     console.log("error");
-//     // Do something with request error
-//     return Promise.reject(error);
-//   }
-// );
-
-// api.interceptors.response.use(
-//   function (response) {
-//     console.log("reponse start");
-//     // Any status code that lie within the range of 2xx cause this function to trigger
-//     // Do something with response data
-//     return response;
-//   },
-//   function (error) {
-//     console.log("error start");
-//     // status 401
-//     // Any status codes that falls outside the range of 2xx cause this function to trigger
-//     // Do something with response error
-//     const state = store.getState();
-//     console.log(state.auth);
-//     const refreshToken = localStorage.getItem("refreshToken");
-//     if (error.response.status === 401 || error.response.status === 403) {
-//       console.log("hey");
-//       const originalRequest = error.config;
-//       if (!originalRequest._retry) {
-//         originalRequest._retry = true;
-//         store
-//           .dispatch(refresh(refreshToken))
-//           .unwrap()
-//           .then((data) => {
-//             console.log(data.token.accessToken);
-//             originalRequest.headers[
-//               "Authorization"
-//             ] = `Bearer ${data.token.accessToken}`;
-//             return api(originalRequest);
-//           });
-//         // .catch(() => store.dispatch(logOut()));
-//       } else {
-//         // store.dispatch(logOut());
-//       }
-//     }
-//     console.log("error");
-//     // return Promise.reject(error);
-//   }
-// );
-// export default api;
