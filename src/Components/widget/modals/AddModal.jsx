@@ -16,7 +16,7 @@ import { TiDelete } from "react-icons/ti";
 import { store } from "../../../store";
 import { Editor } from "@tinymce/tinymce-react";
 
-export const AddModal = ({ product, client }) => {
+export const AddModal = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -97,9 +97,9 @@ export const AddModal = ({ product, client }) => {
         await (product
           ? addEditedProduct(formdata, product._id)
           : addNewProduct(formdata));
-        client.invalidateQueries("products");
+        queryClient.invalidateQueries("products");
       } catch (error) {
-        client.invalidateQueries("products");
+        queryClient.invalidateQueries("products");
 
         console.log("here");
         const state = store.getState();

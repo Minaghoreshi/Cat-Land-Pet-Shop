@@ -3,12 +3,13 @@ import { useQueryClient } from "react-query";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { deletProduct } from "../../../api/products/products-api";
+// import { deletProduct } from "../../../api/products/products-api";
+import { deleteProduct } from "../../../api/products/products-api";
 export const DeleteModal = ({ data }) => {
   const queryClient = useQueryClient();
   const handleDelete = async (productId) => {
     try {
-      const result = await deletProduct(productId);
+      const result = await deleteProduct(productId);
       if (result && result === 200) {
         queryClient.invalidateQueries("products");
 

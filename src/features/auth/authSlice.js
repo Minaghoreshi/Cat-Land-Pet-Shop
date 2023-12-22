@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie"; // Import the js-cookie library
 import { login, refresh } from "./authThunk";
+
 const initialState = {
-  token: localStorage.getItem("token") || "",
-  isLogin: localStorage.getItem("token") ? true : false,
-  refreshToken: localStorage.getItem("refreshToken") || "",
+  token: Cookies.get("token") || "",
+  isLogin: Cookies.get("token") ? true : false,
+  refreshToken: Cookies.get("refreshToken") || "",
   user: null,
   isLoading: false,
 };
@@ -18,8 +20,8 @@ export const auth = createSlice({
       state.refreshToken = "";
       state.user = null;
       state.isLoading = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
+      Cookies.remove("token"); // Use Cookies.remove to remove the cookie
+      Cookies.remove("refreshToken");
     },
   },
   extraReducers: (builder) => {
@@ -32,8 +34,8 @@ export const auth = createSlice({
       state.token = action.payload.token.accessToken;
       state.refreshToken = action.payload.token.refreshToken;
       state.user = action.payload.data.user;
-      localStorage.setItem("token", action.payload.token.accessToken);
-      localStorage.setItem("refreshToken", action.payload.token.refreshToken);
+      Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
+      Cookies.set("refreshToken", action.payload.token.refreshToken);
     });
     builder.addCase(login.rejected, (state) => {
       state.isLogin = false;
@@ -41,7 +43,7 @@ export const auth = createSlice({
     builder.addCase(refresh.fulfilled, (state, action) => {
       console.log(action.payload);
       state.token = action.payload.token.accessToken;
-      localStorage.setItem("token", action.payload.token.accessToken);
+      Cookies.set("token", action.payload.token.accessToken);
     });
     builder.addCase(refresh.rejected, (state, action) => {
       console.log(action.payload);
@@ -50,8 +52,8 @@ export const auth = createSlice({
       state.refreshToken = "";
       state.user = null;
       state.isLoading = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
+      Cookies.remove("token");
+      Cookies.remove("refreshToken");
     });
   },
 });
