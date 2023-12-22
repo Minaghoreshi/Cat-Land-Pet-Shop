@@ -8,12 +8,14 @@ import {
   PaginationComponent,
 } from "../../../components";
 import { getAllOrders } from "../../../api/orders/orders-api";
+
 import {
   ordersColumns,
-  OrdersTableTitle,
   ordersTableButton,
+  OrdersTableTitle,
 } from "../constants";
 import { combineUsersWithOrders } from "./usersandorders";
+import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersData, setOrdersData] = useState();
@@ -30,7 +32,7 @@ const AdminOrders = () => {
       setOrdersData(combinedData);
     }
     if (ordersData) {
-      console.log(ordersData);
+      // console.log(ordersData);
     }
   }, [data, setOrdersData, ordersData]);
 
@@ -81,4 +83,4 @@ const AdminOrders = () => {
     </AdminLayout>
   );
 };
-export default AdminOrders;
+export default WithGuard(AdminOrders);

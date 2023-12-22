@@ -9,13 +9,15 @@ import {
 } from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
 import { combineProductsWithCategories } from "./dataCombining";
-
+import { addProduct } from "../../../api/products/products-api";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,
   ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
+import { WithGuard } from "../../../components/widget/with-guard/withGuard";
+import { AddModal } from "../../../components/widget/modals/AddModal";
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
@@ -43,6 +45,7 @@ const AdminProducts = () => {
     setCurrentPage(page);
   };
   // console.log(wholeData);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -56,7 +59,8 @@ const AdminProducts = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         {" "}
         <TableTitle title={ProductTableTitle} />
-        <TableButton button={ProductTableButton} />
+        {/* <TableButton button={ProductTableButton} /> */}
+        <AddModal />
       </div>
       {data.data && wholeData ? (
         <ProductsTable
@@ -75,4 +79,4 @@ const AdminProducts = () => {
     </AdminLayout>
   );
 };
-export default AdminProducts;
+export default WithGuard(AdminProducts);
