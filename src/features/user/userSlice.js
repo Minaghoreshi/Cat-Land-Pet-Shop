@@ -13,6 +13,9 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    updateBadge: (state) => {
+      state.badge = state.userCart.length;
+    },
     addOrder: (state, action) => {
       const newOrder = action.payload;
 
@@ -65,6 +68,11 @@ export const user = createSlice({
     });
   },
 });
-export const { incrementAnOrder, decrementAnOrder, addOrder, removeAnOrder } =
-  user.actions;
+export const {
+  incrementAnOrder,
+  updateBadge,
+  decrementAnOrder,
+  addOrder,
+  removeAnOrder,
+} = user.actions;
 export default user.reducer;
