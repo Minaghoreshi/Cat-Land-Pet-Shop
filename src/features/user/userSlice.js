@@ -7,6 +7,7 @@ const initialState = {
   isLoading: false,
   userAllOrders: [],
   userCart: [],
+  badge: 0,
 };
 export const user = createSlice({
   name: "user",
@@ -26,6 +27,7 @@ export const user = createSlice({
         // Product doesn't exist, add a new order
         state.userCart.push(newOrder);
       }
+      state.productsCount = state.userCart.length;
     },
     removeAnOrder: (state, action) => {
       const orderToRemoveId = action.payload._id;

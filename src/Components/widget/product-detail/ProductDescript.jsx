@@ -20,7 +20,19 @@ export const ProductDescript = ({
     if (product) {
       setSelectedProduct(product);
     }
-  }, [product, selectedProduct, count]);
+    const state = store.getState();
+    const oldOrders = state.user.userCart;
+    console.log(oldOrders);
+    if (selectedProduct) {
+      const existingProductIndex = oldOrders.findIndex(
+        (order) => order._id === selectedProduct._id
+      );
+      if (existingProductIndex !== -1) {
+        const existingProduct = oldOrders[existingProductIndex];
+        setCount(existingProduct.count);
+      }
+    }
+  }, [product, selectedProduct]);
   const handleIncrement = () => {
     if (count < selectedProduct.quantity) {
       setCount(count + 1);
@@ -43,6 +55,7 @@ export const ProductDescript = ({
     dispatch(addOrder(newOrder));
     const result = store.getState();
     console.log(result.user.userCart);
+    console.log(result.user.productsCount);
   };
 
   return selectedProduct ? (
