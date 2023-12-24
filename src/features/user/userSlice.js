@@ -47,7 +47,7 @@ export const user = createSlice({
     builder.addCase(userLogin.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getUserAllOrders, (state, action) => {
+    builder.addCase(getUserAllOrders.fulfilled, (state, action) => {
       state.userAllOrders = action.payload;
     });
   },
