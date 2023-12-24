@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
 import { useFormik, Field, ErrorMessage } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../features/auth/authThunk";
 export const LoginForm = ({ shouldNavigate = true }) => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
+  const role = useSelector((state) => state.auth.role);
+
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -18,6 +20,9 @@ export const LoginForm = ({ shouldNavigate = true }) => {
       dispatch(login(values))
         .unwrap()
         .then(() => {
+          if (role === "USER") {
+            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+          }
           if (shouldNavigate) {
             navigate("/products-table");
           }
