@@ -1,39 +1,26 @@
 import { Button } from "flowbite-react";
 import React, { useState } from "react";
 
-export const Counter = ({ initialValue = 1, min = 0, max, onChange }) => {
-  const [count, setCount] = useState(initialValue);
-
-  const handleIncrement = () => {
-    if (count < max) {
-      setCount(count + 1);
-      onChange && onChange(count + 1);
-    }
-  };
-
-  const handleDecrement = () => {
-    if (count > min) {
-      setCount(count - 1);
-      onChange && onChange(count - 1);
-    }
-  };
-
+export const Counter = ({ max, handleIncrement, count, handleDecrement }) => {
   return (
-    <div className="flex flex-col justify-center items-center shadow-custom ">
+    <div className="flex gap-4 justify-center items-center shadow-custom ">
       <Button
         disabled={max === 0 ? true : false}
         pill
         onClick={handleDecrement}
         className="w-[45px] h-[45px]"
+        size="xl"
       >
         -
       </Button>
-      <span className="text-lg text-2xl">{max === 0 ? 0 : count}</span>
+      <span className="text-2xl">{max === 0 ? 0 : count}</span>
       <Button
-        disabled={max === 0 ? true : false}
+        disabled={max === 0 || count === max ? true : false}
         pill
         onClick={handleIncrement}
-        className="w-[45px] h-[45px]"
+        className="w-[45px] h-[45px] text-4xl"
+        size="xl"
+        label
       >
         +
       </Button>

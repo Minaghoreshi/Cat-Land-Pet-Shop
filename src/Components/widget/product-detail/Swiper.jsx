@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 export const CustomSwiper = ({ images }) => {
-  console.log(images);
   return (
     <Swiper
       spaceBetween={50}

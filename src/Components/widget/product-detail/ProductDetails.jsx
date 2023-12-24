@@ -46,6 +46,7 @@ export const ProductDetails = () => {
         {" "}
         <CustomSwiper images={product.images} />
         <ProductDescript
+          product={product}
           name={product.name}
           category={product.category.name}
           subcategory={product.subcategory.name}

@@ -14,7 +14,18 @@ export const user = createSlice({
   reducers: {
     addOrder: (state, action) => {
       const newOrder = action.payload;
-      state.userCart.push(newOrder);
+
+      const existingOrderIndex = state.userCart.findIndex(
+        (order) => order._id === newOrder._id
+      );
+
+      if (existingOrderIndex !== -1) {
+        // Product already exists, update its count
+        state.userCart[existingOrderIndex].count = newOrder.count;
+      } else {
+        // Product doesn't exist, add a new order
+        state.userCart.push(newOrder);
+      }
     },
     removeAnOrder: (state, action) => {
       const orderToRemoveId = action.payload._id;
