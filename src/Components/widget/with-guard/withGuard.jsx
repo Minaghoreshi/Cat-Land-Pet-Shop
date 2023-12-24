@@ -11,9 +11,9 @@ import { LoginForm } from "../../base";
 export const WithGuard = (Component) => {
   const GuarderComponent = (props) => {
     const isLogin = useSelector((state) => state.auth.isLogin);
-    const userRole = useSelector((state) => state.auth.role);
+    const isAdmin = useSelector((state) => state.auth.isAdmin);
     // console.log(isLogin);
-    return isLogin && userRole === "ADMIN" ? (
+    return isLogin && isAdmin ? (
       <Component />
     ) : (
       <AdminLogin shouldNavigate={false} />

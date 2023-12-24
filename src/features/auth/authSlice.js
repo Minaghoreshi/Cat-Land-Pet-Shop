@@ -8,7 +8,7 @@ const initialState = {
   refreshToken: Cookies.get("refreshToken") || "",
   user: null,
   isLoading: false,
-  role: null,
+  isAdmin: false,
 };
 
 export const auth = createSlice({
@@ -35,10 +35,12 @@ export const auth = createSlice({
       state.token = action.payload.token.accessToken;
       state.refreshToken = action.payload.token.refreshToken;
       state.user = action.payload.data.user;
-      state.role = action.payload.data.user.role;
+      if (action.payload.data.user === "ADMIN") {
+        state.isAdmin = true;
+      }
+      // console.log(state.role);
       Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
       Cookies.set("refreshToken", action.payload.token.refreshToken);
-      console.log(state.user);
     });
     builder.addCase(login.rejected, (state) => {
       state.isLogin = false;

@@ -7,7 +7,7 @@ import { login } from "../../../features/auth/authThunk";
 export const LoginForm = ({ shouldNavigate = true }) => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
-  const role = useSelector((state) => state.auth.role);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -20,7 +20,8 @@ export const LoginForm = ({ shouldNavigate = true }) => {
       dispatch(login(values))
         .unwrap()
         .then(() => {
-          if (role === "USER") {
+          if (!isAdmin) {
+            console.log(isAdmin);
             setLoadingError("نام کاربری یا رمز عبور اشتباه است");
           }
           if (shouldNavigate) {
