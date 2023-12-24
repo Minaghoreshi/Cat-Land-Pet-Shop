@@ -36,6 +36,7 @@ export const auth = createSlice({
       state.user = action.payload.data.user;
       Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
       Cookies.set("refreshToken", action.payload.token.refreshToken);
+      console.log(state.user);
     });
     builder.addCase(login.rejected, (state) => {
       state.isLogin = false;
