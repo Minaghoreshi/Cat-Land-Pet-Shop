@@ -11,7 +11,7 @@ import { LoginForm } from "../../base";
 export const WithGuard = (Component) => {
   const GuarderComponent = (props) => {
     const isLogin = useSelector((state) => state.auth.isLogin);
-    const userRole = useSelector((state) => state.auth.use.role);
+    const userRole = useSelector((state) => state.auth.role);
     // console.log(isLogin);
     return isLogin && userRole === "ADMIN" ? (
       <Component />

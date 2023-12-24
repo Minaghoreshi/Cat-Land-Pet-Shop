@@ -8,6 +8,7 @@ const initialState = {
   refreshToken: Cookies.get("refreshToken") || "",
   user: null,
   isLoading: false,
+  role: null,
 };
 
 export const auth = createSlice({
@@ -34,6 +35,7 @@ export const auth = createSlice({
       state.token = action.payload.token.accessToken;
       state.refreshToken = action.payload.token.refreshToken;
       state.user = action.payload.data.user;
+      state.role = action.payload.data.user.role;
       Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
       Cookies.set("refreshToken", action.payload.token.refreshToken);
       console.log(state.user);
