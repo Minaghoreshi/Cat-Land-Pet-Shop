@@ -3,7 +3,7 @@ import { CartDeleteModal } from "../modals/CartDeleteModal";
 
 export const CartTable = ({ data, column }) => {
   return (
-    <table className="table self-center">
+    <table className="table self-center min-w-full">
       <thead>
         <tr>
           {column.map((col) => (

@@ -1,16 +1,13 @@
+import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
-import { useFormik, Field, ErrorMessage } from "formik";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../features/auth/authThunk";
-
-export const LoginForm = ({ shouldNavigate = true }) => {
+export const UserLoginForm = () => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
-  const isLogin = useSelector((state) => state.auth.isLogin);
 
-  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -18,31 +15,31 @@ export const LoginForm = ({ shouldNavigate = true }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      dispatch(login(values))
-        .then((action) => {
-          const isAdmin = action.payload.data.user.role;
-          if (isAdmin === "ADMIN") {
-            // Reset any previous error
-            setLoadingError("");
-            // Navigate if needed
-            if (shouldNavigate) {
-              navigate("/products-table");
-            }
-          } else {
-            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
-          }
-        })
-        .catch((error) => {
-          if (error.message === "401" || !isLogin) {
-            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
-          }
-        });
+      // dispatch(login(values))
+      //   .then((action) => {
+      //     const isAdmin = action.payload.data.user.role;
+      //     if (isAdmin === "ADMIN") {
+      //       // Reset any previous error
+      //       setLoadingError("");
+      //       // Navigate if needed
+      //       if (shouldNavigate) {
+      //         navigate("/products-table");
+      //       }
+      //     } else {
+      //       setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     if (error.message === "401" || !isLogin) {
+      //       setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+      //     }
+      //   });
     },
   });
 
   return (
     <div className="text-primary w-1/4 rounded-2xl text-lg p-11 shadow-2xl flex flex-col gap-16">
-      <span className="text-2xl text-center">ورود به پنل مدیریت کت لند</span>
+      <span className="text-2xl text-center">ورود به پنل کاربری</span>
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-center gap-9"
