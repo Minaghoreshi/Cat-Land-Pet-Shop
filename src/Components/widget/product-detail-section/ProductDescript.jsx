@@ -56,7 +56,6 @@ export const ProductDescript = ({
     dispatch(updateBadge());
     const result = store.getState();
     console.log(result.user.userCart);
-    console.log(result.user.productsCount);
   };
 
   return selectedProduct ? (

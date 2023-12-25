@@ -1,4 +1,8 @@
+import axios from "axios";
 import api from "../axios";
+import Cookies from "js-cookie";
+const token = Cookies.get("token");
+
 export const getUserFirstName = async (userId) => {
   // console.log(userId);
   const response = await api.get(`http://localhost:8000/api/users/${userId}`);
@@ -7,4 +11,20 @@ export const getUserFirstName = async (userId) => {
 export const getUserLastName = async (userId) => {
   const response = await api.get(`http://localhost:8000/api/users/${userId}`);
   return response.data.data.user.lastname;
+};
+export const getUserById = async (userId) => {
+  try {
+    const response = await api.get("http://localhost:8000/api/users", {
+      params: { _id: userId },
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = response.data;
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -3,7 +3,7 @@ import { TableTitle } from "../tables/TableTitle";
 import { CartTable } from "../tables";
 import { cartTableColumn } from "./constants";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserCart } from "../../../features/user/userSlice";
+import { clearUserCart, custom } from "../../../features/user/userSlice";
 import { Button } from "flowbite-react";
 import { store } from "../../../store";
 import { useNavigate } from "react-router-dom";

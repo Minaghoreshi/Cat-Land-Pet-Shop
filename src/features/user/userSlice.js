@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserAllOrders, userLogin } from "./userThunk";
+import Cookies from "js-cookie";
 
 const initialState = {
+  token: Cookies.get("token") || "",
+  refreshToken: Cookies.get("refreshToken") || "",
   isLogin: false,
   isLoading: false,
   userAllOrders: [],
@@ -15,6 +18,13 @@ export const user = createSlice({
   reducers: {
     clearUserCart: (state) => {
       state.userCart = [];
+    },
+    custom: (state) => {
+      state.token = "";
+      state.refreshToken = "";
+      state.isLogin = false;
+      state.isLoading = false;
+      state.userId = null;
     },
     updateBadge: (state) => {
       state.badge = state.userCart.length;
@@ -57,9 +67,15 @@ export const user = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
+      console.log("hi");
+      console.log(action.payload.token.refreshToken);
+      state.token = action.payload.token.accessToken;
+      state.refreshToken = action.payload.token.refreshToken;
       state.isLogin = true;
       state.userId = action.payload.data.user._id;
       state.isLoading = false;
+      Cookies.set("token", action.payload.token.accessToken);
+      Cookies.set("refreshToken", action.payload.token.refreshToken);
     });
     builder.addCase(userLogin.rejected, (state) => {
       state.isLogin = false;
@@ -79,5 +95,6 @@ export const {
   addOrder,
   removeAnOrder,
   clearUserCart,
+  custom,
 } = user.actions;
 export default user.reducer;

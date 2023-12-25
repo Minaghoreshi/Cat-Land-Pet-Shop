@@ -4,10 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
 import { userLogin } from "../../../features/user/userThunk";
+import { store } from "../../../store";
 export const UserLoginForm = () => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  const state = store.getState();
+  console.log(state);
   const formik = useFormik({
     initialValues: {
       username: "",
