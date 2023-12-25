@@ -1,15 +1,12 @@
+import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
-import { useFormik, Field, ErrorMessage } from "formik";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../features/auth/authThunk";
-
-export const LoginForm = ({ shouldNavigate = true }) => {
+import { userLogin } from "../../../features/user/userThunk";
+export const UserLoginForm = () => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
-  const isLogin = useSelector((state) => state.auth.isLogin);
-
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -18,22 +15,12 @@ export const LoginForm = ({ shouldNavigate = true }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      dispatch(login(values))
-        .then((action) => {
-          const isAdmin = action.payload.data.user.role;
-          if (isAdmin === "ADMIN") {
-            // Reset any previous error
-            setLoadingError("");
-            // Navigate if needed
-            if (shouldNavigate) {
-              navigate("/products-table");
-            }
-          } else {
-            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
-          }
+      dispatch(userLogin(values))
+        .then(() => {
+          navigate(-1);
         })
         .catch((error) => {
-          if (error.message === "401" || !isLogin) {
+          if (error.message === "401") {
             setLoadingError("نام کاربری یا رمز عبور اشتباه است");
           }
         });
@@ -42,7 +29,7 @@ export const LoginForm = ({ shouldNavigate = true }) => {
 
   return (
     <div className="text-primary w-1/4 rounded-2xl text-lg p-11 shadow-2xl flex flex-col gap-16">
-      <span className="text-2xl text-center">ورود به پنل مدیریت کت لند</span>
+      <span className="text-2xl text-center">ورود به پنل کاربری</span>
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col items-center gap-9"

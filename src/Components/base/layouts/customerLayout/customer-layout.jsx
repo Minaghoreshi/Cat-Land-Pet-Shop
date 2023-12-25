@@ -3,7 +3,7 @@ import { CustomerHeader } from "./customerHeader";
 import { Container } from "../container";
 export function CustomerLayout({ children, className }) {
   return (
-    <Container>
+    <Container className="flex flex-col items-center">
       <CustomerHeader />
       {children}
       {/* <CustomerFooter /> */}

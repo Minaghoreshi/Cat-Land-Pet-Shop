@@ -2,14 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { getProductById } from "../../../api/products/products-api";
-import { Breadcrumb, Button, Card, Carousel } from "flowbite-react";
-import { CustomBreadCrump } from "./CustomBreadCrump";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
-
 import "swiper/css";
 import * as DOMPurify from "dompurify";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -46,6 +40,7 @@ export const ProductDetails = () => {
         {" "}
         <CustomSwiper images={product.images} />
         <ProductDescript
+          product={product}
           name={product.name}
           category={product.category.name}
           subcategory={product.subcategory.name}

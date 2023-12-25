@@ -35,7 +35,7 @@ body {
   @apply py-4 px-4 border   border-gray-300 text-center font-extrabold;
 }
 .table--td {
-  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
+  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700 content-center;
 }
 .editable {
   @apply text-blue-500 underline;

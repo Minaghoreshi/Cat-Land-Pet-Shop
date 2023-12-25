@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getProducts } from "../../../api/products/products-api";
 import { QueryClient, useQuery } from "react-query";
 import {
-  Table,
+  StockTable,
   TableTitle,
   AdminLayout,
   PaginationComponent,
@@ -68,7 +68,7 @@ const AdminStocks = () => {
         </button>{" "}
       </div>
       {productData ? (
-        <Table
+        <StockTable
           data={productData}
           columns={columns}
           setDataToSend={setDataToSend}
