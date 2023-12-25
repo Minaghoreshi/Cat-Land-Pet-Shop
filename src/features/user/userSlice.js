@@ -3,11 +3,11 @@ import { getUserAllOrders, userLogin } from "./userThunk";
 
 const initialState = {
   isLogin: false,
-  userId: null,
   isLoading: false,
   userAllOrders: [],
   userCart: [],
   badge: 0,
+  userId: null,
 };
 export const user = createSlice({
   name: "user",
@@ -33,7 +33,6 @@ export const user = createSlice({
         // Product doesn't exist, add a new order
         state.userCart.push(newOrder);
       }
-      state.productsCount = state.userCart.length;
     },
     removeAnOrder: (state, action) => {
       const orderToRemoveId = action.payload;
@@ -58,7 +57,7 @@ export const user = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLogin = true;
       state.userId = action.payload.data.user._id;
       state.isLoading = false;
     });

@@ -24,6 +24,7 @@ export const CartSection = () => {
     const isLogin = store.getState().user.isLogin;
     if (isLogin) {
       console.log(isLogin);
+      navigate("/checkout");
     } else {
       navigate("/user-login");
     }

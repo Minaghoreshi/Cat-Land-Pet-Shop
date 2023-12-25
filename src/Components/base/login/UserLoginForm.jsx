@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validationSchema } from "./loginSchema";
-import { login } from "../../../features/auth/authThunk";
+import { userLogin } from "../../../features/user/userThunk";
 export const UserLoginForm = () => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -15,25 +15,15 @@ export const UserLoginForm = () => {
     },
     validationSchema,
     onSubmit: (values) => {
-      // dispatch(login(values))
-      //   .then((action) => {
-      //     const isAdmin = action.payload.data.user.role;
-      //     if (isAdmin === "ADMIN") {
-      //       // Reset any previous error
-      //       setLoadingError("");
-      //       // Navigate if needed
-      //       if (shouldNavigate) {
-      //         navigate("/products-table");
-      //       }
-      //     } else {
-      //       setLoadingError("نام کاربری یا رمز عبور اشتباه است");
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     if (error.message === "401" || !isLogin) {
-      //       setLoadingError("نام کاربری یا رمز عبور اشتباه است");
-      //     }
-      //   });
+      dispatch(userLogin(values))
+        .then(() => {
+          navigate(-1);
+        })
+        .catch((error) => {
+          if (error.message === "401") {
+            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+          }
+        });
     },
   });
 
