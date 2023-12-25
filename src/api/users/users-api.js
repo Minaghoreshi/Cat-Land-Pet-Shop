@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from "../axios";
 export const getUserFirstName = async (userId) => {
   // console.log(userId);

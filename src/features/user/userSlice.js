@@ -13,6 +13,9 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    clearUserCart: (state) => {
+      state.userCart = [];
+    },
     updateBadge: (state) => {
       state.badge = state.userCart.length;
     },
@@ -33,8 +36,10 @@ export const user = createSlice({
       state.productsCount = state.userCart.length;
     },
     removeAnOrder: (state, action) => {
-      const orderToRemoveId = action.payload._id;
-      state.userCart.filter((order) => order._id !== orderToRemoveId);
+      const orderToRemoveId = action.payload;
+      state.userCart = state.userCart.filter(
+        (order) => order._id !== orderToRemoveId
+      );
     },
     incrementAnOrder: (state, action) => {
       const selectedProduct = action.payload._id;
@@ -74,5 +79,6 @@ export const {
   decrementAnOrder,
   addOrder,
   removeAnOrder,
+  clearUserCart,
 } = user.actions;
 export default user.reducer;

@@ -49,7 +49,7 @@ export const ProductDescript = ({
       _id: selectedProduct._id,
       count: count,
       price: selectedProduct.price,
-      productName: selectedProduct.name,
+      name: selectedProduct.name,
       thumbnail: selectedProduct.thumbnail,
     };
     dispatch(addOrder(newOrder));
