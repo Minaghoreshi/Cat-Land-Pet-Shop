@@ -16,6 +16,7 @@ export const CartSection = () => {
   };
 
   const tableData = useSelector((state) => state.user.userCart);
+
   tableData.map((order) => {
     return (totalOrderPrice += Number(order.count) * Number(order.price));
   });
