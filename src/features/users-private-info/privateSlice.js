@@ -17,7 +17,7 @@ export const userPrivateInfo = createSlice({
     changeUserPrivateInfo: (state, action) => {
       state.firstname = action.payload.firstname;
       state.lastname = action.payload.lastname;
-      state.address = action.payload.lastname;
+      state.address = action.payload.phoneNumber;
       state.phoneNumber = action.payload.phoneNumber;
     },
   },

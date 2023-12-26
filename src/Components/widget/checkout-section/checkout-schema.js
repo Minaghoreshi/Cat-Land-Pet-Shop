@@ -4,4 +4,5 @@ export const checkuotSchema = Yup.object().shape({
   lastname: Yup.string().required("نام خانوادگی الزامی است"),
   address: Yup.string().required(" آدرس الزامی است"),
   phoneNumber: Yup.number().required(" تلفن همراه الزامی است"),
+  deliveryDate: Yup.date().required("تاریخ تحویل الزامی است"),
 });

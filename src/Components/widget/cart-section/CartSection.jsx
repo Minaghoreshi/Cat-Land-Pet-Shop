@@ -34,14 +34,21 @@ export const CartSection = () => {
   return (
     <div className="mt-5 flex  w-3/5 flex-col gap-10">
       <TableTitle title={"سبد خرید"} />
-      <CartTable column={cartTableColumn} data={tableData} />
+      {tableData.length > 0 ? (
+        <>
+          <CartTable column={cartTableColumn} data={tableData} />{" "}
+          <div className="flex justify-between">
+            <span className="text-save">{`مبلغ کل: ${totalOrderPrice.toLocaleString(
+              "en-US"
+            )} تومان`}</span>
+            <Button onClick={handleSubmit}>نهایی کردن سبد خرید</Button>
+          </div>
+        </>
+      ) : (
+        <span className="text-3xl text-selected">سبد خرید شما خالی است</span>
+      )}
+
       {/* <button onClick={handleClearUserCart}>clear</button> */}
-      <div className="flex justify-between">
-        <span className="text-save">{`مبلغ کل: ${totalOrderPrice.toLocaleString(
-          "en-US"
-        )} تومان`}</span>
-        <Button onClick={handleSubmit}>نهایی کردن سبد خرید</Button>
-      </div>
     </div>
   );
 };

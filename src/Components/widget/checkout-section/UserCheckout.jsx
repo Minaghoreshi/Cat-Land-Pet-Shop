@@ -5,40 +5,27 @@ import DatePicker from "react-multi-date-picker";
 import { Calendar } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import { getUserById } from "../../../api/users/users-api";
 import { useFormik } from "formik";
 import { checkuotSchema } from "./checkout-schema";
 import { store } from "../../../store";
+import { changeUserPrivateInfo } from "../../../features/users-private-info/privateSlice";
+import { useNavigate } from "react-router-dom";
 export const UserCheckout = () => {
   const [value, setValue] = useState(new Date());
   const userId = useSelector((state) => state.user.userId);
-
-  // const {
-  //   data: user,
-  //   isLoading,
-  //   error,
-  // } = useQuery(["user", userId], () => {
-  //   getUserById(userId);
-  // });
-
-  // function handleSubmit() {
-  //   if (value instanceof DateObject) value = value.toDate();
-
-  //   submitDate(value);
-  // }
-  // const handleDateChange = () => {
-  //   console.log(value);
-  // };
-
+  const userInitialData = useSelector((state) => state.userPrivateInfo);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      address: "",
-      phoneNumber: "",
-      deliveryDate: value,
+      firstname: userInitialData.firstname || "",
+      lastname: userInitialData.lastname || "",
+      address: userInitialData.address || "",
+      phoneNumber: userInitialData.phoneNumber || "",
+      deliveryDate: "",
     },
     validationSchema: checkuotSchema,
     onSubmit: (values) => {
@@ -48,8 +35,18 @@ export const UserCheckout = () => {
         ...order,
         deliveryDate: values.deliveryDate,
       }));
-
-      console.log(updatedOrders);
+      // console.log(formik.values.firstname);
+      dispatch(
+        changeUserPrivateInfo({
+          firstname: formik.values.firstname,
+          lastname: formik.values.lastname,
+          address: formik.values.address,
+          phoneNumber: formik.values.phoneNumber,
+        })
+      );
+      navigate("/payment");
+      // const newt = store.getState().userPrivateInfo;
+      // console.log(newt);
     },
   });
   useEffect(() => {
@@ -169,15 +166,15 @@ export const UserCheckout = () => {
                 value="تاریخ تحویل"
               />
             </div>
+            {/* // name="deliveryDate"
+            // onChange={setValue}
+            // onBlur={formik.handleBlur}
+            // value={formik.values.deliveryDate}
+            // style={{ width: "200px", height: "50px" }}
+            // format="YYYY/MM/DD"
+            // calendar={persian}
+            // locale={persian_fa} */}
             <DatePicker
-              // name="deliveryDate"
-              // onChange={setValue}
-              // onBlur={formik.handleBlur}
-              // value={formik.values.deliveryDate}
-              // style={{ width: "200px", height: "50px" }}
-              // format="YYYY/MM/DD"
-              // calendar={persian}
-              // locale={persian_fa}
               name="deliveryDate"
               onChange={setValue}
               onBlur={formik.handleBlur}
@@ -187,10 +184,10 @@ export const UserCheckout = () => {
               calendar={persian}
               locale={persian_fa}
             />
+            {formik.touched.deliveryDate && formik.errors.deliveryDate ? (
+              <div className="text-red-500">{formik.errors.deliveryDate}</div>
+            ) : null}
           </div>{" "}
-          {formik.touched.deliveryDate && formik.errors.deliveryDate ? (
-            <div className="text-red-500">{formik.errors.deliveryDate}</div>
-          ) : null}
         </div>
         <Button className="w-1/2" type="submit">
           ادامه
