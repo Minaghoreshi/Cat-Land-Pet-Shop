@@ -9,3 +9,15 @@ export const getAllOrders = async (page, deliveryStatus) => {
   });
   return response.data;
 };
+export const addMultipleOrders = async (ordersToAdd) => {
+  try {
+    const response = await api.post(
+      `http://localhost:8000/api/orders`,
+      ordersToAdd,
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log(response, "all orders added successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
