@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Customcolumn } from "./custom-column";
+import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { Test } from "./Test";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
+  const [openModal, setOpenModal] = useState(false);
+  function onCloseModal() {
+    setOpenModal(false);
+  }
   return (
     <table className="table">
       <thead>
@@ -46,7 +52,17 @@ export const OrdersTable = ({ data, columns, buttonsArray }) => {
                 )}
               </td>
             ))}
-            <Customcolumn buttonsArray={buttonsArray} />
+            <td className="py-4 px-4 border-t border-gray-300 flex justify-center">
+              <div>
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className="hover:underline text-blue-600"
+                >
+                  بررسی سفارش
+                </button>{" "}
+                <Test data={data} show={openModal} onClose={onCloseModal} />
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>

@@ -16,6 +16,7 @@ import {
 } from "../constants";
 import { combineUsersWithOrders } from "./usersandorders";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
+import { getUserById } from "../../../api/users/users-api";
 const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersData, setOrdersData] = useState();
@@ -29,6 +30,9 @@ const AdminOrders = () => {
   const getOrdersWithUsers = useCallback(async () => {
     if (data) {
       const combinedData = await combineUsersWithOrders(data.data.orders);
+      // const res = await getUserById(data.data.orders.user);
+      // console.log(res);
+      // console.log(combinedData);
       setOrdersData(combinedData);
     }
     if (ordersData) {
