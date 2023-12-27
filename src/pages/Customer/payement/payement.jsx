@@ -1,7 +1,5 @@
 import React from "react";
-import { CustomerLayout } from "../../../components";
-import { PaymentPage } from "../../../components/widget/payment-section/PaymentPage";
-
+import { CustomerLayout, PaymentPage } from "../../../components";
 const Payement = () => {
   return (
     <CustomerLayout>

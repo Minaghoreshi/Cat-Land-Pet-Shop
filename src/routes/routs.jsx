@@ -48,7 +48,7 @@ const AppRoute = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment" element={<Payement />} />
-        <Route path="/payment-result" element={<PayementResult />} />
+        <Route path="/payment-result/:result?" element={<PayementResult />} />
         <Route path="/product/:id?" element={<Product />} />
         <Route path="/products-table" element={<AdminProducts />} />
         <Route path="/stocks-table" element={<AdminStocks />} />

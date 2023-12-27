@@ -2,41 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import paymentPicture from "../../../assets/payment.jpg";
 import { Button } from "flowbite-react";
-import { store } from "../../../store";
-import Product from "../../../pages/Customer/product/product";
-import { addMultipleOrders } from "../../../api/orders/orders-api";
-import { clearUserCart } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { handleCancel, handleSubmit } from "./utils";
 export const PaymentPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const totalOrders = useSelector((state) => state.user.userCart);
   let totalOrderPrice = 0;
-
   totalOrders.map((order) => {
     return (totalOrderPrice += Number(order.count) * Number(order.price) * 10);
   });
-  const handleSubmit = () => {
-    const allOrders = store.getState().user.userCart;
-    const userId = store.getState().user.userId;
-    const OrdersToAdd = {
-      user: userId,
-      products: allOrders.map((order) => ({
-        product: order._id,
-        count: order.count,
-      })),
-      deliveryStatus: allOrders[0].deliveryDate,
-    };
-    console.log(OrdersToAdd);
-    addMultipleOrders(OrdersToAdd);
-    dispatch(clearUserCart());
-    navigate("/payment-result", { result: "submitted" });
-  };
-  const handleCancel = () => {
-    navigate("/payment-result", { result: "canceled" });
-  };
-  // const state = useSelector((state) => state.userPrivateInfo);
-  // console.log(state);
+
   return (
     <div>
       <div className="relative">
@@ -47,8 +23,19 @@ export const PaymentPage = () => {
         <img className="w-[900px]" src={paymentPicture} alt="payment" />
       </div>
       <div className="flex gap-7 justify-center mt-5">
-        <Button onClick={handleSubmit}>پرداخت</Button>
-        <Button onClick={handleCancel} className="bg-selected">
+        <Button
+          onClick={() => {
+            handleSubmit(dispatch, navigate);
+          }}
+        >
+          پرداخت
+        </Button>
+        <Button
+          onClick={() => {
+            handleCancel(navigate);
+          }}
+          className="bg-selected"
+        >
           انصراف
         </Button>
       </div>
