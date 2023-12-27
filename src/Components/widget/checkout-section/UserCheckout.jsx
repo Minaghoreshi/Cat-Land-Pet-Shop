@@ -7,7 +7,7 @@ import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "react-query";
-import { getUserById } from "../../../api/users/users-api";
+import { editUserById, getUserById } from "../../../api/users/users-api";
 import { useFormik } from "formik";
 import { checkuotSchema } from "./checkout-schema";
 import { store } from "../../../store";
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 export const UserCheckout = () => {
   const [value, setValue] = useState(new Date());
   const userId = useSelector((state) => state.user.userId);
+  console.log(userId);
   const userInitialData = useSelector((state) => state.userPrivateInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,14 +37,16 @@ export const UserCheckout = () => {
         deliveryDate: values.deliveryDate,
       }));
       // console.log(formik.values.firstname);
-      dispatch(
-        changeUserPrivateInfo({
-          firstname: formik.values.firstname,
-          lastname: formik.values.lastname,
-          address: formik.values.address,
-          phoneNumber: formik.values.phoneNumber,
-        })
-      );
+      const dataToEdit = {
+        firstname: formik.values.firstname,
+        lastname: formik.values.lastname,
+        address: formik.values.address,
+        phoneNumber: formik.values.phoneNumber,
+      };
+      // editUserById(userId, dataToEdit);
+      // dispatch(
+      //   changeUserPrivateInfo()
+      // );
       navigate("/payment");
       // const newt = store.getState().userPrivateInfo;
       // console.log(newt);
@@ -77,7 +80,6 @@ export const UserCheckout = () => {
               id="firstname"
               type="text"
               className="w-full"
-              required
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.firstname}
@@ -99,7 +101,6 @@ export const UserCheckout = () => {
               id="lastname"
               type="text"
               className="w-full"
-              required
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.lastname}
@@ -123,7 +124,6 @@ export const UserCheckout = () => {
               id="address"
               type="text"
               className="w-full resize-none"
-              required
               rows={4}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -146,7 +146,6 @@ export const UserCheckout = () => {
               id="phoneNumber"
               type="text"
               className="w-full"
-              required
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.phoneNumber}

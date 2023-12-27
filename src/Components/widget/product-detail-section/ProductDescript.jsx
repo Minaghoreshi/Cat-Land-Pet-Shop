@@ -65,7 +65,9 @@ export const ProductDescript = ({
         category={selectedProduct.category.name}
         subcategory={selectedProduct.subcategory.name}
       />
-      <span className="text-xl">{`${selectedProduct.price} تومان`}</span>{" "}
+      <span className="text-xl">{`${selectedProduct.price.toLocaleString(
+        "en-US"
+      )} تومان`}</span>{" "}
       <div className="flex gap-20 items-center ">
         <Counter
           max={selectedProduct.quantity}

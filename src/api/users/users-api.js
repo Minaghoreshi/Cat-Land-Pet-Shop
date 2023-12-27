@@ -28,3 +28,22 @@ export const getUserById = async (userId) => {
     console.error(error);
   }
 };
+export const editUserById = async (userId, data) => {
+  try {
+    const response = await api.patch(
+      `http://localhost:8000/api/users/${userId}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Product edited successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
