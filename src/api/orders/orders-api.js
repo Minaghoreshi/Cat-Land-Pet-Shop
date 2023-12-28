@@ -31,3 +31,15 @@ export const getOrderById = async (orderId) => {
     console.log(error);
   }
 };
+export const editOrder = async (orderId, dataToEdit) => {
+  try {
+    const response = await api.patch(
+      `http://localhost:8000/api/orders/${orderId}`,
+      dataToEdit,
+      { headers: { "Content-Type": "application/json" } }
+    );
+    console.log(response, "all orders added successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { createPortal } from "react-dom";
 import { useQuery } from "react-query";
-import { getOrderById } from "../../../api/orders/orders-api";
+import { editOrder, getOrderById } from "../../../api/orders/orders-api";
 import { ModalTable } from "./ModalTable";
+import { queryClient } from "../../../../src/index";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
     { key: "product", label: "کالا", width: "w-3/5" },
@@ -29,6 +30,13 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   if (orderData) {
     console.log(orderData);
   }
+  const submitDelivery = (id) => {
+    console.log(id);
+    const dataToEdit = { deliveryStatus: true };
+    editOrder(id, dataToEdit);
+    onClose();
+    queryClient.invalidateQueries("orders");
+  };
   // console.log(data);
   return createPortal(
     <Modal show={show} onClose={onClose} size="md" popup>
@@ -98,7 +106,14 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
                 </div>
               ) : (
                 <div className="flex justify-center">
-                  <Button className="w-1/2">تحویل شد</Button>
+                  <Button
+                    onClick={() => {
+                      submitDelivery(orderData._id);
+                    }}
+                    className="w-1/2"
+                  >
+                    تحویل شد
+                  </Button>
                 </div>
               )}
             </>
