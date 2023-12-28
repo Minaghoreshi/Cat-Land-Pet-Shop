@@ -19,13 +19,7 @@ export const user = createSlice({
     clearUserCart: (state) => {
       state.userCart = [];
     },
-    custom: (state) => {
-      state.token = "";
-      state.refreshToken = "";
-      state.isLogin = false;
-      state.isLoading = false;
-      state.userId = null;
-    },
+
     updateBadge: (state) => {
       state.badge = state.userCart.length;
     },

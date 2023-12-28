@@ -1,12 +1,13 @@
 import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/9005223.jpg";
-// import { Badge } from "flowbite-react";
-// import { store } from "../../../../store";
-// import { useSelector } from "react-redux";
+import { Badge } from "flowbite-react";
+import { store } from "../../../../store";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export const CustomerHeader = () => {
-  // const badgeCount = useSelector((state) => state.user.badge);
+  const badge = useSelector((state) => state.user.badge);
   let navigate = useNavigate();
 
   return (
@@ -47,13 +48,13 @@ export const CustomerHeader = () => {
           >
             6
           </Badge> */}{" "}
-          {/* <Badge
+          <Badge
             className="absolute top-[-1.8rem] left-0 text-base rounded"
             color="gray"
           >
             {" "}
-            {badgeCount}
-          </Badge> */}
+            {badge}
+          </Badge>
         </div>
       </div>
     </header>

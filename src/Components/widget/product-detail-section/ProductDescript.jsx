@@ -6,14 +6,7 @@ import { useDispatch } from "react-redux";
 import { addOrder, user, updateBadge } from "../../../features/user/userSlice";
 import { store } from "../../../store";
 
-export const ProductDescript = ({
-  product,
-  name,
-  category,
-  subcategory,
-  price,
-  quantity,
-}) => {
+export const ProductDescript = ({ product }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [count, setCount] = useState(1);
   useEffect(() => {
