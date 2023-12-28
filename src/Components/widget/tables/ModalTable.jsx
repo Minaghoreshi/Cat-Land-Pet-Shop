@@ -25,10 +25,12 @@ export const ModalTable = ({
       </thead>
       <tbody>
         <tr>
-          <Link to={`/product/${productId}`}>
-            <td className="table--td">{product}</td>{" "}
-          </Link>
-          <td className="table--td">{totalPrice}</td>{" "}
+          <td className="table--td">
+            {" "}
+            <Link to={`/product/${productId}`}>{product} </Link>
+          </td>
+
+          <td className="table--td">{totalPrice}</td>
           <td className="table--td">{count}</td>
         </tr>
       </tbody>
