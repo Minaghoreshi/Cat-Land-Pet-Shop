@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Customcolumn } from "./custom-column";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { CheckOrderModal } from "./CheckOrderModal";
+import { CheckOrderModal } from "../modals/CheckOrderModal";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
   const [selectedOrder, setSelectedOrder] = useState();
   const [openModal, setOpenModal] = useState(false);

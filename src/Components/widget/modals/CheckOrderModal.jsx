@@ -3,8 +3,8 @@ import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { createPortal } from "react-dom";
 import { useQuery } from "react-query";
 import { editOrder, getOrderById } from "../../../api/orders/orders-api";
-import { ModalTable } from "./ModalTable";
-import { queryClient } from "../../../../src/index";
+import { ModalTable } from "../tables/ModalTable";
+import { queryClient } from "../../../index";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
     { key: "product", label: "کالا", width: "w-3/5" },
@@ -91,6 +91,7 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
                 product={orderData.products[0].product.name}
                 count={orderData.products[0].count}
                 totalPrice={orderData.totalPrice}
+                productId={orderData.products[0].product._id}
               />
               {orderData.deliveryStatus ? (
                 <div className="flex justify-center">
