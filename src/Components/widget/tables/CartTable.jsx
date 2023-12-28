@@ -1,5 +1,6 @@
 import React from "react";
 import { CartDeleteModal } from "../modals/CartDeleteModal";
+import { Link } from "react-router-dom";
 
 export const CartTable = ({ data, column }) => {
   return (
@@ -25,16 +26,27 @@ export const CartTable = ({ data, column }) => {
             {column.map((col) => (
               <td key={col.key} className="table--td ">
                 {col.key === "thumbnail" ? (
+                  <Link to={`/product/${row._id}`}>
+                    <div className="flex justify-center">
+                      <img
+                        className="w-[100px]"
+                        src={`http://localhost:8000/images/products/thumbnails/${row.thumbnail}`}
+                        alt="thumbnail"
+                      />
+                    </div>{" "}
+                  </Link>
+                ) : col.key === "name" ? (
                   <div className="flex justify-center">
-                    <img
-                      className="w-[100px]"
-                      src={`http://localhost:8000/images/products/thumbnails/${row.thumbnail}`}
-                      alt="thumbnail"
-                    />
+                    {" "}
+                    <Link to={`/product/${row._id}`}>
+                      <span className="hover:underline hover:text-selected">
+                        {row[col.key]}
+                      </span>{" "}
+                    </Link>
                   </div>
                 ) : (
                   <div className="flex justify-center">
-                    <span>{row[col.key]}</span>
+                    <span>{row[col.key].toLocaleString("en-US")}</span>
                   </div>
                 )}
               </td>

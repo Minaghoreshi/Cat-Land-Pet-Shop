@@ -12,6 +12,7 @@ export const getUserLastName = async (userId) => {
   const response = await api.get(`http://localhost:8000/api/users/${userId}`);
   return response.data.data.user.lastname;
 };
+
 export const getUserById = async (userId) => {
   try {
     const response = await api.get("http://localhost:8000/api/users", {
@@ -23,7 +24,7 @@ export const getUserById = async (userId) => {
     });
 
     const data = response.data;
-    console.log(data);
+    return data;
   } catch (error) {
     console.error(error);
   }
