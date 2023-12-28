@@ -6,7 +6,7 @@ export const CustomCard = ({ product }) => {
   return (
     <Link to={`/product/${product._id}`}>
       <Card
-        className="max-w-sm max-w-xs shadow-custom p-4 bg-gray-100 "
+        className=" max-w-xs shadow-custom p-4 bg-gray-100 "
         imgAlt="product-thumbnail"
         imgSrc={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
       >

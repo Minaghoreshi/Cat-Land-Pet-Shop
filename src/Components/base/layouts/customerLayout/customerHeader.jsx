@@ -11,7 +11,7 @@ export const CustomerHeader = () => {
   let navigate = useNavigate();
 
   return (
-    <header className="flex px-9 py-5 bg-primary text-secondary items-center justify-between w-full mb-20">
+    <header className="flex px-9 py-5 bg-primary  text-secondary items-center justify-between w-full">
       <h1 className=" font-bold text-[60px] ">کت لند</h1>
       <div>
         <img
@@ -42,12 +42,7 @@ export const CustomerHeader = () => {
             <Icon icon="mdi:cart-outline" color="white" />
             سبد خرید
           </button>
-          {/* <Badge
-            size="sm"
-            className="absolute top-[-1.5rem] left-0 text-base rounded"
-          >
-            6
-          </Badge> */}{" "}
+
           <Badge
             className="absolute top-[-1.8rem] left-0 text-base rounded"
             color="gray"
