@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Customcolumn } from "./custom-column";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
-import { Test } from "./Test";
+import { CheckOrderModal } from "./CheckOrderModal";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
+  const [selectedOrder, setSelectedOrder] = useState();
   const [openModal, setOpenModal] = useState(false);
   function onCloseModal() {
     setOpenModal(false);
   }
+  const OpenModal = (selecterId) => {
+    setOpenModal(true);
+    setSelectedOrder(selecterId);
+  };
   return (
     <table className="table">
       <thead>
@@ -55,12 +60,19 @@ export const OrdersTable = ({ data, columns, buttonsArray }) => {
             <td className="py-4 px-4 border-t border-gray-300 flex justify-center">
               <div>
                 <button
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    OpenModal(row._id);
+                  }}
                   className="hover:underline text-blue-600"
                 >
                   بررسی سفارش
                 </button>{" "}
-                <Test data={data} show={openModal} onClose={onCloseModal} />
+                <CheckOrderModal
+                  selectedOrder={selectedOrder}
+                  data={data}
+                  show={openModal}
+                  onClose={onCloseModal}
+                />
               </div>
             </td>
           </tr>

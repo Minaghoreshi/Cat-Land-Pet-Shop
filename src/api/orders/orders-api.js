@@ -21,3 +21,13 @@ export const addMultipleOrders = async (ordersToAdd) => {
     console.log(error);
   }
 };
+export const getOrderById = async (orderId) => {
+  try {
+    const response = await api.get(
+      `http://localhost:8000/api/orders/${orderId}`
+    );
+    return response.data.data.order;
+  } catch (error) {
+    console.log(error);
+  }
+};
