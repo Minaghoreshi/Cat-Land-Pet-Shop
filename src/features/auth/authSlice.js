@@ -8,6 +8,7 @@ const initialState = {
   refreshToken: Cookies.get("refreshToken") || "",
   user: null,
   isLoading: false,
+  isAdmin: false,
 };
 
 export const auth = createSlice({
@@ -29,13 +30,42 @@ export const auth = createSlice({
       state.isLoading = true;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      state.isLogin = true;
-      state.isLoading = false;
-      state.token = action.payload.token.accessToken;
-      state.refreshToken = action.payload.token.refreshToken;
-      state.user = action.payload.data.user;
-      Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
-      Cookies.set("refreshToken", action.payload.token.refreshToken);
+      // console.log(action.payload.data.user.role);
+      // if (action.payload.data.user.role === "ADMIN") {
+      //   state.isLoading = false;
+      //   state.isLogin = true;
+      //   state.token = action.payload.token.accessToken;
+      //   state.refreshToken = action.payload.token.refreshToken;
+      //   state.user = action.payload.data.user;
+      //   state.isAdmin = true;
+
+      //   Cookies.set("token", action.payload.token.accessToken); // Use Cookies.set to set the cookie
+      //   Cookies.set("refreshToken", action.payload.token.refreshToken);
+      // }
+      const userRole = action.payload.data.user.role;
+      // console.log(userRole);
+      if (userRole === "ADMIN") {
+        state.isLoading = false;
+        state.isLogin = true;
+        state.token = action.payload.token.accessToken;
+        state.refreshToken = action.payload.token.refreshToken;
+        state.user = action.payload.data.user;
+        state.isAdmin = true;
+
+        Cookies.set("token", action.payload.token.accessToken);
+        Cookies.set("refreshToken", action.payload.token.refreshToken);
+      } else {
+        // Handle the case where the user is not an admin
+        state.isLoading = false;
+        state.isLogin = false;
+        state.token = "";
+        state.refreshToken = "";
+        state.user = null;
+        state.isAdmin = false;
+
+        Cookies.remove("token");
+        Cookies.remove("refreshToken");
+      }
     });
     builder.addCase(login.rejected, (state) => {
       state.isLogin = false;

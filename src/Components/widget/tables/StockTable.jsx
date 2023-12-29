@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { EditableItem } from "./EditableItem";
-export const Table = ({ columns, data, setDataToSend }) => {
+export const StockTable = ({ columns, data, setDataToSend }) => {
   const [editedData, setEditedData] = useState([]);
 
   const update = (id, fieldName, valuForKey) => {
@@ -27,7 +27,7 @@ export const Table = ({ columns, data, setDataToSend }) => {
 
   useEffect(() => {
     setDataToSend(editedData);
-  }, [editedData]);
+  }, [editedData, setDataToSend]);
   return (
     <table className="table">
       <thead>

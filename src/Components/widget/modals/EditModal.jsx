@@ -1,27 +1,14 @@
-import {
-  Button,
-  Checkbox,
-  Label,
-  Modal,
-  TextInput,
-  Dropdown,
-  FileInput,
-  Select,
-} from "flowbite-react";
+import { Button, Label, Modal, TextInput, Select } from "flowbite-react";
 import { TiDelete } from "react-icons/ti";
 
-import {
-  getAllCategories,
-  getCategoryById,
-} from "../../../api/category/category-api";
+import { getAllCategories } from "../../../api/category/category-api";
 import { addEditedProduct } from "../../../api/products/products-api";
-import axios from "axios";
-import { Formik, useFormik } from "formik";
 import { editValidationSchema } from "./editSchema";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useQuery } from "react-query";
+import { useFormik } from "formik";
 export const EditModal = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();

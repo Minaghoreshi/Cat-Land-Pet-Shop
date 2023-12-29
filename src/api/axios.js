@@ -2,10 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { store } from "../store";
 import { refresh } from "../features/auth/authThunk";
-import { logOut } from "../features/auth/authSlice";
-
 const URL = "http://localhost:8000/api/token";
-
 const api = axios.create({ baseURL: URL });
 
 api.interceptors.request.use(

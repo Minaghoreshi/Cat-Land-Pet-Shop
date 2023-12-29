@@ -31,11 +31,14 @@ body {
 .table {
   @apply border shadow-custom w-3/4 mt-8 table-fixed rounded-xl overflow-hidden;
 }
+.ModalTable {
+  @apply border shadow-custom mt-8 table-fixed rounded-xl overflow-hidden;
+}
 .table--th {
   @apply py-4 px-4 border   border-gray-300 text-center font-extrabold;
 }
 .table--td {
-  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700;
+  @apply py-4 px-4 border border-gray-300 text-sm font-extralight text-gray-700 content-center;
 }
 .editable {
   @apply text-blue-500 underline;

@@ -1,6 +1,10 @@
 import React from "react";
-import { CustomerLayout } from "../../../components";
+import { CustomerLayout, CartSection } from "../../../components";
 const Cart = () => {
-  return <CustomerLayout>Cart</CustomerLayout>;
+  return (
+    <CustomerLayout>
+      <CartSection />
+    </CustomerLayout>
+  );
 };
 export default Cart;

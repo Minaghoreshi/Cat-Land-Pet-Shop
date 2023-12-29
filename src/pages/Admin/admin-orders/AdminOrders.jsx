@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import {
   TableTitle,
@@ -16,6 +16,7 @@ import {
 } from "../constants";
 import { combineUsersWithOrders } from "./usersandorders";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
+import { getUserById } from "../../../api/users/users-api";
 const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersData, setOrdersData] = useState();
@@ -26,19 +27,33 @@ const AdminOrders = () => {
     () => getAllOrders(currentPage, deliveryStatus)
   );
   //pass data to get the name and family name of user
+  // const getOrdersWithUsers = useCallback(async () => {
+  //   if (data) {
+  //     const combinedData = await combineUsersWithOrders(data.data.orders);
+  //     setOrdersData(combinedData);
+  //   }
+  //   if (ordersData) {
+  //   }
+  // }, [data, setOrdersData, ordersData]);
   const getOrdersWithUsers = useCallback(async () => {
     if (data) {
+      console.log(data);
       const combinedData = await combineUsersWithOrders(data.data.orders);
       setOrdersData(combinedData);
     }
-    if (ordersData) {
-      // console.log(ordersData);
-    }
-  }, [data, setOrdersData, ordersData]);
+  }, [data, setOrdersData]);
 
+  const memoizedGetOrdersWithUsers = useMemo(
+    () => getOrdersWithUsers,
+    [getOrdersWithUsers]
+  );
+  // console.log("test");
+  // useEffect(() => {
+  //   getOrdersWithUsers();
+  // }, [data, getOrdersWithUsers]);
   useEffect(() => {
-    getOrdersWithUsers();
-  }, [data, getOrdersWithUsers]);
+    memoizedGetOrdersWithUsers();
+  }, [memoizedGetOrdersWithUsers]);
 
   const handleStatusChange = (status) => {
     setDeliveryStatus(status);

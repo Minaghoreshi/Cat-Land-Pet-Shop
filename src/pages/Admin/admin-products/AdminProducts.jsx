@@ -3,17 +3,14 @@ import { useQuery } from "react-query";
 import {
   ProductsTable,
   TableTitle,
-  TableButton,
   AdminLayout,
   PaginationComponent,
 } from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
 import { combineProductsWithCategories } from "./dataCombining";
-import { addProduct } from "../../../api/products/products-api";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,
-  ProductTableButton,
   ProductsTablecolumns,
 } from "../constants";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";

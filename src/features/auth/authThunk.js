@@ -4,7 +4,7 @@ import axios from "axios";
 const userAPI = `http://localhost:8000/api/auth/login`;
 const refreshAPI = `http://localhost:8000/api/auth/token`;
 //data= username:string password:string
-export const login = createAsyncThunk(`auth/userLogin`, async (data) => {
+export const login = createAsyncThunk(`auth/adminLogin`, async (data) => {
   try {
     const response = await axios.post(userAPI, data);
     console.log(response.data);

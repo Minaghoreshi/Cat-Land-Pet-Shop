@@ -5,7 +5,10 @@ import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
+import { useSelector } from "react-redux";
 export const Main = () => {
+  const check = useSelector((state) => state.auth.isLogin);
+  console.log(check);
   const [menuItems, setMenuItems] = useState([]);
   const {
     data: category,

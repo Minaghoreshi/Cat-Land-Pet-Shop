@@ -1,7 +1,12 @@
 import React from "react";
-import { CustomerLayout } from "../../../components";
+import { CustomerLayout, UserCheckout } from "../../../components";
+// import { UserCheckout } from "../../../components/widget/checkout-section/UserCheckout";
 
 const Checkout = () => {
-  return <CustomerLayout>Checkout</CustomerLayout>;
+  return (
+    <CustomerLayout>
+      <UserCheckout />
+    </CustomerLayout>
+  );
 };
 export default Checkout;
