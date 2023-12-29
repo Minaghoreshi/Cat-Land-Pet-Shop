@@ -12,9 +12,9 @@ const Cart = Loadable(lazy(() => import("../pages/Customer/cart/cart")));
 const Checkout = Loadable(
   lazy(() => import("../pages/Customer/checkout/checkout"))
 );
-const Payement = Loadable(
-  lazy(() => import("../pages/Customer/payement/payement"))
-);
+// const Payement = Loadable(
+//   lazy(() => import("../pages/Customer/payement/payement"))
+// );
 const PayementResult = Loadable(
   lazy(() => import("../pages/Customer/payement-result/payement-result"))
 );
@@ -47,7 +47,7 @@ const AppRoute = () => {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/payment" element={<Payement />} />
+        {/* <Route path="/payment" element={<Payement />} /> */}
         <Route path="/payment-result/:result?" element={<PayementResult />} />
         <Route path="/product/:id?" element={<Product />} />
         <Route path="/products-table" element={<AdminProducts />} />

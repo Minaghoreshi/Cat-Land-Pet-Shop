@@ -7,5 +7,5 @@ export * from "./subcategory-section";
 export * from "./product-detail-section";
 export * from "./cart-section";
 export * from "./checkout-section";
-export * from "./payment-section";
+// export * from "./payment-section";
 export * from "./result-section";

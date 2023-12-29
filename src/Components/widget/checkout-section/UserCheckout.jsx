@@ -13,6 +13,7 @@ import { checkuotSchema } from "./checkout-schema";
 import { store } from "../../../store";
 import { changeUserPrivateInfo } from "../../../features/users-private-info/privateSlice";
 import { useNavigate } from "react-router-dom";
+import { addDate } from "../../../features/user/userSlice";
 export const UserCheckout = () => {
   const [value, setValue] = useState(new Date());
   const userId = useSelector((state) => state.user.userId);
@@ -20,6 +21,12 @@ export const UserCheckout = () => {
   const userInitialData = useSelector((state) => state.userPrivateInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const totalOrders = useSelector((state) => state.user.userCart);
+  let totalOrderPrice = 0;
+  totalOrders.map((order) => {
+    return (totalOrderPrice += Number(order.count) * Number(order.price) * 10);
+  });
+  console.log(addDate);
   const formik = useFormik({
     initialValues: {
       firstname: userInitialData.firstname || "",
@@ -32,24 +39,12 @@ export const UserCheckout = () => {
     onSubmit: (values) => {
       console.log(formik.values);
       const userOrders = store.getState().user.userCart;
-      const updatedOrders = userOrders.map((order) => ({
-        ...order,
-        deliveryDate: values.deliveryDate,
-      }));
-      // console.log(formik.values.firstname);
-      const dataToEdit = {
-        firstname: formik.values.firstname,
-        lastname: formik.values.lastname,
-        address: formik.values.address,
-        phoneNumber: formik.values.phoneNumber,
-      };
-      // editUserById(userId, dataToEdit);
-      // dispatch(
-      //   changeUserPrivateInfo()
-      // );
-      navigate("/payment");
-      // const newt = store.getState().userPrivateInfo;
-      // console.log(newt);
+      dispatch(addDate(formik.values.deliveryDate));
+      const queryParams = new URLSearchParams({
+        price: totalOrderPrice,
+      });
+      const url = `http://localhost:3002?${queryParams.toString()}`;
+      window.location.href = url;
     },
   });
   useEffect(() => {

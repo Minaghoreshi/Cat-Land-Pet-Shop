@@ -16,6 +16,13 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    addDate: (state, action) => {
+      const deliveryDate = action.payload;
+      state.userCart = state.userCart.map((order) => ({
+        ...order,
+        deliveryDate,
+      }));
+    },
     clearUserCart: (state) => {
       state.userCart = [];
     },
@@ -90,5 +97,6 @@ export const {
   removeAnOrder,
   clearUserCart,
   custom,
+  addDate,
 } = user.actions;
 export default user.reducer;

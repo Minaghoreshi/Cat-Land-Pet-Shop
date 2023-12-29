@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import success from "../../../assets/success.png";
 import unsuccess from "../../../assets/unsuccess.png";
+import { addMultipleOrders } from "../../../api/orders/orders-api";
+import { store } from "../../../store";
+import { clearUserCart, updateBadge } from "../../../features/user/userSlice";
 export const PaymentResult = () => {
-  const location = useLocation();
-  const result = location.state && location.state.result;
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const result = urlSearchParams.get("result");
+  useEffect(() => {
+    const handleResult = async () => {
+      if (result === "success") {
+        const allOrders = store.getState().user.userCart;
+        const userId = store.getState().user.userId;
+        console.log(allOrders[0].deliveryDate);
+        const ordersToAdd = {
+          user: userId,
+          products: allOrders.map((order) => ({
+            product: order._id,
+            count: order.count,
+          })),
+          deliveryStatus: false,
+          deliveryDate: allOrders[0].deliveryDate,
+        };
 
+        console.log(ordersToAdd);
+
+        try {
+          await addMultipleOrders(ordersToAdd);
+          store.dispatch(clearUserCart());
+          store.dispatch(updateBadge());
+        } catch (error) {
+          console.error("Error adding orders:", error);
+        }
+      }
+    };
+
+    handleResult();
+  }, [result]);
+
+  console.log(result);
   return result === "success" ? (
     <div className="flex flex-col w-full px-32 text-4xl ">
       <span>نتیجه پرداخت</span>

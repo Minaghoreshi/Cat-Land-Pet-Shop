@@ -10,7 +10,6 @@ export const UserLoginForm = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const state = store.getState();
-  console.log(state);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -20,12 +19,19 @@ export const UserLoginForm = () => {
     onSubmit: (values) => {
       dispatch(userLogin(values))
         .then(() => {
-          navigate(-1);
+          const isLogin = store.getState().user.isLogin;
+          if (isLogin) {
+            navigate(-1);
+          } else {
+            setLoadingError("نام کاربری یا رمز عبور اشتباه است");
+          }
+          // If login is successful, navigate to the previous page
         })
         .catch((error) => {
           if (error.message === "401") {
             setLoadingError("نام کاربری یا رمز عبور اشتباه است");
           }
+          // You may handle other errors here if needed
         });
     },
   });
