@@ -3,6 +3,7 @@ import { singUpValidationSchema } from "./signUpSchema";
 import { useFormik } from "formik";
 import { addNewUser } from "../../../../../api/users/users-api";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../../../base/utils/utils";
 export const SignUpForm = ({ handleChangeToSignUp }) => {
   const [loadingError, setLoadingError] = useState(null);
   const navigate = useNavigate();
@@ -32,8 +33,14 @@ export const SignUpForm = ({ handleChangeToSignUp }) => {
       if (res === 201) {
         setLoadingError((prev) => null);
         console.log("done");
-        handleChangeToSignUp();
-        navigate("/user-login");
+        showToast(
+          "ثبت نام با موفقیت انجام شد. لطفا وارد حساب کاربری خود شوید",
+          "green"
+        );
+        setTimeout(() => {
+          handleChangeToSignUp();
+          navigate("/user-login");
+        }, 3000);
       } else {
         const responseBody = await res.response.data;
         const errorMatch = responseBody.match(/Error: (.+)<br>/);
