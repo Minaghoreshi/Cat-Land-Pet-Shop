@@ -48,3 +48,14 @@ export const editUserById = async (userId, data) => {
     console.log(error);
   }
 };
+export const addNewUser = async (userData) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:8000/api/users`,
+      userData
+    );
+    return response.status;
+  } catch (error) {
+    return error;
+  }
+};
