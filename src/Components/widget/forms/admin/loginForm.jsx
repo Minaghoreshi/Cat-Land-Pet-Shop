@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { validationSchema } from "./loginSchema";
+import { LoginSchema } from "../user/login-form/loginSchema";
 import { useFormik, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../features/auth/authThunk";
+import { login } from "../../../../features/auth/authThunk";
 
 export const LoginForm = ({ shouldNavigate = true }) => {
   const [loadingError, setLoadingError] = useState(null);
@@ -16,7 +16,7 @@ export const LoginForm = ({ shouldNavigate = true }) => {
       username: "",
       password: "",
     },
-    validationSchema,
+    LoginSchema,
     onSubmit: (values) => {
       dispatch(login(values))
         .then((action) => {

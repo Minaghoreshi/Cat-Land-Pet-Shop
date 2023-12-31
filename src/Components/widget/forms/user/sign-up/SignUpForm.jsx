@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { singUpValidationSchema } from "./signUpSchema";
 import { useFormik } from "formik";
-import { addNewUser } from "../../../api/users/users-api";
+import { addNewUser } from "../../../../../api/users/users-api";
 import { useNavigate } from "react-router-dom";
 export const SignUpForm = ({ handleChangeToSignUp }) => {
   const [loadingError, setLoadingError] = useState(null);
@@ -18,8 +18,6 @@ export const SignUpForm = ({ handleChangeToSignUp }) => {
     },
     validationSchema: singUpValidationSchema,
     onSubmit: async (values) => {
-      // Handle signup logic here
-      console.log(values);
       const userDataToSend = {
         firstname: formik.values.firstname,
         lastname: formik.values.lastname,
