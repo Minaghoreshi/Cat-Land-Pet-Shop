@@ -8,7 +8,10 @@ export const ModalTable = ({
   count,
   productId,
 }) => {
-  console.log(productId);
+  if (!productId) {
+    return null; // or return an alternative component, message, etc.
+  }
+
   return (
     <table className="ModalTable">
       <thead>
@@ -26,10 +29,8 @@ export const ModalTable = ({
       <tbody>
         <tr>
           <td className="table--td">
-            {" "}
-            <Link to={`/product/${productId}`}>{product} </Link>
+            <Link to={`/product/${productId}`}>{product}</Link>
           </td>
-
           <td className="table--td">{totalPrice}</td>
           <td className="table--td">{count}</td>
         </tr>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Modal } from "flowbite-react";
 import { createPortal } from "react-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { editOrder, getOrderById } from "../../../api/orders/orders-api";
-import { ModalTable } from "../tables/ModalTable";
+import { editOrder, getOrderById } from "../../../../api/orders/orders-api";
+import { ModalTable } from "../../tables/ModalTable";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
     { key: "product", label: "کالا", width: "w-3/5" },
@@ -38,6 +38,9 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   if (orderData) {
     console.log(orderData);
   }
+  if (isLoading) {
+    return <div>loading</div>;
+  }
   const submitDelivery = (id) => {
     console.log(id);
     const dataToEdit = { deliveryStatus: true };
@@ -50,9 +53,6 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
       <Modal.Header />
       <Modal.Body>
         <div className="space-y-6 flex flex-col ">
-          {/* <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-            Sign in to our platform
-          </h3> */}
           {orderData ? (
             <>
               <div className="flex flex-col gap-3">
@@ -93,13 +93,19 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
                   </span>
                 </div>
               </div>{" "}
-              <ModalTable
-                columns={columns}
-                product={orderData.products[0].product.name}
-                count={orderData.products[0].count}
-                totalPrice={orderData.totalPrice}
-                productId={orderData.products[0].product._id}
-              />
+              {orderData.products[0]?.product?.name ? (
+                <ModalTable
+                  columns={columns}
+                  product={orderData.products[0].product.name}
+                  count={orderData.products[0].count}
+                  totalPrice={orderData.totalPrice}
+                  productId={orderData.products[0].product._id}
+                />
+              ) : (
+                <div className="text-selected">
+                  این کالا از لیست محصولات، حذف شده است
+                </div>
+              )}
               {orderData.deliveryStatus ? (
                 <div className="flex justify-center">
                   <span>

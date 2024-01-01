@@ -1,5 +1,5 @@
 import React from "react";
-import { CartDeleteModal } from "../modals/CartDeleteModal";
+import { CartDeleteModal } from "../modals/delete-cart-modal/CartDeleteModal";
 import { Link } from "react-router-dom";
 
 export const CartTable = ({ data, column }) => {

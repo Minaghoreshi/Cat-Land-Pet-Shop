@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { deleteProduct } from "../../../api/products/products-api";
+import { deleteProduct } from "../../../../api/products/products-api";
 export const DeleteModal = ({ data }) => {
   const queryClient = useQueryClient();
 

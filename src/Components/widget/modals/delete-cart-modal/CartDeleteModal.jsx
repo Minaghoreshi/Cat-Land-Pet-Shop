@@ -2,7 +2,10 @@ import { Button, Modal } from "flowbite-react";
 import React, { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import { removeAnOrder, updateBadge } from "../../../features/user/userSlice";
+import {
+  removeAnOrder,
+  updateBadge,
+} from "../../../../features/user/userSlice";
 
 export const CartDeleteModal = ({ data }) => {
   const [openModal, setOpenModal] = useState(false);

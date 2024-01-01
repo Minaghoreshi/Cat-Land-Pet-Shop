@@ -17,8 +17,19 @@ export const AddModalForm = ({ setOpenModal, product }) => {
   const [productThumbnail, setProductThumbnail] = useState("");
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
-
   const [subcategories, setSubCategories] = useState(null);
+  const queryClient = useQueryClient();
+
+  //when fomr loads: get all the categories for the select option
+  const { data, error, isLoading } = useQuery(["categories"], () =>
+    getAllCategories()
+  );
+  useEffect(() => {
+    if (data) {
+      setCategories(data);
+    }
+  }, [data]);
+  //after selecting a category, get its subcategories
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,20 +44,13 @@ export const AddModalForm = ({ setOpenModal, product }) => {
 
     fetchData();
   }, [selectedCategory]);
-  const queryClient = useQueryClient();
+  //save the thumnail in state for showing the image
   useEffect(() => {
     if (product && product.thumbnail) {
       setProductThumbnail(product.thumbnail);
     }
   }, [product]);
-  const { data, error, isLoading } = useQuery(["categories"], () =>
-    getAllCategories()
-  );
-  useEffect(() => {
-    if (data) {
-      setCategories(data);
-    }
-  }, [data]);
+  //mutations-----
   const addEditedOrder = useMutation(
     (params) => addEditedProduct(params.formData, params.productId),
     {
@@ -61,6 +65,7 @@ export const AddModalForm = ({ setOpenModal, product }) => {
       queryClient.invalidateQueries("products");
     },
   });
+  //mutations-----
   const formikInitialValues = {
     thumbnail: product?.thumbnail || "",
     images: [],
@@ -87,6 +92,7 @@ export const AddModalForm = ({ setOpenModal, product }) => {
       }
     },
   });
+
   const handleThumbnailDelete = () => {
     setProductThumbnail("");
   };

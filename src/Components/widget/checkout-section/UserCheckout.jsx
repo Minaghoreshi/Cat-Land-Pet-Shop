@@ -43,7 +43,7 @@ export const UserCheckout = () => {
       const queryParams = new URLSearchParams({
         price: totalOrderPrice,
       });
-      const url = `http://localhost:3002?${queryParams.toString()}`;
+      const url = `http://localhost:3001?${queryParams.toString()}`;
       window.location.href = url;
     },
   });

@@ -1,5 +1,5 @@
 import { AddModal } from "../modals/add-edit-modal/AddModal";
-import { DeleteModal } from "../modals/DeleteModal";
+import { DeleteModal } from "../modals/delete-product-modal/DeleteModal";
 
 export const ProductsTable = ({ data, columns }) => {
   return (
