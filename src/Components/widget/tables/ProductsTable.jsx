@@ -34,8 +34,6 @@ export const ProductsTable = ({ data, columns }) => {
                 ) : (
                   ` ${row.category} / ${row.subCategory}`
                 )}
-
-                {/* {row[column.key]} */}
               </td>
             ))}
 

@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   ProductsTable,
   TableTitle,
   AdminLayout,
   PaginationComponent,
 } from "../../../components";
-import { getProducts } from "../../../api/products/products-api";
+import { deleteProduct, getProducts } from "../../../api/products/products-api";
 import { combineProductsWithCategories } from "./dataCombining";
 import {
   ProductTableCustomButtons,
@@ -19,11 +19,13 @@ const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
 
-  //get all products (without category and subcategory)
-  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
-    getProducts(currentPage)
-  );
-  //pass the data and get subcategpory and category and store in the wholedata state
+  const { data, isLoading, error } = useQuery({
+    queryFn: () => {
+      return getProducts(currentPage);
+    },
+    queryKey: ["products", { currentPage }],
+  });
+
   const getDataDetails = useCallback(async () => {
     if (data) {
       const combinedData = await combineProductsWithCategories(
@@ -41,7 +43,6 @@ const AdminProducts = () => {
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
-  // console.log(wholeData);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -56,7 +57,6 @@ const AdminProducts = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         {" "}
         <TableTitle title={ProductTableTitle} />
-        {/* <TableButton button={ProductTableButton} /> */}
         <AddModal />
       </div>
       {data.data && wholeData ? (

@@ -1,22 +1,22 @@
 import React from "react";
-import { useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { Button, Modal } from "flowbite-react";
 import { useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-// import { deletProduct } from "../../../api/products/products-api";
 import { deleteProduct } from "../../../api/products/products-api";
 export const DeleteModal = ({ data }) => {
   const queryClient = useQueryClient();
+
+  const { mutateAsync: deleteMutation } = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries("products");
+    },
+  });
   const handleDelete = async (productId) => {
     try {
-      const result = await deleteProduct(productId);
-      if (result && result === 200) {
-        queryClient.invalidateQueries("products");
-
-        setOpenModal(false);
-      } else {
-        console.error("Deletion failed");
-      }
+      await deleteMutation(data._id);
+      setOpenModal(false);
     } catch (error) {
       console.error("Error deleting product:", error);
     }
