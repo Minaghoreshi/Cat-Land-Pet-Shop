@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { createPortal } from "react-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { editOrder, getOrderById } from "../../../api/orders/orders-api";
 import { ModalTable } from "../tables/ModalTable";
-import { queryClient } from "../../../index";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
     { key: "product", label: "کالا", width: "w-3/5" },
     { key: "totalPrice", label: "قیمت" },
     { key: "count", label: "تعداد" },
   ];
+  const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState(selectedOrder);
   const [orderData, setOrderData] = useState(null);
   const { data, error, isLoading } = useQuery(
@@ -18,7 +18,15 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
     () => getOrderById(selectedId),
     { enabled: !!selectedId } // Enable the query only when selectedId is truthy
   );
-
+  const editOrderMutation = useMutation(
+    (params) => editOrder(params.id, params.dataToEdit),
+    {
+      onSuccess: () => {
+        onClose();
+        queryClient.invalidateQueries("orders");
+      },
+    }
+  );
   useEffect(() => {
     if (selectedOrder) {
       setSelectedId(selectedOrder);
@@ -33,11 +41,10 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const submitDelivery = (id) => {
     console.log(id);
     const dataToEdit = { deliveryStatus: true };
-    editOrder(id, dataToEdit);
-    onClose();
-    queryClient.invalidateQueries("orders");
+    console.log(dataToEdit);
+    editOrderMutation.mutate({ id, dataToEdit });
   };
-  // console.log(data);
+
   return createPortal(
     <Modal show={show} onClose={onClose} size="md" popup>
       <Modal.Header />

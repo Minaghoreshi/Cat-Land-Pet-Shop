@@ -2,8 +2,7 @@ import { Button, Label, Modal, Select, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { validationSchema } from "./AddSchema";
 import { useFormik } from "formik";
-import { useMutation, useQuery } from "react-query";
-import { queryClient } from "../../../../src/index";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import {
@@ -17,12 +16,22 @@ import { store } from "../../../store";
 import { Editor } from "@tinymce/tinymce-react";
 
 export const AddModal = ({ product }) => {
+  const queryClient = useQueryClient();
+
   const [openModal, setOpenModal] = useState(false);
   const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [subcategories, setSubCategories] = useState(null);
   const [productImages, setProductImages] = useState([]);
   const [productThumbnail, setProductThumbnail] = useState("");
+  const addEditedOrder = useMutation(
+    (params) => addEditedProduct(params.formdata, params.productId),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("products");
+      },
+    }
+  );
   const { mutateAsync: addMutation } = useMutation({
     mutationFn: addNewProduct,
     onSuccess: () => {
@@ -98,7 +107,7 @@ export const AddModal = ({ product }) => {
         }
         setOpenModal(false);
         await (product
-          ? addEditedProduct(formdata, product._id)
+          ? addEditedOrder.mutate({ formdata, productId: product._id })
           : addMutation(formdata));
         queryClient.invalidateQueries("products");
       } catch (error) {
