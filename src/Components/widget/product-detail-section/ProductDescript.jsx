@@ -5,10 +5,13 @@ import { Button } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { addOrder, user, updateBadge } from "../../../features/user/userSlice";
 import { store } from "../../../store";
+import { Toastify } from "../../base";
 
 export const ProductDescript = ({ product }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [count, setCount] = useState(1);
+  const [toastifyVisible, setToastifyVisible] = useState(false);
+
   useEffect(() => {
     if (product) {
       setSelectedProduct(product);
@@ -26,6 +29,14 @@ export const ProductDescript = ({ product }) => {
       }
     }
   }, [product, selectedProduct]);
+  useEffect(() => {
+    if (toastifyVisible) {
+      const timeOutId = setTimeout(() => {
+        setToastifyVisible(false);
+      }, 3100);
+      return () => clearTimeout(timeOutId);
+    }
+  }, [toastifyVisible]);
   const handleIncrement = () => {
     if (count < selectedProduct.quantity) {
       setCount(count + 1);
@@ -46,32 +57,45 @@ export const ProductDescript = ({ product }) => {
       thumbnail: selectedProduct.thumbnail,
     };
     dispatch(addOrder(newOrder));
+    setToastifyVisible((prev) => !prev);
+
     dispatch(updateBadge());
     const result = store.getState();
     console.log(result.user.userCart);
   };
 
-  return selectedProduct ? (
-    <div className="flex flex-col justify-between">
-      <h1 className="text-primary text-3xl">{selectedProduct.name}</h1>{" "}
-      <CustomBreadCrump
-        category={selectedProduct.category.name}
-        subcategory={selectedProduct.subcategory.name}
-      />
-      <span className="text-xl">{`${selectedProduct.price.toLocaleString(
-        "en-US"
-      )} تومان`}</span>{" "}
-      <div className="flex gap-20 items-center ">
-        <Counter
-          max={selectedProduct.quantity}
-          handleIncrement={handleIncrement}
-          count={count}
-          handleDecrement={handleDecrement}
+  return (
+    <>
+      {toastifyVisible && (
+        <Toastify
+          text={"محصول به سبد خرید  اضافه شد"}
+          color={"bg-success"}
+          position={"left-10"}
         />
-        <Button onClick={addToCart} size="xl">
-          افزودن به سبد خرید
-        </Button>
-      </div>
-    </div>
-  ) : null;
+      )}
+      {selectedProduct ? (
+        <div className="flex flex-col justify-between">
+          <h1 className="text-primary text-3xl">{selectedProduct.name}</h1>{" "}
+          <CustomBreadCrump
+            category={selectedProduct.category.name}
+            subcategory={selectedProduct.subcategory.name}
+          />
+          <span className="text-xl">{`${selectedProduct.price.toLocaleString(
+            "en-US"
+          )} تومان`}</span>{" "}
+          <div className="flex gap-20 items-center ">
+            <Counter
+              max={selectedProduct.quantity}
+              handleIncrement={handleIncrement}
+              count={count}
+              handleDecrement={handleDecrement}
+            />
+            <Button onClick={addToCart} size="xl">
+              افزودن به سبد خرید
+            </Button>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
 };

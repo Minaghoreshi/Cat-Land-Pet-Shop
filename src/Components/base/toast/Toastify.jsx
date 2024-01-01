@@ -1,7 +1,7 @@
 import { Toast } from "flowbite-react";
 import { useEffect, useState } from "react";
 
-export const Toastify = ({ text, color }) => {
+export const Toastify = ({ text, color, position }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -12,8 +12,10 @@ export const Toastify = ({ text, color }) => {
   }, []);
   return (
     isVisible && (
-      <Toast className={`flex ${color} animate-slideInDown absolute top-10`}>
-        <div className="ml-3 text-xl font-normal text-white">{text}</div>
+      <Toast className={`flex ${color} absolute ${position}`}>
+        <div className="flex ml-3 w-auto text-xl font-normal text-white">
+          {text}
+        </div>
       </Toast>
     )
   );

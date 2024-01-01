@@ -20,7 +20,7 @@ export const UserForm = () => {
     <>
       {" "}
       {toastifyVisible ? (
-        <Toastify text={"خوش آمدید"} color={"bg-success"} />
+        <Toastify text={"خوش آمدید"} color={"bg-success"} position={"top-0"} />
       ) : (
         ""
       )}
