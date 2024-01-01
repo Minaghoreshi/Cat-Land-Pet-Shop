@@ -11,3 +11,4 @@ export * from "./checkout-section";
 export * from "./result-section";
 export * from "./forms";
 export * from "./forms/user/sign-up";
+export * from "./with-guard";

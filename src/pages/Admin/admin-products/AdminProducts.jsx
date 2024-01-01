@@ -1,20 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import {
   ProductsTable,
   TableTitle,
   AdminLayout,
   PaginationComponent,
+  WithGuard,
+  AddModal,
 } from "../../../components";
-import { deleteProduct, getProducts } from "../../../api/products/products-api";
+import { getProducts } from "../../../api/products/products-api";
 import { combineProductsWithCategories } from "./dataCombining";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,
   ProductsTablecolumns,
 } from "../constants";
-import { WithGuard } from "../../../components/widget/with-guard/withGuard";
-import { AddModal } from "../../../components/widget/modals/AddModal";
+
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
