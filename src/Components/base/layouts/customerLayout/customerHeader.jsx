@@ -42,14 +42,17 @@ export const CustomerHeader = () => {
             <Icon icon="mdi:cart-outline" color="white" />
             سبد خرید
           </button>
-
-          <Badge
-            className="absolute top-[-1.8rem] left-0 text-base rounded"
-            color="gray"
-          >
-            {" "}
-            {badge}
-          </Badge>
+          {badge > 0 ? (
+            <Badge
+              className="absolute top-[-1.8rem] left-0 text-base rounded"
+              color="gray"
+            >
+              {" "}
+              {badge}
+            </Badge>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </header>
