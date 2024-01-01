@@ -2,7 +2,7 @@ import { Button, Label, Modal, Select, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { validationSchema } from "./AddSchema";
 import { useFormik } from "formik";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../../../../src/index";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
@@ -23,8 +23,15 @@ export const AddModal = ({ product }) => {
   const [subcategories, setSubCategories] = useState(null);
   const [productImages, setProductImages] = useState([]);
   const [productThumbnail, setProductThumbnail] = useState("");
+  const { mutateAsync: addMutation } = useMutation({
+    mutationFn: addNewProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries("products");
+    },
+  });
+
   const formikInitialValues = {
-    thumbnail: productImages || "",
+    thumbnail: "",
     images: [],
     name: product?.name || "",
     category: "",
@@ -92,7 +99,7 @@ export const AddModal = ({ product }) => {
         setOpenModal(false);
         await (product
           ? addEditedProduct(formdata, product._id)
-          : addNewProduct(formdata));
+          : addMutation(formdata));
         queryClient.invalidateQueries("products");
       } catch (error) {
         queryClient.invalidateQueries("products");
@@ -103,11 +110,11 @@ export const AddModal = ({ product }) => {
   const handleThumbnailDelete = () => {
     setProductThumbnail("");
   };
-  const handleImageDelete = (index) => {
-    const updatedImages = [...productImages];
-    updatedImages.splice(index, 1);
-    setProductImages(updatedImages);
-  };
+  // const handleImageDelete = (index) => {
+  //   const updatedImages = [...productImages];
+  //   updatedImages.splice(index, 1);
+  //   setProductImages(updatedImages);
+  // };
   const { data, error, isLoading } = useQuery(["categories"], () =>
     getAllCategories()
   );
@@ -227,7 +234,7 @@ export const AddModal = ({ product }) => {
               }}
               onBlur={formik.handleBlur}
             />{" "}
-            <div className="mt-3 flex gap-3 flex-wrap">
+            {/* <div className="mt-3 flex gap-3 flex-wrap">
               {product
                 ? productImages.map((image, index) => (
                     <div key={index} className="relative">
@@ -245,7 +252,7 @@ export const AddModal = ({ product }) => {
                     </div>
                   ))
                 : ""}{" "}
-            </div>
+            </div> */}
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="name" value="نام کالا" />
