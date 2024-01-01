@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./loginSchema";
 import { store } from "../../../../../store";
 import { userLogin } from "../../../../../features/user/userThunk";
-export const UserLoginForm = () => {
+import { Flip, ToastContainer, toast } from "react-toastify";
+
+export const UserLoginForm = ({ setToastifyVisible }) => {
   const [loadingError, setLoadingError] = useState(null);
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,7 +23,11 @@ export const UserLoginForm = () => {
         .then(() => {
           const isLogin = store.getState().user.isLogin;
           if (isLogin) {
-            navigate(-1);
+            setLoadingError((prev) => null);
+            setToastifyVisible((prev) => !prev);
+            setTimeout(() => {
+              navigate("/");
+            }, 3200);
           } else {
             setLoadingError("نام کاربری یا رمز عبور اشتباه است");
           }

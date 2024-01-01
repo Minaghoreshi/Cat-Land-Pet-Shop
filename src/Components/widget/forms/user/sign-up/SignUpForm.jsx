@@ -3,8 +3,8 @@ import { singUpValidationSchema } from "./signUpSchema";
 import { useFormik } from "formik";
 import { addNewUser } from "../../../../../api/users/users-api";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "../../../../base/utils/utils";
-export const SignUpForm = ({ handleChangeToSignUp }) => {
+import { Flip, ToastContainer, toast } from "react-toastify";
+export const SignUpForm = ({ handleChangeToSignUp, setToastifyVisible }) => {
   const [loadingError, setLoadingError] = useState(null);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -32,15 +32,11 @@ export const SignUpForm = ({ handleChangeToSignUp }) => {
       console.log(res);
       if (res === 201) {
         setLoadingError((prev) => null);
-        console.log("done");
-        showToast(
-          "ثبت نام با موفقیت انجام شد. لطفا وارد حساب کاربری خود شوید",
-          "green"
-        );
+        setToastifyVisible((prev) => !prev);
         setTimeout(() => {
           handleChangeToSignUp();
-          navigate("/user-login");
-        }, 3000);
+          // navigate("/user-login");
+        }, 3200);
       } else {
         const responseBody = await res.response.data;
         const errorMatch = responseBody.match(/Error: (.+)<br>/);
@@ -58,6 +54,7 @@ export const SignUpForm = ({ handleChangeToSignUp }) => {
 
   return (
     <>
+      {/* <ToastContainer transition={Flip} /> */}
       <span className="text-2xl text-center">ثبت نام</span>{" "}
       <form
         onSubmit={formik.handleSubmit}
