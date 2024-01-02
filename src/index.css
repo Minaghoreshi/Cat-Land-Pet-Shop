@@ -49,7 +49,7 @@ body {
   @apply text-blue-500 underline;
 }
 .sidebar {
-  @apply w-64 h-screen rounded-xl p-3 mr-7 overflow-y-auto max-h-[750px] shadow-custom  no-scrollbar;
+  @apply w-64 h-screen rounded-xl p-3 mr-7 overflow-y-auto max-h-[400px] shadow-custom  no-scrollbar text-t;
 }
 .item-label {
   @apply flex my-2 gap-3;

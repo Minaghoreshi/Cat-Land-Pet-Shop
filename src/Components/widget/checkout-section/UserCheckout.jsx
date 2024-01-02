@@ -43,7 +43,7 @@ export const UserCheckout = () => {
       ...formik.values,
       deliveryDate: value?.toDate?.().toISOString(),
     });
-  }, [value]);
+  }, [value, formik]);
   return (
     <div className="mt-5 flex  w-3/5 flex-col gap-10">
       <TableTitle title={"تکمیل اطلاعات کاربری"} />
