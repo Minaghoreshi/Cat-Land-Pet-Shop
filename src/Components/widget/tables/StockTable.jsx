@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { EditableItem } from "./EditableItem";
+import { Toastify } from "../../base/toast/Toastify";
 export const StockTable = ({ columns, data, setDataToSend }) => {
   const [editedData, setEditedData] = useState([]);
 
