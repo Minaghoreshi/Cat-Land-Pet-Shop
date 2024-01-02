@@ -1,21 +1,27 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/9005223.jpg";
-import { Badge } from "flowbite-react";
-import { useSelector } from "react-redux";
-import { Icon } from "@iconify/react";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { CategoryNav } from "../../../widget/category-nav/CategoryNav";
+import { userLogOut } from "../../../../features/user/userSlice";
+import { LoginSign } from "./LoginSign";
+import { LogOutSign } from "./LogOutSign";
+import { CartSign } from "./CartSign";
 export const CustomerHeader = () => {
   const badge = useSelector((state) => state.user.badge);
-  let navigate = useNavigate();
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const menuTimeoutRef = useRef(null);
+  const isUserLogin = useSelector((state) => state.user.isLogin);
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMouseEnter = () => {
     clearTimeout(menuTimeoutRef.current);
     setMenuVisibility(true);
   };
-
+  const handleLogOut = () => {
+    dispatch(userLogOut());
+  };
   const handleMouseLeaveContainer = () => {
     menuTimeoutRef.current = setTimeout(() => {
       setMenuVisibility(false);
@@ -57,15 +63,11 @@ export const CustomerHeader = () => {
           >
             دسته بندی
           </span>{" "}
-          <div className="flex flex-col relative gap-2 items-end">
-            <div className="flex gap-2 items-end">
-              {" "}
-              <Icon icon="line-md:account" width="30" height="30" />
-              <Link to={"/user-login"}>
-                <span className="header--li">ورود / ثبت نام</span>
-              </Link>
-            </div>
-          </div>
+          {isUserLogin ? (
+            <LogOutSign handleLogOut={handleLogOut} />
+          ) : (
+            <LoginSign />
+          )}
           <button
             onClick={() => {
               navigate("/admin-login");
@@ -74,26 +76,7 @@ export const CustomerHeader = () => {
             {" "}
             پنل مدیریت
           </button>{" "}
-          <div
-            className="relative cursor-pointer"
-            onClick={() => {
-              navigate("/cart");
-            }}
-          >
-            <Icon icon="emojione:shopping-cart" width="35" height="35" />
-
-            {badge > 0 ? (
-              <Badge
-                className="absolute top-[-1.5rem] left-2 text-base rounded"
-                color="red"
-              >
-                {" "}
-                {badge}
-              </Badge>
-            ) : (
-              ""
-            )}
-          </div>
+          <CartSign badge={badge} />
         </div>
       </div>{" "}
       {isMenuVisible ? (

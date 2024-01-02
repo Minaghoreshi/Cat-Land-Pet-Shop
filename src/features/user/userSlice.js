@@ -16,6 +16,15 @@ export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
+    userLogOut: (state) => {
+      state.token = "";
+      state.refreshToken = "";
+      state.isLogin = false;
+      state.userAllOrders = [];
+      state.userCart = [];
+      state.badge = 0;
+      state.userId = null;
+    },
     addDate: (state, action) => {
       const deliveryDate = action.payload;
       state.userCart = state.userCart.map((order) => ({
@@ -98,5 +107,6 @@ export const {
   clearUserCart,
   custom,
   addDate,
+  userLogOut,
 } = user.actions;
 export default user.reducer;
