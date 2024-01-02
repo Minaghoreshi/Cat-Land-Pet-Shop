@@ -19,26 +19,20 @@ import {
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
-
   const { data, isLoading, error } = useQuery({
     queryFn: () => {
       return getProducts(currentPage);
     },
     queryKey: ["products", { currentPage }],
+    onSuccess: (data) => getDataDetails(data),
   });
 
-  const getDataDetails = useCallback(async () => {
-    if (data) {
-      const combinedData = await combineProductsWithCategories(
-        data.data.products
-      );
-      setWholeData(combinedData);
-    }
-  }, [data]);
-  //run use effect whenever data changes so that getting category and sub category be done
-  useEffect(() => {
-    getDataDetails();
-  }, [data, getDataDetails]);
+  const getDataDetails = async (data) => {
+    const combinedData = await combineProductsWithCategories(
+      data.data.products
+    );
+    setWholeData(combinedData);
+  };
 
   //for pagination changing
   const onPageChange = (page) => {
