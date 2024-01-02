@@ -6,6 +6,7 @@
 
 body {
   font-family: "farsi";
+  box-sizing: border-box;
 }
 @layer utilities {
   @variants responsive {
@@ -18,9 +19,13 @@ body {
     }
   }
 }
+
 .custom-scroll {
   max-height: 800px;
   overflow-y: auto;
+}
+.header--li {
+  @apply hover:text-selected cursor-pointer;
 }
 .admin--nav {
   @apply font-bold py-2 px-4  bg-white text-primary border;

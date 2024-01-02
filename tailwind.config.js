@@ -14,6 +14,7 @@ module.exports = {
         head: `#fbe4ea`,
         error: `#f05a77`,
         success: `#61c191`,
+        t: `#616161`,
       },
       animation: { slideInDown: "slideInDown 1s ease-in-out" },
       fontFamily: { custom: "farsi" },
