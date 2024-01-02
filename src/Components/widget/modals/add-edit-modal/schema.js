@@ -2,7 +2,6 @@ import * as Yup from "yup";
 
 export const validationSchema = Yup.object().shape({
   thumbnail: Yup.mixed().required("تصویر پیش نمایش کالا الزامی است"),
-  // images: Yup.array().of(Yup.mixed()).min(1, "تصویر کالا الزامی است"),
   name: Yup.string()
     .required("نام کالا الزامی است")
     .min(1, "نام کالا الزامی است"),

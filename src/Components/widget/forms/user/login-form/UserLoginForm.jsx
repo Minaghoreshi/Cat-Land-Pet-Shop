@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "./loginSchema";
 import { store } from "../../../../../store";
 import { userLogin } from "../../../../../features/user/userThunk";
-import { Flip, ToastContainer, toast } from "react-toastify";
 
 export const UserLoginForm = ({ setToastifyVisible }) => {
   const [loadingError, setLoadingError] = useState(null);

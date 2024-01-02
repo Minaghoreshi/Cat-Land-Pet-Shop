@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import success from "../../../assets/success.png";
 import unsuccess from "../../../assets/unsuccess.png";
 import { addMultipleOrders } from "../../../api/orders/orders-api";

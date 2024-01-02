@@ -2,25 +2,16 @@ import React, { useEffect, useState } from "react";
 import { TableTitle } from "../tables";
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import DatePicker from "react-multi-date-picker";
-import { Calendar } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useQuery } from "react-query";
-import { editUserById, getUserById } from "../../../api/users/users-api";
 import { useFormik } from "formik";
 import { checkuotSchema } from "./checkout-schema";
-import { store } from "../../../store";
-import { changeUserPrivateInfo } from "../../../features/users-private-info/privateSlice";
-import { useNavigate } from "react-router-dom";
 import { addDate } from "../../../features/user/userSlice";
 export const UserCheckout = () => {
   const [value, setValue] = useState(new Date());
-  const userId = useSelector((state) => state.user.userId);
-  console.log(userId);
   const userInitialData = useSelector((state) => state.userPrivateInfo);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const totalOrders = useSelector((state) => state.user.userCart);
   let totalOrderPrice = 0;
   totalOrders.map((order) => {
@@ -38,7 +29,7 @@ export const UserCheckout = () => {
     validationSchema: checkuotSchema,
     onSubmit: (values) => {
       console.log(formik.values);
-      const userOrders = store.getState().user.userCart;
+
       dispatch(addDate(formik.values.deliveryDate));
       const queryParams = new URLSearchParams({
         price: totalOrderPrice,
@@ -48,7 +39,6 @@ export const UserCheckout = () => {
     },
   });
   useEffect(() => {
-    // Set the value to a Date object
     formik.setValues({
       ...formik.values,
       deliveryDate: value?.toDate?.().toISOString(),
@@ -160,14 +150,6 @@ export const UserCheckout = () => {
                 value="تاریخ تحویل"
               />
             </div>
-            {/* // name="deliveryDate"
-            // onChange={setValue}
-            // onBlur={formik.handleBlur}
-            // value={formik.values.deliveryDate}
-            // style={{ width: "200px", height: "50px" }}
-            // format="YYYY/MM/DD"
-            // calendar={persian}
-            // locale={persian_fa} */}
             <DatePicker
               name="deliveryDate"
               onChange={setValue}

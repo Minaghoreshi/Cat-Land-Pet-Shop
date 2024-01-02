@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Label, Modal, Select, TextInput } from "flowbite-react";
+import { Button, Label, Select, TextInput } from "flowbite-react";
 import { createDataToSend } from "./utils";
 import { useFormik } from "formik";
 import { validationSchema } from "./schema";

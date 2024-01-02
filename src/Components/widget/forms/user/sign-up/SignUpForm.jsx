@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import { singUpValidationSchema } from "./signUpSchema";
 import { useFormik } from "formik";
 import { addNewUser } from "../../../../../api/users/users-api";
-import { useNavigate } from "react-router-dom";
-import { Flip, ToastContainer, toast } from "react-toastify";
 export const SignUpForm = ({ handleChangeToSignUp, setToastifyVisible }) => {
   const [loadingError, setLoadingError] = useState(null);
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -35,7 +32,6 @@ export const SignUpForm = ({ handleChangeToSignUp, setToastifyVisible }) => {
         setToastifyVisible((prev) => !prev);
         setTimeout(() => {
           handleChangeToSignUp();
-          // navigate("/user-login");
         }, 3200);
       } else {
         const responseBody = await res.response.data;
@@ -54,7 +50,6 @@ export const SignUpForm = ({ handleChangeToSignUp, setToastifyVisible }) => {
 
   return (
     <>
-      {/* <ToastContainer transition={Flip} /> */}
       <span className="text-2xl text-center">ثبت نام</span>{" "}
       <form
         onSubmit={formik.handleSubmit}

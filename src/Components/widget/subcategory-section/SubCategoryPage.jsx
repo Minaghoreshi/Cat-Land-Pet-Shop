@@ -11,8 +11,8 @@ export const SubCategoryPage = () => {
   const [menuItems, setMenuItems] = useState([]);
   const {
     data: category,
-    // error: categoryError,
-    // isLoading: categoryLoading,
+    error,
+    isLoading,
   } = useQuery(["test"], getAllCategories);
   const fetchSubCategories = async () => {
     if (category) {

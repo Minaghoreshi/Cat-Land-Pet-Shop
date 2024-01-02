@@ -36,15 +36,12 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
     }
   }, [selectedOrder, data]);
   if (orderData) {
-    console.log(orderData);
   }
   if (isLoading) {
     return <div>loading</div>;
   }
   const submitDelivery = (id) => {
-    console.log(id);
     const dataToEdit = { deliveryStatus: true };
-    console.log(dataToEdit);
     editOrderMutation.mutate({ id, dataToEdit });
   };
 

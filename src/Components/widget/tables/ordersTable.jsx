@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Customcolumn } from "./custom-column";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { CheckOrderModal } from "../modals/check-order-modal/CheckOrderModal";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
   const [selectedOrder, setSelectedOrder] = useState();
@@ -21,7 +19,6 @@ export const OrdersTable = ({ data, columns, buttonsArray }) => {
               {column.label}
             </th>
           ))}
-          {/* <th className="py-4 px-4 border border-gray-300 font-semibold text-right"></th> */}
         </tr>
       </thead>
       <tbody>

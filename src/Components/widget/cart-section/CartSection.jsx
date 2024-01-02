@@ -3,18 +3,12 @@ import { TableTitle } from "../tables/TableTitle";
 import { CartTable } from "../tables";
 import { cartTableColumn } from "./constants";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUserCart, custom } from "../../../features/user/userSlice";
 import { Button } from "flowbite-react";
 import { store } from "../../../store";
 import { useNavigate } from "react-router-dom";
 export const CartSection = () => {
   let totalOrderPrice = 0;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const handleClearUserCart = () => {
-    dispatch(clearUserCart());
-  };
-
   const tableData = useSelector((state) => state.user.userCart);
 
   tableData.map((order) => {
@@ -47,8 +41,6 @@ export const CartSection = () => {
       ) : (
         <span className="text-3xl text-selected">سبد خرید شما خالی است</span>
       )}
-
-      {/* <button onClick={handleClearUserCart}>clear</button> */}
     </div>
   );
 };

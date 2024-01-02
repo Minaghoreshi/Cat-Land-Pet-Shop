@@ -9,7 +9,7 @@ export const ModalTable = ({
   productId,
 }) => {
   if (!productId) {
-    return null; // or return an alternative component, message, etc.
+    return null;
   }
 
   return (

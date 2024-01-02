@@ -3,7 +3,7 @@ import { CustomBreadCrump } from "./CustomBreadCrump";
 import Counter from "./Counter";
 import { Button } from "flowbite-react";
 import { useDispatch } from "react-redux";
-import { addOrder, user, updateBadge } from "../../../features/user/userSlice";
+import { addOrder, updateBadge } from "../../../features/user/userSlice";
 import { store } from "../../../store";
 import { Toastify } from "../../base";
 

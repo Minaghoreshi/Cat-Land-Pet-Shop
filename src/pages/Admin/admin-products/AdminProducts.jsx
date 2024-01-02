@@ -9,7 +9,7 @@ import {
   AddModal,
 } from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
-import { combineProductsWithCategories } from "./dataCombining";
+import { combineProductsWithCategories } from "./utils";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,

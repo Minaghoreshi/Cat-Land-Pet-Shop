@@ -6,7 +6,6 @@ export function CustomerLayout({ children, className }) {
     <Container className="flex flex-col items-center overflow-y-hidden max-h-screen">
       <CustomerHeader />
       {children}
-      {/* <CustomerFooter /> */}
     </Container>
   );
 }

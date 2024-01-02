@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginSchema } from "../user/login-form/loginSchema";
-import { useFormik, Field, ErrorMessage } from "formik";
+import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../../features/auth/authThunk";
 

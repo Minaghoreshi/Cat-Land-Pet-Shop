@@ -24,7 +24,6 @@ export const EditableItem = ({
     setIsEditing(false);
     if (value !== originalValue) {
       update(event.target.id, event.target.name, event.target.value);
-      // setIsEdited(true);
     } else {
       setIsEditing(false);
     }

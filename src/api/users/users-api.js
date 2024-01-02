@@ -4,7 +4,6 @@ import Cookies from "js-cookie";
 const token = Cookies.get("token");
 
 export const getUserFirstName = async (userId) => {
-  // console.log(userId);
   const response = await api.get(`http://localhost:8000/api/users/${userId}`);
   return response.data.data.user.firstname;
 };
@@ -37,7 +36,6 @@ export const editUserById = async (userId, data) => {
       {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
         },
       }
     );

@@ -11,7 +11,6 @@ export const CartDeleteModal = ({ data }) => {
   const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = (orderId) => {
-    console.log(orderId);
     dispatch(removeAnOrder(orderId));
     dispatch(updateBadge());
     setOpenModal(false);

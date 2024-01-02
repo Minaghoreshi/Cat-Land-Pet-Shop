@@ -2,9 +2,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/9005223.jpg";
 import { Badge } from "flowbite-react";
-import { store } from "../../../../store";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 export const CustomerHeader = () => {
   const badge = useSelector((state) => state.user.badge);

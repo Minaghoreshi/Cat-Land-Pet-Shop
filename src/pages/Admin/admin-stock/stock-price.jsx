@@ -49,7 +49,6 @@ const AdminStocks = () => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
-  // console.log(data.data.products);
   const columns = [
     { key: "name", label: "کالا", width: "w-3/5" },
     { key: "price", label: "قیمت" },

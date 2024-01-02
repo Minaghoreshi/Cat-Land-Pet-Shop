@@ -49,7 +49,7 @@ export const Main = () => {
           return { categoryId: category._id, products: productsRes };
         } catch (error) {
           console.log(error);
-          return { categoryId: category._id, products: [] }; // Handle error, assuming an empty array for products
+          return { categoryId: category._id, products: [] };
         }
       });
 
