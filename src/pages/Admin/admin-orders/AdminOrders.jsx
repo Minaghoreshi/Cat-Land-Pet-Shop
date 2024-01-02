@@ -6,6 +6,7 @@ import {
   OrdersTable,
   AdminLayout,
   PaginationComponent,
+  WithGuard,
 } from "../../../components";
 import { getAllOrders } from "../../../api/orders/orders-api";
 
@@ -14,27 +15,19 @@ import {
   ordersTableButton,
   OrdersTableTitle,
 } from "../constants";
-import { combineUsersWithOrders } from "./usersandorders";
-import { WithGuard } from "../../../components/widget/with-guard/withGuard";
-import { getUserById } from "../../../api/users/users-api";
+import { combineUsersWithOrders } from "./utils.js";
 const AdminOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersData, setOrdersData] = useState();
   const [deliveryStatus, setDeliveryStatus] = useState(false);
   //get orders data
-  const { data, error, isLoading } = useQuery(
-    ["orders", currentPage, deliveryStatus],
-    () => getAllOrders(currentPage, deliveryStatus)
-  );
-  //pass data to get the name and family name of user
-  // const getOrdersWithUsers = useCallback(async () => {
-  //   if (data) {
-  //     const combinedData = await combineUsersWithOrders(data.data.orders);
-  //     setOrdersData(combinedData);
-  //   }
-  //   if (ordersData) {
-  //   }
-  // }, [data, setOrdersData, ordersData]);
+  const { data, error, isLoading } = useQuery({
+    queryFn: () => {
+      return getAllOrders(currentPage, deliveryStatus);
+    },
+    queryKey: ["orders", currentPage, deliveryStatus],
+  });
+
   const getOrdersWithUsers = useCallback(async () => {
     if (data) {
       console.log(data);
@@ -47,10 +40,7 @@ const AdminOrders = () => {
     () => getOrdersWithUsers,
     [getOrdersWithUsers]
   );
-  // console.log("test");
-  // useEffect(() => {
-  //   getOrdersWithUsers();
-  // }, [data, getOrdersWithUsers]);
+
   useEffect(() => {
     memoizedGetOrdersWithUsers();
   }, [memoizedGetOrdersWithUsers]);

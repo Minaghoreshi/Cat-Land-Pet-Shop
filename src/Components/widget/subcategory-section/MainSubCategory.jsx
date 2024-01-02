@@ -13,7 +13,6 @@ export const MainSubCategory = ({ sub }) => {
   } = useQuery(["category", sub], () => {
     return getSubCategoryById(sub);
   });
-  // return <div>{subCategoryData}</div>;
   const {
     data: productsData,
     error: productsError,

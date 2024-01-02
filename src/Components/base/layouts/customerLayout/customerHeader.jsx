@@ -2,9 +2,7 @@ import { Icon } from "@iconify/react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/9005223.jpg";
 import { Badge } from "flowbite-react";
-import { store } from "../../../../store";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 export const CustomerHeader = () => {
   const badge = useSelector((state) => state.user.badge);
@@ -42,14 +40,17 @@ export const CustomerHeader = () => {
             <Icon icon="mdi:cart-outline" color="white" />
             سبد خرید
           </button>
-
-          <Badge
-            className="absolute top-[-1.8rem] left-0 text-base rounded"
-            color="gray"
-          >
-            {" "}
-            {badge}
-          </Badge>
+          {badge > 0 ? (
+            <Badge
+              className="absolute top-[-1.8rem] left-0 text-base rounded"
+              color="gray"
+            >
+              {" "}
+              {badge}
+            </Badge>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </header>

@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getProducts } from "../../../api/products/products-api";
-import { QueryClient, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   StockTable,
   TableTitle,
   AdminLayout,
   PaginationComponent,
+  Toastify,
 } from "../../../components";
 import { addMultipleEditedProduct } from "../../../api/products/products-api";
 import { WithGuard } from "../../../components/widget/with-guard/withGuard";
 const AdminStocks = () => {
+  const queryClient = useQueryClient();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [productData, setProductData] = useState(null);
   const [dataToSend, setDataToSend] = useState(null);
-  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
-    getProducts(currentPage)
-  );
+  const [toastifyVisible, setToastifyVisible] = useState(false);
 
+  const { data, isLoading, error } = useQuery({
+    queryFn: () => {
+      return getProducts(currentPage);
+    },
+    queryKey: ["products", { currentPage }],
+    onSuccess: (data) => setProductData(data.data.products),
+  });
+  const { mutateAsync: addEditedDataMuttion } = useMutation({
+    mutationFn: addMultipleEditedProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries("products");
+      setToastifyVisible((prev) => !prev);
+    },
+  });
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
 
-  useEffect(() => {
-    // Update the state when data changes
-    if (data) {
-      setProductData(data.data.products);
-    }
-  }, [data]);
-
   const save = async () => {
     try {
-      const result = await addMultipleEditedProduct(dataToSend);
-      if (result && result === 200) {
-        QueryClient.invalidateQueries("products");
-      }
+      await addEditedDataMuttion(dataToSend);
     } catch (error) {
       console.log(error.response.status);
     }
@@ -49,7 +54,6 @@ const AdminStocks = () => {
     console.error("Error fetching data:", error);
     return <p>Error fetching data</p>;
   }
-  // console.log(data.data.products);
   const columns = [
     { key: "name", label: "کالا", width: "w-3/5" },
     { key: "price", label: "قیمت" },
@@ -58,6 +62,16 @@ const AdminStocks = () => {
 
   return (
     <AdminLayout>
+      {" "}
+      {toastifyVisible ? (
+        <Toastify
+          text={"تغییرات با موفقیت ذخیره گردید"}
+          color={"bg-success"}
+          position={"top-[20%]"}
+        />
+      ) : (
+        ""
+      )}{" "}
       <div className="mt-5 flex justify-between items-center w-3/4">
         <TableTitle title={"مدیریت موجودی و قیمت"} />
         <button
@@ -66,7 +80,7 @@ const AdminStocks = () => {
         >
           ذخیره
         </button>{" "}
-      </div>
+      </div>{" "}
       {productData ? (
         <StockTable
           data={productData}
@@ -76,7 +90,6 @@ const AdminStocks = () => {
       ) : (
         <p>loading</p>
       )}
-
       <PaginationComponent
         currentPage={currentPage}
         onPageChange={onPageChange}

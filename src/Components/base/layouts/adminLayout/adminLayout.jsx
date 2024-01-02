@@ -6,7 +6,6 @@ export function AdminLayout({ children }) {
     <Container className="flex items-center flex-col">
       <AdminHeader />
       {children}
-      {/* <AdminFooter /> */}
     </Container>
   );
 }

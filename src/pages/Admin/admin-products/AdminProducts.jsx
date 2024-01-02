@@ -1,47 +1,43 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import {
   ProductsTable,
   TableTitle,
   AdminLayout,
   PaginationComponent,
+  WithGuard,
+  AddModal,
 } from "../../../components";
 import { getProducts } from "../../../api/products/products-api";
-import { combineProductsWithCategories } from "./dataCombining";
+import { combineProductsWithCategories } from "./utils";
 import {
   ProductTableCustomButtons,
   ProductTableTitle,
   ProductsTablecolumns,
 } from "../constants";
-import { WithGuard } from "../../../components/widget/with-guard/withGuard";
-import { AddModal } from "../../../components/widget/modals/AddModal";
+
 const AdminProducts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [wholeData, setWholeData] = useState();
+  const { data, isLoading, error } = useQuery({
+    queryFn: () => {
+      return getProducts(currentPage);
+    },
+    queryKey: ["products", { currentPage }],
+    onSuccess: (data) => getDataDetails(data),
+  });
 
-  //get all products (without category and subcategory)
-  const { data, error, isLoading } = useQuery(["products", currentPage], () =>
-    getProducts(currentPage)
-  );
-  //pass the data and get subcategpory and category and store in the wholedata state
-  const getDataDetails = useCallback(async () => {
-    if (data) {
-      const combinedData = await combineProductsWithCategories(
-        data.data.products
-      );
-      setWholeData(combinedData);
-    }
-  }, [data]);
-  //run use effect whenever data changes so that getting category and sub category be done
-  useEffect(() => {
-    getDataDetails();
-  }, [data, getDataDetails]);
+  const getDataDetails = async (data) => {
+    const combinedData = await combineProductsWithCategories(
+      data.data.products
+    );
+    setWholeData(combinedData);
+  };
 
   //for pagination changing
   const onPageChange = (page) => {
     setCurrentPage(page);
   };
-  // console.log(wholeData);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -56,7 +52,6 @@ const AdminProducts = () => {
       <div className="mt-5 flex justify-between items-center w-3/4">
         {" "}
         <TableTitle title={ProductTableTitle} />
-        {/* <TableButton button={ProductTableButton} /> */}
         <AddModal />
       </div>
       {data.data && wholeData ? (

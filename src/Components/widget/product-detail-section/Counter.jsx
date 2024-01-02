@@ -1,5 +1,4 @@
 import { Button } from "flowbite-react";
-import React, { useState } from "react";
 
 export const Counter = ({ max, handleIncrement, count, handleDecrement }) => {
   return (

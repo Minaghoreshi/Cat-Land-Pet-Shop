@@ -1,11 +1,13 @@
 import React from "react";
 import { Container } from "../container";
-import { UserLoginForm } from "../../login";
+import { UserForm } from "../../../widget";
 
 export const UserLoginLayout = () => {
   return (
-    <Container className="flex justify-center items-center">
-      <UserLoginForm />
-    </Container>
+    <>
+      <Container className="flex justify-center items-center flex-col">
+        <UserForm />
+      </Container>
+    </>
   );
 };
