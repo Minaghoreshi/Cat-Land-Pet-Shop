@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getProducts } from "../../../api/products/products-api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {

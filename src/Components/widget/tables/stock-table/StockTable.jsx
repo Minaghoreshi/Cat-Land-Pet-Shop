@@ -1,8 +1,6 @@
-// Table.js
 import React, { useEffect, useState } from "react";
-
-import { EditableItem } from "./EditableItem";
-import { Toastify } from "../../base/toast/Toastify";
+import { EditableItem } from "../table-parts/EditableItem";
+import { THead } from "../table-parts";
 export const StockTable = ({ columns, data, setDataToSend }) => {
   const [editedData, setEditedData] = useState([]);
 
@@ -31,18 +29,7 @@ export const StockTable = ({ columns, data, setDataToSend }) => {
   }, [editedData, setDataToSend]);
   return (
     <table className="table">
-      <thead>
-        <tr>
-          {columns.map((column, index) => (
-            <th
-              key={column.key}
-              className={`table--th ${column.width ? column.width : ""}`}
-            >
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      <THead column={columns} />
       <tbody>
         {data.map((item, index) => (
           <tr

@@ -7,13 +7,8 @@ import { useParams } from "react-router-dom";
 import { MainSubCategory } from "./MainSubCategory";
 export const SubCategoryPage = () => {
   const { id } = useParams();
-  console.log(id);
   const [menuItems, setMenuItems] = useState([]);
-  const {
-    data: category,
-    error,
-    isLoading,
-  } = useQuery(["test"], getAllCategories);
+  const { data: category } = useQuery(["test"], getAllCategories);
   const fetchSubCategories = async () => {
     if (category) {
       const promises = category.map(async (category) => {

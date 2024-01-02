@@ -1,22 +1,11 @@
 import React from "react";
-import { CartDeleteModal } from "../modals/delete-cart-modal/CartDeleteModal";
+import { CartDeleteModal } from "../../modals/delete-cart-modal/CartDeleteModal";
 import { Link } from "react-router-dom";
-
+import { THead } from "../table-parts";
 export const CartTable = ({ data, column }) => {
   return (
     <table className="table self-center min-w-full">
-      <thead>
-        <tr>
-          {column.map((col) => (
-            <th
-              key={col.key}
-              className={`table--th ${col.width ? col.width : ""}`}
-            >
-              {col.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      <THead column={column} />
       <tbody>
         {data.map((row, index) => (
           <tr

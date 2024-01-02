@@ -15,7 +15,7 @@ export const ProductDetails = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState();
-  const { data, error, isLoading } = useQuery(["product", id], () => {
+  const { data } = useQuery(["product", id], () => {
     return getProductById(id);
   });
   const myRef = useRef();

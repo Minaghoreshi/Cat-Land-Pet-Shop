@@ -1,18 +1,10 @@
-import { AddModal } from "../modals/add-edit-modal/AddModal";
-import { DeleteModal } from "../modals/delete-product-modal/DeleteModal";
-
+import { AddModal } from "../../modals/add-edit-modal/AddModal";
+import { DeleteModal } from "../../modals/delete-product-modal/DeleteModal";
+import { THead } from "../table-parts";
 export const ProductsTable = ({ data, columns }) => {
   return (
     <table className="table ">
-      <thead>
-        <tr className="">
-          {columns.map((column) => (
-            <th key={column.key} className="table--th">
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      <THead column={columns} />
       <tbody>
         {data.map((row, rowIndex) => (
           <tr

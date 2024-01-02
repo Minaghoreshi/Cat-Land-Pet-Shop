@@ -3,7 +3,7 @@ import { Button, Modal } from "flowbite-react";
 import { createPortal } from "react-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { editOrder, getOrderById } from "../../../../api/orders/orders-api";
-import { ModalTable } from "../../tables/ModalTable";
+import { ModalTable } from "../../tables/modal-table/ModalTable";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
     { key: "product", label: "کالا", width: "w-3/5" },
@@ -13,7 +13,7 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState(selectedOrder);
   const [orderData, setOrderData] = useState(null);
-  const { data, error, isLoading } = useQuery(
+  const { data, isLoading } = useQuery(
     ["selectedOrder", selectedId],
     () => getOrderById(selectedId),
     { enabled: !!selectedId } // Enable the query only when selectedId is truthy

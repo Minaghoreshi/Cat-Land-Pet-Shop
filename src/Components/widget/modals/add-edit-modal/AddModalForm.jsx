@@ -21,9 +21,7 @@ export const AddModalForm = ({ setOpenModal, product }) => {
   const queryClient = useQueryClient();
 
   //when fomr loads: get all the categories for the select option
-  const { data, error, isLoading } = useQuery(["categories"], () =>
-    getAllCategories()
-  );
+  const { data } = useQuery(["categories"], () => getAllCategories());
   useEffect(() => {
     if (data) {
       setCategories(data);

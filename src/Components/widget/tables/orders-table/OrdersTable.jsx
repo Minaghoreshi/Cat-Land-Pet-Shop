@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { CheckOrderModal } from "../modals/check-order-modal/CheckOrderModal";
+import { CheckOrderModal } from "../../modals/check-order-modal/CheckOrderModal";
+import { THead } from "../table-parts";
 export const OrdersTable = ({ data, columns, buttonsArray }) => {
   const [selectedOrder, setSelectedOrder] = useState();
   const [openModal, setOpenModal] = useState(false);
@@ -12,15 +13,7 @@ export const OrdersTable = ({ data, columns, buttonsArray }) => {
   };
   return (
     <table className="table">
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <th key={column.key} className="table--th">
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      <THead column={columns} />
       <tbody>
         {data.map((row, rowIndex) => (
           <tr

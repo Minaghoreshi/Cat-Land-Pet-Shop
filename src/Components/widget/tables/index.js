@@ -1,9 +1,7 @@
-export * from "./EditableItem";
-export * from "./TableButton";
-export * from "./TableFilter";
-export * from "./TableTitle";
-export * from "./custom-column";
-export * from "./ProductsTable";
-export * from "./StockTable";
-export * from "./CartTable";
-export * from "./ordersTable";
+export * from "./table-parts";
+export * from "./products-table";
+export * from "./stock-table";
+// export * from "./CartTable";
+export * from "./orders-table";
+export * from "./cart-table";
+export * from "./modal-table";

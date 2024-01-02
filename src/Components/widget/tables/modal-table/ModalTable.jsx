@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { THead } from "../table-parts";
 export const ModalTable = ({
   columns,
   product,
@@ -14,18 +14,7 @@ export const ModalTable = ({
 
   return (
     <table className="ModalTable">
-      <thead>
-        <tr>
-          {columns.map((column, index) => (
-            <th
-              key={column.key}
-              className={`table--th ${column.width ? column.width : ""}`}
-            >
-              {column.label}
-            </th>
-          ))}
-        </tr>
-      </thead>
+      <THead column={columns} />
       <tbody>
         <tr>
           <td className="table--td">

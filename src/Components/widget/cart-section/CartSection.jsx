@@ -1,8 +1,7 @@
 import React from "react";
-import { TableTitle } from "../tables/TableTitle";
-import { CartTable } from "../tables";
+import { TableTitle, CartTable } from "../tables";
 import { cartTableColumn } from "./constants";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button } from "flowbite-react";
 import { store } from "../../../store";
 import { useNavigate } from "react-router-dom";
