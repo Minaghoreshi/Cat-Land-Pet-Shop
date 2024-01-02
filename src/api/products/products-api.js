@@ -45,13 +45,9 @@ export const addNewProduct = async (formData) => {
   } catch (error) {
     if (error.response.status === 401) {
       return null;
-    }
-
-    // If it's not a 401 error, log it as an actual error
-    else {
+    } else {
       console.error(error);
     }
-    // Rethrow the error to handle it in the calling code if needed
     throw error;
   }
 };
@@ -78,17 +74,12 @@ export const addMultipleEditedProduct = async (dataToSend) => {
   }
 };
 
-// API for deleting
 export const deleteProduct = async (productId) => {
   try {
     const response = await api.delete(`${apiUrl}/${productId}`);
 
-    // Handle the response data
     return response.status;
-
-    // You can update your state or perform other actions with the subcategories here
   } catch (error) {
-    // Handle errors
     console.error("Error deleting product:", error);
   }
 };

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import success from "../../../assets/success.png";
 import unsuccess from "../../../assets/unsuccess.png";
 import { addMultipleOrders } from "../../../api/orders/orders-api";
@@ -8,9 +7,13 @@ import { clearUserCart, updateBadge } from "../../../features/user/userSlice";
 export const PaymentResult = () => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const result = urlSearchParams.get("result");
+  const [pageResult, setPageResult] = useState(null);
+  useEffect(() => {
+    setPageResult(result);
+  }, []);
   useEffect(() => {
     const handleResult = async () => {
-      if (result === "success") {
+      if (pageResult === "success") {
         const allOrders = store.getState().user.userCart;
         const userId = store.getState().user.userId;
         console.log(allOrders[0].deliveryDate);
@@ -24,8 +27,6 @@ export const PaymentResult = () => {
           deliveryDate: allOrders[0].deliveryDate,
         };
 
-        console.log(ordersToAdd);
-
         try {
           await addMultipleOrders(ordersToAdd);
           store.dispatch(clearUserCart());
@@ -37,7 +38,7 @@ export const PaymentResult = () => {
     };
 
     handleResult();
-  }, [result]);
+  }, [pageResult]);
 
   console.log(result);
   return result === "success" ? (

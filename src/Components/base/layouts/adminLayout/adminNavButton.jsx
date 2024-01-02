@@ -11,7 +11,6 @@ export const AdminNavButton = () => {
     setSelectedButton(buttonName);
   }, [location.pathname]);
   const handleClick = (buttonName, route) => {
-    // setSelectedButton(buttonName);
     navigate(route);
   };
   return (
