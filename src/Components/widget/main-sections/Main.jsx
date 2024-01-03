@@ -80,7 +80,7 @@ export const Main = () => {
   return (
     <div className="flex flex-col items-center pt-4 gap-16 no-scrollbar overflow-auto custom-scroll">
       {" "}
-      <Hero className="w-[1400px] max-h-96 " />
+      <Hero className="w-[1622px] max-h-96 rounded-lg" />
       <ProductsSection menuItems={menuItems}></ProductsSection>
     </div>
   );

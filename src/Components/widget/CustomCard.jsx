@@ -2,10 +2,12 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-export const CustomCard = ({ product }) => {
+export const CustomCard = ({ product, className }) => {
   return (
     <Link to={`/product/${product._id}`}>
-      <div className="p-4 flex flex-col items-center w-[220px] h-[270px] gap-4 bg-white">
+      <div
+        className={`p-4 flex flex-col items-center w-[220px] h-[270px] gap-4 bg-white ${className}`}
+      >
         <img
           className="h-28 w-28"
           src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}

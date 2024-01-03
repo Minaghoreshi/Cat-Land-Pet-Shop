@@ -6,7 +6,7 @@ export const CategoryPage = () => {
   const { id } = useParams();
 
   return (
-    <div className="flex mt-8 gap-16">
+    <div className="flex flex-col items-center pt-4 gap-16 no-scrollbar overflow-auto custom-scroll">
       <MainCategory categoryId={id} />
     </div>
   );
