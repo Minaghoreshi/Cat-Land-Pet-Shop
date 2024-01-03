@@ -43,7 +43,7 @@ export const CustomerHeader = () => {
   }, []);
 
   return (
-    <header className="flex px-14 pt-5 pb-2 text-t bg-white items-center justify-evenly w-full relative">
+    <header className="flex px-14 pt-5 pb-2 text-t bg-white items-center justify-evenly w-full relative shadow-custom">
       <div
         className="flex gap-3 items-center cursor-pointer "
         onClick={() => {

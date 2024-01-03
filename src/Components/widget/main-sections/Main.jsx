@@ -76,7 +76,7 @@ export const Main = () => {
     return <p>Error fetching data</p>;
   }
   return (
-    <div className="flex mt-8 gap-16">
+    <div className="flex pt-4 gap-16">
       <ProductsSection menuItems={menuItems}></ProductsSection>
     </div>
   );
