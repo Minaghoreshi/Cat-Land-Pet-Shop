@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
+import { Hero } from "./hero/Hero";
+
 export const Main = () => {
   const [menuItems, setMenuItems] = useState([]);
   const {
@@ -76,7 +78,9 @@ export const Main = () => {
     return <p>Error fetching data</p>;
   }
   return (
-    <div className="flex pt-4 gap-16">
+    <div className="flex flex-col items-center pt-4 gap-16 no-scrollbar overflow-auto custom-scroll">
+      {" "}
+      <Hero className="w-[1400px] max-h-96 " />
       <ProductsSection menuItems={menuItems}></ProductsSection>
     </div>
   );
