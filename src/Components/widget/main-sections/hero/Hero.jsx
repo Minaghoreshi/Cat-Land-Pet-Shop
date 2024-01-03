@@ -33,7 +33,7 @@ export const Hero = ({ className }) => {
         {imagesArray.map((image, index) => (
           <SwiperSlide key={image}>
             <img
-              className="rounded-lg"
+              className="rounded-lg w-full h-full"
               src={image}
               alt={`Slide ${index + 1}`}
             />

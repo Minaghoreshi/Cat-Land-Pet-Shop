@@ -15,7 +15,7 @@ export const ProductsSection = ({ menuItems }) => {
       {menuItems.map((item, index) => (
         <div
           key={item._id}
-          className="flex  p-5 items-center  bg-secondary rounded-lg"
+          className="flex  p-5 items-center  bg-secondary rounded-lg overflow-y-auto"
         >
           <div className="w-[220px] h-[270px] flex justify-between flex-col items-center">
             <h1 className="font-bold text-[21px] text-primary">{item.name}</h1>

@@ -7,7 +7,7 @@ import { userLogOut } from "../../../../features/user/userSlice";
 import { LoginSign } from "./LoginSign";
 import { LogOutSign } from "./LogOutSign";
 import { CartSign } from "./CartSign";
-export const CustomerHeader = () => {
+export const CustomerHeader = ({ className }) => {
   const badge = useSelector((state) => state.user.badge);
   const [isMenuVisible, setMenuVisibility] = useState(false);
   const menuTimeoutRef = useRef(null);
@@ -43,7 +43,9 @@ export const CustomerHeader = () => {
   }, []);
 
   return (
-    <header className="flex px-14 pt-5 pb-2 text-t bg-white items-center justify-evenly w-full relative shadow-custom z-10">
+    <header
+      className={`flex px-14 pt-5 pb-2 text-t bg-white items-center justify-evenly w-full relative shadow-custom z-10 ${className}`}
+    >
       <div
         className="flex gap-3 items-center cursor-pointer "
         onClick={() => {

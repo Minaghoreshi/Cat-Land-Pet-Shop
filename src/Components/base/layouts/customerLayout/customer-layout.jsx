@@ -3,8 +3,8 @@ import { CustomerHeader } from "./customerHeader";
 import { Container } from "../container";
 export function CustomerLayout({ children, className }) {
   return (
-    <Container className="flex flex-col items-center overflow-y-hidden max-h-screen ">
-      <CustomerHeader />
+    <Container className=" relative flex flex-col items-center overflow-hidden max-h-screen ">
+      <CustomerHeader className={"absolute top-0"} />
       {children}
     </Container>
   );
