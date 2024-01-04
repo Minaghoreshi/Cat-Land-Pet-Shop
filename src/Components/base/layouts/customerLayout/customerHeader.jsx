@@ -21,6 +21,7 @@ export const CustomerHeader = ({ className }) => {
   };
   const handleLogOut = () => {
     dispatch(userLogOut());
+    navigate("/");
   };
   const handleMouseLeaveContainer = () => {
     menuTimeoutRef.current = setTimeout(() => {

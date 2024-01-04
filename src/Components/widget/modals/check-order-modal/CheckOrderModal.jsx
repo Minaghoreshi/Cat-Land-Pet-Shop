@@ -6,13 +6,14 @@ import { editOrder, getOrderById } from "../../../../api/orders/orders-api";
 import { ModalTable } from "../../tables/modal-table/ModalTable";
 export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
   const columns = [
-    { key: "product", label: "کالا", width: "w-3/5" },
-    { key: "totalPrice", label: "قیمت" },
+    { key: "name", label: "کالا", width: "w-3/5" },
+    { key: "price", label: "قیمت" },
     { key: "count", label: "تعداد" },
   ];
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState(selectedOrder);
   const [orderData, setOrderData] = useState(null);
+  const [tableData, setTableData] = useState([]);
   const { data, isLoading } = useQuery(
     ["selectedOrder", selectedId],
     () => getOrderById(selectedId),
@@ -35,8 +36,26 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
       setOrderData(data);
     }
   }, [selectedOrder, data]);
-  if (orderData) {
-  }
+  useEffect(() => {
+    if (orderData && orderData.products) {
+      console.log(orderData);
+      const formattedData = orderData.products.map((product) => ({
+        id: product.product ? product.product._id : "",
+        name:
+          product.product && product.product.name ? product.product.name : null,
+        price:
+          product.product && product.product.price
+            ? product.product.price
+            : null,
+        count: product.product && product.count ? product.count : null,
+      }));
+
+      setTableData(formattedData);
+    }
+  }, [orderData]);
+  useEffect(() => {
+    console.log(tableData);
+  }, [tableData]);
   if (isLoading) {
     return <div>loading</div>;
   }
@@ -91,13 +110,7 @@ export const CheckOrderModal = ({ show, onClose, selectedOrder }) => {
                 </div>
               </div>{" "}
               {orderData.products[0]?.product?.name ? (
-                <ModalTable
-                  columns={columns}
-                  product={orderData.products[0].product.name}
-                  count={orderData.products[0].count}
-                  totalPrice={orderData.totalPrice}
-                  productId={orderData.products[0].product._id}
-                />
+                <ModalTable columns={columns} data={tableData} />
               ) : (
                 <div className="text-selected">
                   این کالا از لیست محصولات، حذف شده است

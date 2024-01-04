@@ -5,3 +5,4 @@ export * from "./stock-table";
 export * from "./orders-table";
 export * from "./cart-table";
 export * from "./modal-table";
+export * from "./user-orders-table";

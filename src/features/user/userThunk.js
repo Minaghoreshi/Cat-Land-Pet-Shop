@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { store } from "../../store";
 const userAPI = `http://localhost:8000/api/auth/login`;
 const ordersApi = `http://localhost:8000/api/orders`;
 //data:username,password :string

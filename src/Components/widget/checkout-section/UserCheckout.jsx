@@ -17,7 +17,7 @@ export const UserCheckout = () => {
   totalOrders.map((order) => {
     return (totalOrderPrice += Number(order.count) * Number(order.price) * 10);
   });
-  console.log(addDate);
+
   const formik = useFormik({
     initialValues: {
       firstname: userInitialData.firstname || "",
@@ -43,7 +43,7 @@ export const UserCheckout = () => {
       ...formik.values,
       deliveryDate: value?.toDate?.().toISOString(),
     });
-  }, [value, formik]);
+  }, [value]);
   return (
     <div className="mt-5 flex  w-3/5 flex-col gap-10">
       <TableTitle title={"تکمیل اطلاعات کاربری"} />
