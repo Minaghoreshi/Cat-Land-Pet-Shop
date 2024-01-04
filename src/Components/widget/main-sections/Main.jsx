@@ -5,6 +5,7 @@ import { getAllCategories } from "../../../api/category/category-api";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
 import { Hero } from "./hero/Hero";
+import { Error } from "../error";
 
 export const Main = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -74,8 +75,7 @@ export const Main = () => {
   }
 
   if (categoryError) {
-    console.error("Error fetching data:", categoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
   return (
     <div className="flex flex-col items-center pt-4 gap-16 overflow-y-auto overflow-x-hidden no-scrollbar max-w-full">

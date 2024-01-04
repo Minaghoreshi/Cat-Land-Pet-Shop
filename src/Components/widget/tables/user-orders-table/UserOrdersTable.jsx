@@ -9,7 +9,7 @@ export const UserOrdersTable = ({ data, column }) => {
       <tbody>
         {data.map((row, index) => (
           <tr
-            key={row._id}
+            key={row.id}
             className={index % 2 !== 0 ? "bg-gray-50" : "bg-white"}
           >
             {column.map((col) => (

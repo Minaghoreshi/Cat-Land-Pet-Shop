@@ -31,7 +31,7 @@ export const LogOutSign = ({ handleLogOut }) => {
     };
   }, []);
   return (
-    <div className="flex flex-col relative gap-7 items-end w-[126px]">
+    <div className="flex flex-col relative gap-7 items-end ">
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeaveContainer}
@@ -45,7 +45,7 @@ export const LogOutSign = ({ handleLogOut }) => {
         <ul
           onMouseEnter={handleMouseEnterList}
           onMouseLeave={handleMouseLeaveList}
-          className="flex flex-col p-5 gap-2 absolute top-full bg-white w-[126px] right-10 rounded-lg"
+          className="flex flex-col p-5 gap-2 absolute top-full bg-white w-[126px] right-0 rounded-lg"
         >
           <Link to={"/user-orders"}>
             <li className="header--li">سفارش ها</li>{" "}

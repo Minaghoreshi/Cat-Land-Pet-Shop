@@ -13,3 +13,4 @@ export * from "./forms/user/sign-up";
 export * from "./with-guard";
 export * from "./category-nav";
 export * from "./user-order-section";
+export * from "./error";

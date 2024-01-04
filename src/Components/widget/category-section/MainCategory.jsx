@@ -4,6 +4,7 @@ import { getCategoryById } from "../../../api/category/category-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
 import { CustomCard } from "../CustomCard";
 import img from "../../../assets/hero.jpg";
+import { Error } from "../error";
 export const MainCategory = ({ categoryId }) => {
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
@@ -36,16 +37,14 @@ export const MainCategory = ({ categoryId }) => {
   }
 
   if (categoryError) {
-    console.error("Error fetching data:", categoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
   if (productsLoading) {
     return <p>Loading...</p>;
   }
 
   if (productsError) {
-    console.error("Error fetching data:", categoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
 
   return (

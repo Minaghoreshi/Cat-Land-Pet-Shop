@@ -5,6 +5,7 @@ import { CustomCard } from "../CustomCard";
 import img from "../../../assets/hero.jpg";
 
 import { getSubCategoryById } from "../../../api/subcategory/subcategory-api";
+import { Error } from "../error";
 export const MainSubCategory = ({ sub }) => {
   const [subCategory, setSubCategory] = useState(null);
   const [products, setProducts] = useState([]);
@@ -36,16 +37,14 @@ export const MainSubCategory = ({ sub }) => {
   }
 
   if (subCategoryError) {
-    console.error("Error fetching data:", subCategoryError);
     return <p>Error fetching data</p>;
   }
   if (productsLoading) {
-    return <p>Loading...</p>;
+    return <Error />;
   }
 
   if (productsError) {
-    console.error("Error fetching data:", subCategoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
   return (
     <div className="flex pb-6 flex-col gap-5 px-7 w-[1687px] ">

@@ -10,11 +10,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { CustomSwiper } from "./Swiper";
 import { ProductDescript } from "./ProductDescript";
+import { Error } from "../error";
 export const ProductDetails = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState();
-  const { data } = useQuery(["product", id], () => {
+  const { data, error } = useQuery(["product", id], () => {
     return getProductById(id);
   });
   const myRef = useRef();
@@ -31,10 +32,12 @@ export const ProductDetails = () => {
       setProduct(data);
     }
   }, [data, product]);
-
+  if (error) {
+    return <Error />;
+  }
   return product ? (
     <div className="w-full h-screen py-12 bg-secondary flex  justify-center gap-20 ">
-      <div className="bg-white w-2/3 p-8 rounded-lg flex flex-col gap-20  shadow-custom">
+      <div className="bg-white w-2/3 p-8 rounded-lg flex flex-col gap-20  shadow-custom overflow-y-auto max-h-[780px] no-scrollbar py-24">
         {" "}
         <div className="flex gap-14">
           {" "}

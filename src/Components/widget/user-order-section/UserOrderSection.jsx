@@ -7,20 +7,27 @@ import {
 import { UserOrdersTable } from "../tables";
 import { userOrdersColumn } from "./constants";
 import { NothingToShow } from "./NothingToShow";
-
+import { store } from "../../../store";
+import { Error } from "../error/Error";
 export const UserOrderSection = () => {
   const isUserLogin = useSelector((state) => state.user.isLogin);
   const orders = useSelector((state) => state.user.userOrdersId);
-  const userId = useSelector((state) => state.user.userId);
   const [tableData, setTableData] = useState([]);
   const userAllDetails = useSelector(
     (state) => state.user.userAllOrdersDetails
   );
   const dispatch = useDispatch();
   useEffect(() => {
+    const userId = store.getState().user.userId;
+
     dispatch(getUserAllOrders(userId));
-    dispatch(getUserOldOrdersDetais(orders));
-  }, [userId]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (orders.length > 0) {
+      dispatch(getUserOldOrdersDetais(orders));
+    }
+  }, [dispatch, orders]);
 
   useEffect(() => {
     if (userAllDetails.length > 0) {
@@ -49,7 +56,7 @@ export const UserOrderSection = () => {
     console.log(tableData);
   }, [tableData]);
 
-  return isUserLogin ? (
+  return orders.length > 0 ? (
     <UserOrdersTable data={tableData} column={userOrdersColumn} />
   ) : (
     <NothingToShow />
