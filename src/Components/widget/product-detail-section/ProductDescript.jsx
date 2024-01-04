@@ -9,9 +9,10 @@ import { Toastify } from "../../base";
 
 export const ProductDescript = ({ product }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const [toastifyVisible, setToastifyVisible] = useState(false);
-
+  const [toastColor, setToastColor] = useState("");
+  const [toastText, setToastText] = useState("");
   useEffect(() => {
     if (product) {
       setSelectedProduct(product);
@@ -43,35 +44,39 @@ export const ProductDescript = ({ product }) => {
     }
   };
   const handleDecrement = () => {
-    if (count > 1) {
+    if (count > 0) {
       setCount(count - 1);
     }
   };
   const dispatch = useDispatch();
   const addToCart = () => {
-    const newOrder = {
-      _id: selectedProduct._id,
-      count: count,
-      price: selectedProduct.price,
-      name: selectedProduct.name,
-      thumbnail: selectedProduct.thumbnail,
-    };
-    dispatch(addOrder(newOrder));
-    setToastifyVisible((prev) => !prev);
+    if (count > 0) {
+      const newOrder = {
+        _id: selectedProduct._id,
+        count: count,
+        price: selectedProduct.price,
+        name: selectedProduct.name,
+        thumbnail: selectedProduct.thumbnail,
+      };
+      dispatch(addOrder(newOrder));
+      setToastText("محصول به سبد خرید اضافه شد");
+      setToastColor("bg-success");
+      setToastifyVisible((prev) => !prev);
 
-    dispatch(updateBadge());
-    const result = store.getState();
-    console.log(result.user.userCart);
+      dispatch(updateBadge());
+      const result = store.getState();
+      console.log(result.user.userCart);
+    } else {
+      setToastText("تعداد محصول را انتخاب کنید");
+      setToastColor("bg-selected");
+      setToastifyVisible((prev) => !prev);
+    }
   };
 
   return (
     <>
       {toastifyVisible && (
-        <Toastify
-          text={"محصول به سبد خرید  اضافه شد"}
-          color={"bg-success"}
-          position={"left-10"}
-        />
+        <Toastify text={toastText} color={toastColor} position={"left-10"} />
       )}
       {selectedProduct ? (
         <div className="flex flex-col justify-between">

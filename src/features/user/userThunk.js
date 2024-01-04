@@ -3,7 +3,7 @@ import axios from "axios";
 const userAPI = `http://localhost:8000/api/auth/login`;
 const ordersApi = `http://localhost:8000/api/orders`;
 //data:username,password :string
-export const userLogin = createAsyncThunk(`ttt`, async (data) => {
+export const userLogin = createAsyncThunk(`userLogin`, async (data) => {
   try {
     const response = await axios.post(userAPI, data);
 

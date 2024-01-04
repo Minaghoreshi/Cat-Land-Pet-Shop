@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import { lazy } from "react";
 import { Loadable } from "../components/base/loadable/Loadable";
-
 const Home = Loadable(lazy(() => import("../pages/Customer/home/home")));
 const AdminLogin = Loadable(
   lazy(() => import("../pages/Admin/admin-login/admin-login"))
@@ -35,6 +34,9 @@ const SubCategory = Loadable(
 const UserLogin = Loadable(
   lazy(() => import("../pages/Customer/user-login/UserLogin"))
 );
+const UserOrder = Loadable(
+  lazy(() => import("../pages/Customer/user-orders/UserOrders"))
+);
 const AppRoute = () => {
   return (
     <BrowserRouter>
@@ -50,8 +52,9 @@ const AppRoute = () => {
         <Route path="/orders-table" element={<AdminOrders />} />
         <Route path="/category/:id?" element={<Category />} />
         <Route path="/SubCategory/:id?" element={<SubCategory />} />
-        <Route path="/user-login" element={<UserLogin />}></Route>
+        <Route path="/user-login" element={<UserLogin />} />
         <Route path="*" element={<Home />} />
+        <Route path="/user-orders" element={<UserOrder />} />
       </Routes>
     </BrowserRouter>
   );

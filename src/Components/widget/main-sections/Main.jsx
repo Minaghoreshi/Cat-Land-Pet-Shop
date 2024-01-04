@@ -78,7 +78,7 @@ export const Main = () => {
     return <p>Error fetching data</p>;
   }
   return (
-    <div className="flex flex-col items-center pt-4 gap-16 overflow-x-auto no-scrollbar">
+    <div className="flex flex-col items-center pt-4 gap-16 overflow-y-auto overflow-x-hidden no-scrollbar max-w-full">
       {" "}
       <Hero className="w-screen lg:w-[1622px] max-h-96 rounded-lg" />
       <ProductsSection menuItems={menuItems}></ProductsSection>

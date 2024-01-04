@@ -11,13 +11,13 @@ const imagesArray = [img1, img2, img3, img4];
 export const ProductsSection = ({ menuItems }) => {
   console.log(menuItems);
   return menuItems ? (
-    <div className="flex flex-col gap-5 px-9 pb-10  max-w-full">
+    <div className="flex flex-col gap-5 px-9 pb-10  max-w-full relative">
       {menuItems.map((item, index) => (
         <div
           key={item._id}
-          className="flex  p-5 items-center  bg-secondary rounded-lg overflow-y-auto"
+          className="flex  p-5 items-center  bg-secondary rounded-lg overflow-auto w-auto "
         >
-          <div className="w-[220px] h-[270px] flex justify-between flex-col items-center">
+          <div className="min-w-[220px] h-[270px] flex justify-between flex-col items-center ">
             <h1 className="font-bold text-[21px] text-primary">{item.name}</h1>
             <img
               className="w-[170px] h-[200px] rounded-lg"
