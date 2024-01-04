@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUserAllOrders, userLogin } from "./userThunk";
+import {
+  getUserAllOrders,
+  getUserOldOrdersDetais,
+  userLogin,
+} from "./userThunk";
 import Cookies from "js-cookie";
 
 const initialState = {
@@ -7,10 +11,11 @@ const initialState = {
   refreshToken: Cookies.get("refreshToken") || "",
   isLogin: false,
   isLoading: false,
-  userAllOrders: [],
+  userOrdersId: [],
   userCart: [],
   badge: 0,
   userId: null,
+  userAllOrdersDetails: [],
 };
 export const user = createSlice({
   name: "user",
@@ -20,10 +25,11 @@ export const user = createSlice({
       state.token = "";
       state.refreshToken = "";
       state.isLogin = false;
-      state.userAllOrders = [];
+      state.userOrdersId = [];
       state.userCart = [];
       state.badge = 0;
       state.userId = null;
+      state.userAllOrdersDetails = [];
     },
     addDate: (state, action) => {
       const deliveryDate = action.payload;
@@ -94,7 +100,11 @@ export const user = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getUserAllOrders.fulfilled, (state, action) => {
-      state.userAllOrders = action.payload;
+      const orderIds = action.payload.map((order) => order._id);
+      state.userOrdersId = orderIds;
+    });
+    builder.addCase(getUserOldOrdersDetais.fulfilled, (state, action) => {
+      state.userAllOrdersDetails = action.payload;
     });
   },
 });
