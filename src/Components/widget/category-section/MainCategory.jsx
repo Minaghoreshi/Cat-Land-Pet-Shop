@@ -3,6 +3,8 @@ import { useQuery } from "react-query";
 import { getCategoryById } from "../../../api/category/category-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
 import { CustomCard } from "../CustomCard";
+import img from "../../../assets/hero.jpg";
+import { Error } from "../error";
 export const MainCategory = ({ categoryId }) => {
   const [category, setCategory] = useState(null);
   const [products, setProducts] = useState([]);
@@ -35,26 +37,32 @@ export const MainCategory = ({ categoryId }) => {
   }
 
   if (categoryError) {
-    console.error("Error fetching data:", categoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
   if (productsLoading) {
     return <p>Loading...</p>;
   }
 
   if (productsError) {
-    console.error("Error fetching data:", categoryError);
-    return <p>Error fetching data</p>;
+    return <Error />;
   }
+
   return (
-    <div className="flex pb-6 flex-col gap-5 px-9 max-w-screen-2xl max-height:700px overflow-auto custom-scroll">
-      <h1 className="font-bold text-[30px] text-primary hover:underline underline-offset-8 hover:text-selected">
-        {category}
-      </h1>{" "}
-      <div className="flex flex-wrap gap-10">
+    <div className="flex pb-6 flex-col gap-5 px-7 w-[1687px] ">
+      <div className="relative flex gap-5 justify-center rounded-lg w-full h-72 items-end shadow-bt ">
+        <img src={img} alt="Background" className="h-[200px]" />
+        <h1 className="absolute top-10 font-bold text-[30px] text-primary ">
+          {category}
+        </h1>
+      </div>
+      <div className="flex flex-wrap gap-12 justify-start py-5 px-7 bg-secondary content-center rounded-lg">
         {products &&
           products.map((product) => (
-            <CustomCard key={product._id} product={product} />
+            <CustomCard
+              key={product._id}
+              product={product}
+              className={"border rounded-lg"}
+            />
           ))}
       </div>
     </div>

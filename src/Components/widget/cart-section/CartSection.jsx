@@ -38,7 +38,7 @@ export const CartSection = () => {
           </div>
         </>
       ) : (
-        <span className="text-3xl text-selected">سبد خرید شما خالی است</span>
+        <span className="text-[30px] text-selected">سبد خرید شما خالی است</span>
       )}
     </div>
   );

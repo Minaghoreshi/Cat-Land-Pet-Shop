@@ -1,52 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { HomeSidebar } from "../sideBar/HomeSidebar";
+import React from "react";
 import { MainCategory } from "./MainCategory";
-import { useQuery } from "react-query";
-import { getAllCategories } from "../../../api/category/category-api";
-import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
+
 import { useParams } from "react-router-dom";
 export const CategoryPage = () => {
   const { id } = useParams();
 
-  const [menuItems, setMenuItems] = useState([]);
-  const {
-    data: category,
-    error: categoryError,
-    isLoading: categoryLoading,
-  } = useQuery(["test"], getAllCategories);
-  const fetchSubCategories = async () => {
-    if (category) {
-      const promises = category.map(async (category) => {
-        try {
-          const res = await getSubCategoryByCategoryId(category._id);
-          return {
-            name: category.name,
-            _id: category._id,
-            isOpen: false,
-            subCategories: res,
-          };
-        } catch (error) {
-          console.log(error);
-          return {
-            name: category.name,
-            _id: category._id,
-            isOpen: false,
-            subCategories: [],
-          };
-        }
-      });
-
-      const resolvedMenuItems = await Promise.all(promises);
-      setMenuItems(resolvedMenuItems);
-    }
-  };
-  useEffect(() => {
-    fetchSubCategories();
-  }, [category]);
-
   return (
-    <div className="flex mt-8 gap-16">
-      <HomeSidebar menuItems={menuItems} setMenuItems={setMenuItems} />
+    <div className="flex flex-col items-center pt-4 gap-16 no-scrollbar overflow-auto custom-scroll">
       <MainCategory categoryId={id} />
     </div>
   );

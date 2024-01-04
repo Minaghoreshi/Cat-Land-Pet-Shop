@@ -6,6 +6,7 @@
 
 body {
   font-family: "farsi";
+  /* box-sizing: border-box; */
 }
 @layer utilities {
   @variants responsive {
@@ -18,9 +19,13 @@ body {
     }
   }
 }
+
 .custom-scroll {
-  max-height: 800px;
+  max-height: 100vh;
   overflow-y: auto;
+}
+.header--li {
+  @apply hover:text-selected cursor-pointer;
 }
 .admin--nav {
   @apply font-bold py-2 px-4  bg-white text-primary border;
@@ -44,7 +49,7 @@ body {
   @apply text-blue-500 underline;
 }
 .sidebar {
-  @apply w-64 h-screen rounded-xl p-3 mr-7 overflow-y-auto max-h-[750px] shadow-custom  no-scrollbar;
+  @apply w-64 h-screen rounded-xl p-3 mr-7 overflow-y-auto max-h-[400px] shadow-custom  no-scrollbar text-t;
 }
 .item-label {
   @apply flex my-2 gap-3;

@@ -13,15 +13,15 @@ export const AdminHeader = () => {
   };
   return (
     <header className="flex px-9 py-5 bg-primary text-secondary items-center justify-between w-full mb-20">
-      <h1 className=" font-bold text-[60px] ">پنل مدیریت فروشگاه کت لند</h1>
-      <div>
+      <h1 className=" font-bold text-[30px] ">پنل مدیریت فروشگاه کت لند</h1>
+      {/* <div>
         <img
           onClick={returnHome}
           className="w-24 h-24 cursor-pointer"
           src={logo}
           alt="logo"
         />
-      </div>
+      </div> */}
       <AdminNavButton />
       <div className="flex gap-8 justify-self-end text-2xl ">
         <button onClick={returnHome}>بازگشت به سایت</button>
