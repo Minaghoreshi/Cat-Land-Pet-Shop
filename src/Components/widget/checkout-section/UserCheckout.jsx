@@ -17,7 +17,7 @@ export const UserCheckout = () => {
   totalOrders.map((order) => {
     return (totalOrderPrice += Number(order.count) * Number(order.price) * 10);
   });
-  console.log(addDate);
+
   const formik = useFormik({
     initialValues: {
       firstname: userInitialData.firstname || "",

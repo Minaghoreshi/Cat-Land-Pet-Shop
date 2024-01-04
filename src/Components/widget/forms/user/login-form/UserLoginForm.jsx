@@ -26,7 +26,7 @@ export const UserLoginForm = ({ setToastifyVisible }) => {
             setToastifyVisible((prev) => !prev);
             setTimeout(() => {
               navigate("/");
-            }, 3200);
+            }, 2000);
           } else {
             setLoadingError("نام کاربری یا رمز عبور اشتباه است");
           }

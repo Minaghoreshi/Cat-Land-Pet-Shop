@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { ProductsSection } from "./products-section/ProductsSection";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getAllCategories } from "../../../api/category/category-api";
+import { useQuery } from "react-query";
 import { getSubCategoryByCategoryId } from "../../../api/subcategory/subcategory-api";
 import { getProductsByCategory } from "../../../api/products/products-api";
-import { Hero } from "./hero/Hero";
-import { Error } from "../error";
-
-export const Main = () => {
+export const CategoryNav = ({ classname, onMouseEnter, onMouseLeave }) => {
   const [menuItems, setMenuItems] = useState([]);
+  console.log(menuItems);
   const {
     data: category,
     error: categoryError,
@@ -75,13 +73,35 @@ export const Main = () => {
   }
 
   if (categoryError) {
-    return <Error />;
+    console.error("Error fetching data:", categoryError);
+    return <p>Error fetching data</p>;
   }
+
   return (
-    <div className="flex flex-col items-center pt-4 gap-16 overflow-y-auto overflow-x-hidden no-scrollbar max-w-full">
-      {" "}
-      <Hero className="w-screen lg:w-[1622px] max-h-96 rounded-lg" />
-      <ProductsSection menuItems={menuItems}></ProductsSection>
+    <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={` flex rounded-br-lg rounded-bl-lg border border-t-0 gap-6 bg-white z-10 ${classname} bg-transparent w-2/3 justify-between p-7`}
+    >
+      {menuItems.map((category) => (
+        <div key={category._id} className="flex flex-col gap-3">
+          <Link to={`/category/${category._id}`}>
+            <h4 className="text-black hover:text-selected">{category.name}</h4>
+          </Link>
+          <ul className="pr-2">
+            {category.subCategories.map((sub) => (
+              <Link to={`/SubCategory/${sub._id}`} key={sub._id}>
+                <li
+                  key={sub._id}
+                  className="text-gray-400 hover:text-selected mb-3"
+                >
+                  {sub.name}{" "}
+                </li>
+              </Link>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };

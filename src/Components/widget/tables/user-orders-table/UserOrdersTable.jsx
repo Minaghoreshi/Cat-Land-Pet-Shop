@@ -1,18 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { THead } from "../table-parts";
-export const ModalTable = ({ columns, data }) => {
-  console.log(data);
+import { Link } from "react-router-dom";
+
+export const UserOrdersTable = ({ data, column }) => {
   return (
-    <table className="ModalTable">
-      <THead column={columns} />
+    <table className="table self-center">
+      <THead column={column} />
       <tbody>
         {data.map((row, index) => (
           <tr
             key={row.id}
             className={index % 2 !== 0 ? "bg-gray-50" : "bg-white"}
           >
-            {columns.map((col) => (
+            {column.map((col) => (
               <td key={col.key} className="table--td ">
                 {col.key === "thumbnail" ? (
                   <Link to={`/product/${row.id}`}>
@@ -35,7 +35,7 @@ export const ModalTable = ({ columns, data }) => {
                   </div>
                 ) : (
                   <div className="flex justify-center">
-                    <span>{row[col.key]}</span>
+                    <span>{row[col.key].toLocaleString("en-US")}</span>
                   </div>
                 )}
               </td>
